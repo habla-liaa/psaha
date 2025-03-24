@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Sistemas de procesamiento &#8212; Procesamiento de señales, audio y habla</title>
+    <title>Sistema lineal &#8212; Procesamiento de señales, audio y habla</title>
   
   
   
@@ -172,8 +172,11 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introducción</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">Historia</a></li>
-<li class="toctree-l1"><a class="reference internal" href="signals.html">Señales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Señales básicas y sus operaciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="energyandpower.html">Energía y Potencia de una señal</a></li>
 <li class="toctree-l1"><a class="reference internal" href="exercises.html">Ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sistemaslti.html">Sistemas Lineales e Invariantes en el Tiempo</a></li>
+
 </ul>
 
     </div>
@@ -346,7 +349,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -357,11 +362,22 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Sistemas de procesamiento</h1>
+    <h1>Sistema lineal</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Sistema lineal</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-invariante-en-el-tiempo">Sistema invariante en el tiempo</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistemas-de-procesamiento">Sistemas de procesamiento</a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -372,6 +388,82 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <div class="math notranslate nohighlight">
+\[
+\Delta t
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+SR = \frac{1}{\Delta t}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+2^N
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+x[n] = \sum_{k=-\infty}^{\infty} x[n] \delta[k-n]
+\]</div>
+<p>Convolución discreta</p>
+<div class="math notranslate nohighlight">
+\[ y[n] = \alpha_0 x[n-0] + \alpha_1 x[n-1] + \alpha_2 x[n-2] + \cdots \]</div>
+<div class="math notranslate nohighlight">
+\[ y[n] = h[0]x[n-0] + h[1]x[n-1] + h[2]x[n-2] + \cdots \]</div>
+<div class="math notranslate nohighlight">
+\[
+y[n] = \sum_{k=0}^{N-1} h[k]x[n-k]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y[n] = \left(h * x\right)[n]
+\]</div>
+<div class="math notranslate nohighlight">
+\[ f (t) * g (t)\ \stackrel{\mathrm{.}}{=} \int_{-\infty}^{\infty} f(\tau) g(t - \tau) d\tau \]</div>
+<div class="math notranslate nohighlight">
+\[{\displaystyle f[n]*g[n]=\sum _{m=0 }^{M }f[m]g[n-m]}\]</div>
+<p>Propiedades de la convolución</p>
+<p>Conmutativa
+Asociativa
+Distributiva
+Asociativa con la multiplicación por escalares
+Elemento neutro</p>
+<div class="math notranslate nohighlight">
+\[
+\left(h * x\right)[n] = \left(x * h\right)[n]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\left(h * x\right) * g = h * \left(x * g\right)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+h * \left(x_1 + x_2\right) = h * x_1 + h * x_2
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\alpha \left(h * x\right) = \left(\alpha h\right) * x
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+x * \delta = x
+\]</div>
+<section id="sistema-lineal">
+<h1>Sistema lineal<a class="headerlink" href="#sistema-lineal" title="Permalink to this heading">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ x \rightarrow S \rightarrow y \]</div>
+<div class="math notranslate nohighlight">
+\[ \alpha x \rightarrow S \rightarrow \alpha y \]</div>
+<div class="math notranslate nohighlight">
+\[ x_1 \rightarrow S \rightarrow y_1, \quad y_2 \rightarrow S \rightarrow y_2 \]</div>
+<div class="math notranslate nohighlight">
+\[ x_1 + x_2 \rightarrow S \rightarrow y_1 + y_2 \]</div>
+</section>
+<section id="sistema-invariante-en-el-tiempo">
+<h1>Sistema invariante en el tiempo<a class="headerlink" href="#sistema-invariante-en-el-tiempo" title="Permalink to this heading">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ x(t) \rightarrow S \rightarrow y(t) \]</div>
+<div class="math notranslate nohighlight">
+\[ x(t - t_0) \rightarrow S \rightarrow y(t - t_0) \]</div>
+<div class="math notranslate nohighlight">
 \[
 x(t)
 \]</div>
@@ -425,6 +517,7 @@ y[n]
 <li><p>Métodos de agrupamiento básicos</p></li>
 <li><p>Métodos de reducción de dimensionalidad básicos</p></li>
 </ul>
+</section>
 <section id="sistemas-de-procesamiento">
 <h1>Sistemas de procesamiento<a class="headerlink" href="#sistemas-de-procesamiento" title="Permalink to this heading">#</a></h1>
 <p>A una señal se le puede aplicar un proceso o transformación. Tradicionalmente pensamos en una función matemática que toma una señal <span class="math notranslate nohighlight">\(x\)</span> como argumento y devuelve otra señal <span class="math notranslate nohighlight">\(y = f(x)\)</span>. Podemos generalizar esto a la idea de un sistema que toma una señal de entrada, la procesa y genera otra señal de salida.</p>
@@ -484,6 +577,23 @@ y[n]
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Sistema lineal</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-invariante-en-el-tiempo">Sistema invariante en el tiempo</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistemas-de-procesamiento">Sistemas de procesamiento</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>

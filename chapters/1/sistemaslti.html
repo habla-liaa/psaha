@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Energía y Potencia de una señal &#8212; Procesamiento de señales, audio y habla</title>
+    <title>Sistemas Lineales e Invariantes en el Tiempo &#8212; Procesamiento de señales, audio y habla</title>
   
   
   
@@ -64,11 +64,11 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/1/energyandpower';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/1/sistemaslti';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Ejercicios" href="exercises.html" />
-    <link rel="prev" title="Señales básicas y sus operaciones" href="signals.html" />
+    <link rel="prev" title="Energía y Potencia de una señal" href="energyandpower.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -175,10 +175,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introducción</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">Historia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signals.html">Señales básicas y sus operaciones</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Energía y Potencia de una señal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="energyandpower.html">Energía y Potencia de una señal</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Sistemas Lineales e Invariantes en el Tiempo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="exercises.html">Ejercicios</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sistemaslti.html">Sistemas Lineales e Invariantes en el Tiempo</a></li>
-
 </ul>
 
     </div>
@@ -250,7 +249,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/1/energyandpower.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/1/sistemaslti.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -280,7 +279,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../_sources/chapters/1/energyandpower.ipynb" target="_blank"
+      <li><a href="../../_sources/chapters/1/sistemaslti.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -364,7 +363,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Energía y Potencia de una señal</h1>
+    <h1>Sistemas Lineales e Invariantes en el Tiempo</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -374,8 +373,15 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#densidad-de-una-senal">Densidad de una señal</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decibeles">Decibeles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-lineal">Sistema lineal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#superposicion">Superposición</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#homogeneidad">Homogeneidad</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-invariante-en-el-tiempo">Sistema invariante en el tiempo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracterizacion-de-un-sistema">Caracterización de un sistema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-de-la-convolucion">Propiedades de la convolución</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#respuesta-al-impulso-de-un-sistema-lti">Respuesta al impulso de un sistema LTI</a></li>
 </ul>
             </nav>
         </div>
@@ -387,114 +393,133 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="energia-y-potencia-de-una-senal">
-<h1>Energía y Potencia de una señal<a class="headerlink" href="#energia-y-potencia-de-una-senal" title="Permalink to this heading">#</a></h1>
-<p>Primero escribamos las expresiones de media y varianza para señales continuas y discretas. Podemos definir la media de una señal como:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="sistemas-lineales-e-invariantes-en-el-tiempo">
+<h1>Sistemas Lineales e Invariantes en el Tiempo<a class="headerlink" href="#sistemas-lineales-e-invariantes-en-el-tiempo" title="Permalink to this heading">#</a></h1>
+<section id="sistema-lineal">
+<h2>Sistema lineal<a class="headerlink" href="#sistema-lineal" title="Permalink to this heading">#</a></h2>
+<p>Definiendo un sistema lineal como aquel que cumple con la propiedad de superposición y de homogeneidad.</p>
+<section id="superposicion">
+<h3>Superposición<a class="headerlink" href="#superposicion" title="Permalink to this heading">#</a></h3>
+<p>Se aplica una entrada <span class="math notranslate nohighlight">\(x_1\)</span> y se obtiene una salida <span class="math notranslate nohighlight">\(y_1\)</span> y luego se aplica una entrada <span class="math notranslate nohighlight">\(x_2\)</span> y se obtiene una salida <span class="math notranslate nohighlight">\(y_2\)</span>, entonces si se aplica una entrada <span class="math notranslate nohighlight">\(x_1 + x_2\)</span> se obtiene una salida <span class="math notranslate nohighlight">\(y_1 + y_2\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[ x_1 \rightarrow S \rightarrow y_1, \quad y_2 \rightarrow S \rightarrow y_2 \]</div>
+<div class="math notranslate nohighlight">
+\[ x_1 + x_2 \rightarrow S \rightarrow y_1 + y_2 \]</div>
+<p>Descripto con notación de operador lo podemos expresar como:</p>
 <div class="math notranslate nohighlight">
 \[
-\begin{align}
-\mu = \lim_{T\to\infty}\frac{1}{T}\int_{-T/2}^{T/2}x(t)dt &amp; \,&amp; \mu = \lim_{N\to\infty}\frac{1}{N}\sum_{n=1}^{N}x[n]
-\end{align}
+y_1(t) = H \cdot x_1(t), \quad y_2(t) = H \cdot x_2(t)
 \]</div>
-<p>Y la varianza de la señal como:</p>
 <div class="math notranslate nohighlight">
 \[
-\begin{align}
-\sigma^2 = \lim_{T\to\infty}\frac{1}{T}\int_{-T/2}^{T/2}(x(t)-\mu)^2dt &amp; \,&amp; \sigma^2 = \lim_{N\to\infty}\frac{1}{N}\sum_{n=1}^{N}(x[n]-\mu)^2
-\end{align}
+y_1(t) + y_2(t) = H \cdot (x_1(t) + x_2(t))
 \]</div>
-<p>Ahora vamos a definir la potencia instantánea como:</p>
+<p>El resultado de un sistema a estimulos complejos puede expresarse como estímulos menos complejos.</p>
+</section>
+<section id="homogeneidad">
+<h3>Homogeneidad<a class="headerlink" href="#homogeneidad" title="Permalink to this heading">#</a></h3>
+<p>Si se aplica una entrada <span class="math notranslate nohighlight">\(\alpha x\)</span> se obtiene una salida <span class="math notranslate nohighlight">\(\alpha y\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[ x \rightarrow S \rightarrow y \]</div>
+<div class="math notranslate nohighlight">
+\[ \alpha x \rightarrow S \rightarrow \alpha y \]</div>
+<p>Con notación de operador:</p>
 <div class="math notranslate nohighlight">
 \[
-\begin{align}
-P(t) = \left| x(t)\right|^2 &amp; \,&amp; P[n] = \left| x[n]\right|^2
-\end{align}
+y(t) = H \cdot x(t)
 \]</div>
-<p>Es decir, si la señal toma valores reales, la potencia es elevar al cuadrado a la señal.</p>
-<p>En terminos físicos, la potencia es energía por unidad de tiempo, por lo que si sumamos la potencia instantanea entre el tiempmo <span class="math notranslate nohighlight">\(T_1\)</span> y el tiempo <span class="math notranslate nohighlight">\(T_2\)</span> deberíamos obtener la energía total de ese intervalo de tiempo.</p>
 <div class="math notranslate nohighlight">
 \[
-\begin{align}
-E_{T_1,T_2} = \int_{T_1}^{T_2} \left| x(t)\right|^2 dt &amp; \,&amp; E_{n_1,n_2} = \sum_{n = n_1}^{n_2}\left| x[n]\right|^2
-\end{align}
-\]</div>
-<p>Si a esta energía <span class="math notranslate nohighlight">\(E(t)\)</span> las dividimos por el total del tiempo del intervalo <span class="math notranslate nohighlight">\(T_2-T_1\)</span>, obtenemos nuevamente un valor con unidades de potencia. Esta vez no es la potencia instantánea, sino la potencia promedio.</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-P_{T_1,T_2} = \int_{T_1}^{T_2} \frac{\left| x(t)\right|^2 dt}{T_2-T_1} &amp; \,&amp; P_{n_1,n_2} = \sum_{n =n_1}^{n_2}\frac{\left| x[n]\right|^2}{n_2-n_1+1}
-\end{align}
-\]</div>
-<p>Notemos que en el caso discreto el denominador tiene un 1 agregado para contemplar el caso cuando <span class="math notranslate nohighlight">\(n_2-n_1 = 0\)</span>.</p>
-<p>Si la señal tiene media nula la definición de potencia es equivalente a calcular la varianza de la señal, y si la media no es nula, la potencia se puede escribir como la varianza más la media al cuadrado:</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-P = \sigma^2 + \mu^2
-\end{align}
-\]</div>
-<p>Finalmente definimos el valor RMS de una señal <span class="math notranslate nohighlight">\(x(t)\)</span> como el valor que tiene que tener una señal constante para tener la misma potencia que la señal original.</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-X_{RMS} = \sqrt{\int_{T_1}^{T_2} \frac{\left| x(t)\right|^2 dt}{T_2-T_1}} &amp; \,&amp; X_{RMS} = \sqrt{\sum_{n = n_1}^{n_2}\frac{\left| x[n]\right|^2}{n_2-n_1+1}}
-\end{align}
-\]</div>
-<p>El valor RMS sirve como valor eficaz de la señal y tiene las mismas unidades que la señal.</p>
-<p>Realicemos el cálculo para el caso de una señal sinusoide con frecuencia <span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(x(t) = A\sin(2\pi f t)\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[ X_{RMS} = \sqrt{\int_{0}^{T} \frac{ (A\sin(2\pi f t))^2 dt}{T}} \]</div>
-<p>Donde <span class="math notranslate nohighlight">\(T\)</span> es el período de la señal <span class="math notranslate nohighlight">\(1/f\)</span>. El resultado de la integral es <span class="math notranslate nohighlight">\(\frac{A^2}{2}T\)</span>. Falta dividir por <span class="math notranslate nohighlight">\(T\)</span> y aplicar la raiz. Finalmente queda:</p>
-<div class="math notranslate nohighlight">
-\[ X_{RMS} = \sqrt{\frac{A^2}{2}T/T} = \frac{1}{\sqrt{2}}A = 0.707 A\]</div>
-<section id="densidad-de-una-senal">
-<h2>Densidad de una señal<a class="headerlink" href="#densidad-de-una-senal" title="Permalink to this heading">#</a></h2>
-<p>Dada una señal <span class="math notranslate nohighlight">\(x(t)\)</span> consideramos que la densidad en función de <span class="math notranslate nohighlight">\(x\)</span> depende de cuanto tiempo pase la señal en ese valor.</p>
-<div class="math notranslate nohighlight">
-\[
-p(x) = \frac{dt}{T dx}
-\]</div>
-<p>Con <span class="math notranslate nohighlight">\(T\)</span> el tiempo total de la señal. La probabilidad de que la señal tome un valor entre <span class="math notranslate nohighlight">\(x\)</span> y <span class="math notranslate nohighlight">\(x+dx\)</span> es <span class="math notranslate nohighlight">\(P(x)dx\)</span>.</p>
-<p>Si conocemos la densidad de probabilidad de una señal, podemos calcular la media y la varianza de la señal con las formulas de los momentos. La esperanza de una señal es:</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-E[x(t)] = \int_{-\infty}^{\infty} x p(x) dx
-\end{align}
-\]</div>
-<p>Donde <span class="math notranslate nohighlight">\(p(x)\)</span> es la función de densidad de probabilidad de la señal. La varianza de la señal es:</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-Var[x(t)] = \int_{-\infty}^{\infty} (x-E[x(t)])^2 p(x) dx
-\end{align}
-\]</div>
-<p>Con esta fórmula podemos calcular la potencia de una señal si conocemos la densidad de probabilidad de la señal. La potencia de una señal es:</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-P = Var[x(t)] + E[x(t)]^2 = \int_{-\infty}^{\infty} (x - \mu)^2 p(x) dx + \mu^2
-\end{align}
+\alpha y(t) = \alpha H \cdot x(t) = H \cdot (\alpha x(t)) 
 \]</div>
 </section>
-<section id="decibeles">
-<h2>Decibeles<a class="headerlink" href="#decibeles" title="Permalink to this heading">#</a></h2>
-<p>La energía y la potencia pueden expresarse en escala de decibeles a través de la siguiente fórmula genérica para una magnitud L:</p>
+</section>
+<section id="sistema-invariante-en-el-tiempo">
+<h2>Sistema invariante en el tiempo<a class="headerlink" href="#sistema-invariante-en-el-tiempo" title="Permalink to this heading">#</a></h2>
+<p>Un sistema es invariante en el tiempo si el desplazamiento temporal de la entrada produce un desplazamiento temporal en la salida, es decir el sistema no cambia su comportamiento en el tiempo.</p>
 <div class="math notranslate nohighlight">
-\[ L_{dB} = 10 \log_{10}\left(\frac{L}{L_{ref}}\right) \]</div>
-<p>Donde <span class="math notranslate nohighlight">\(L_{ref}\)</span> es un valore de referencia para el cual el valor en decibeles <span class="math notranslate nohighlight">\(L_{dB}\)</span> vale 0.</p>
-<p>Que en el caso de la potencia de una señal sería:</p>
+\[ x(t) \rightarrow S \rightarrow y(t) \]</div>
 <div class="math notranslate nohighlight">
-\[ P_{dB} = 10 \log_{10}\left(\frac{P}{P_{ref}}\right) \]</div>
+\[ x(t - t_0) \rightarrow S \rightarrow y(t - t_0) \]</div>
+<p>Con notación de operador:</p>
 <div class="math notranslate nohighlight">
-\[ P_{dB} = 10 \log_{10}\left(\frac{X_{RMS}^2}{X^2_{ref}}\right) = 20 \log_{10}\left(\frac{X_{RMS}}{X_{ref}}\right) \]</div>
-<p>Para el caso de una sinusoide quedaría: <span class="math notranslate nohighlight">\(P_{dB} = 20 \log_{10}\left(\frac{A}{A_{ref}}\right) \)</span></p>
-<p>Uno de los casos más comunes es la intensidad del sonido medida en <span class="math notranslate nohighlight">\(dB_{SPL}\)</span>, (SPL = sound pressure level) cuya fórmula es:</p>
-<div class="math notranslate nohighlight">
-\[ 
-L_p=10 \log_{10}\left(\frac{{p_{\mathrm{{RMS}}}}^2}{{p_{\mathrm{ref}}}^2}\right) =20 \log_{10}\left(\frac{p_{\mathrm{RMS}}}{p_{\mathrm{ref}}}\right) dB
+\[
+x(t-t_0) = D_{t_0} \cdot x(t) 
 \]</div>
-<p>El valor para <span class="math notranslate nohighlight">\(p_{ref}\)</span> suele tomarse como la amplitud de un tono puro de <span class="math notranslate nohighlight">\(1kHz\)</span> en el umbral de la audición, aproximadamente <span class="math notranslate nohighlight">\(20\)</span> micropascales, <span class="math notranslate nohighlight">\(p_{ref}=20\mu Pa\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+y(t - t_0) = H \cdot x(t - t_0) = H \cdot D_{t_0} \cdot x(t) = D_{t_0} \cdot H \cdot x(t) = D_{t_0} \cdot y(t)
+\]</div>
+</section>
+<section id="caracterizacion-de-un-sistema">
+<h2>Caracterización de un sistema<a class="headerlink" href="#caracterizacion-de-un-sistema" title="Permalink to this heading">#</a></h2>
+<p>Cualquier señal la podemos expresar como:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+x[n] = \sum_{k=-\infty}^{\infty} x[n] \delta[k-n] &amp; \, &amp; x(t) = \int_{-\infty}^{\infty} x(t) \delta(t - \tau) d\tau \tag{1}
+\end{align}
+\]</div>
+<p>Retomemos la idea de generar una salida compleja en base a combinaciones de señales más simples. En este caso, cualquier señal puede ser expresada como una combinación lineal de impulsos.</p>
+<p>Por otro lado pensemos como representar al sistema identidad, el cual donde la señal de salida es igual a la señal de entrada. La forma trivial sería simplemente multiplicar la señal de entrada por 1.</p>
+<div class="math notranslate nohighlight">
+\[
+x[n] = 1 \cdot x[n] 
+\]</div>
+<p>Al mismo tiempo la expresión (1), también aplica como un sistema LTI y también representa la identidad. Podemos generalizar a caracterizar cualquier sistema LTI, extendiendo la expresión (1) pensando que una salida será la composición de entradas desplazadas y escaladas.</p>
+<div class="math notranslate nohighlight">
+\[ y[n] = \alpha_0 x[n-0] + \alpha_1 x[n-1] + \alpha_2 x[n-2] + \cdots \]</div>
+<p>Si pensamos estos coeficientes como una nueva señal <span class="math notranslate nohighlight">\(h[n]\)</span>, podemos expresar la salida como:</p>
+<div class="math notranslate nohighlight">
+\[ y[n] = h[0]x[n-0] + h[1]x[n-1] + h[2]x[n-2] + \cdots \]</div>
+<p>Y de forma general</p>
+<div class="math notranslate nohighlight">
+\[ y[n] = \sum_{k=-\infty}^{\infty} h[k]x[n-k] \]</div>
+<p>Esta expresión se conoce como la convolución entre las señales <span class="math notranslate nohighlight">\(x[n]\)</span> y <span class="math notranslate nohighlight">\(h[n]\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+y[n] = \left(h * x\right)[n]
+\]</div>
+<p>Por lo tanto el comportamiento de un sistema LTI queda caracterizado por la señal <span class="math notranslate nohighlight">\(h[n]\)</span>.</p>
+<p>El análogo en el caso continuo es:</p>
+<div class="math notranslate nohighlight">
+\[ y(t) =  \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau  =  \left( h * x \right)(t)\  \]</div>
+</section>
+<section id="propiedades-de-la-convolucion">
+<h2>Propiedades de la convolución<a class="headerlink" href="#propiedades-de-la-convolucion" title="Permalink to this heading">#</a></h2>
+<p>Conmutatividad</p>
+<div class="math notranslate nohighlight">
+\[
+\left(h * x\right)[n] = \left(x * h\right)[n]
+\]</div>
+<p>Asociatividad</p>
+<div class="math notranslate nohighlight">
+\[
+\left(h * x\right) * g = h * \left(x * g\right)
+\]</div>
+<p>Distributividad</p>
+<div class="math notranslate nohighlight">
+\[
+h * \left(x_1 + x_2\right) = h * x_1 + h * x_2
+\]</div>
+<p>Homogeneidad</p>
+<div class="math notranslate nohighlight">
+\[
+\alpha \left(h * x\right) = \left(\alpha h\right) * x
+\]</div>
+<p>Elemento Neutro</p>
+<div class="math notranslate nohighlight">
+\[
+x * \delta = x
+\]</div>
+</section>
+<section id="respuesta-al-impulso-de-un-sistema-lti">
+<h2>Respuesta al impulso de un sistema LTI<a class="headerlink" href="#respuesta-al-impulso-de-un-sistema-lti" title="Permalink to this heading">#</a></h2>
+<p>Imaginemos tenemos acceso a un sistema LTI, al cual le podemos aplicar cualquier señal de entrada y medir la señal de salida. Sería interesante poder encontrar <span class="math notranslate nohighlight">\(h[n]\)</span> y caracterizar el sistema en base a una señal de entrada especial. Si vemos las propiedades de la convolución, la señal <span class="math notranslate nohighlight">\(\delta[n]\)</span> cumple con la propiedad de elemento neutro, es decir que al convolucionar cualquier señal con el impulso, la señal de salida es igual a la señal de entrada. En el caso de un sistema LTI caracterizado por una señal <span class="math notranslate nohighlight">\(h[n]\)</span>, la salida al aplicar un impulso es igual a la señal que caracteriza al sistema, esto le da a <span class="math notranslate nohighlight">\(h[n]\)</span> el nombre de respuesta al impulso del sistema.</p>
+<div class="math notranslate nohighlight">
+\[
+y[n] = \left(h * \delta\right)[n] = h[n]
+\]</div>
 </section>
 </section>
 
@@ -529,12 +554,12 @@ L_p=10 \log_{10}\left(\frac{{p_{\mathrm{{RMS}}}}^2}{{p_{\mathrm{ref}}}^2}\right)
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="signals.html"
+       href="energyandpower.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Señales básicas y sus operaciones</p>
+        <p class="prev-next-title">Energía y Potencia de una señal</p>
       </div>
     </a>
     <a class="right-next"
@@ -561,8 +586,15 @@ L_p=10 \log_{10}\left(\frac{{p_{\mathrm{{RMS}}}}^2}{{p_{\mathrm{ref}}}^2}\right)
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#densidad-de-una-senal">Densidad de una señal</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decibeles">Decibeles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-lineal">Sistema lineal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#superposicion">Superposición</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#homogeneidad">Homogeneidad</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-invariante-en-el-tiempo">Sistema invariante en el tiempo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracterizacion-de-un-sistema">Caracterización de un sistema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-de-la-convolucion">Propiedades de la convolución</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#respuesta-al-impulso-de-un-sistema-lti">Respuesta al impulso de un sistema LTI</a></li>
 </ul>
   </nav></div>
 
