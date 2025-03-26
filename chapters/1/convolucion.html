@@ -455,6 +455,14 @@ R_{xy}(t) &amp; = \int_{-\infty}^{\infty} x(\tau) y(t + \tau) d\tau &amp;\,  &am
 R_{xx}(t) &amp; = \int_{-\infty}^{\infty} x(\tau) x(t + \tau) d\tau &amp;\,  &amp; R_{xx}[n] = \sum_{m=-\infty}^{\infty} x[m] x[n+m]
 \end{align}
 \]</div>
+<p>Como propiedades de la auto-correlación vemos que es una función par, es decir <span class="math notranslate nohighlight">\(R_{xx}(t) = R_{xx}(-t)\)</span>. Y por otro lado para <em>lag</em> 0 toma el valor máximo y es igual al valor de la energía de la señal.</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+R_{xx}(0) &amp; = \int_{-\infty}^{\infty} |x(\tau)|^2 d\tau &amp;\,  &amp;
+R_{xx}[0] = \sum_{n=-\infty}^{\infty} |x[n]|^2
+\end{align}
+\]</div>
 </section>
 </section>
 
