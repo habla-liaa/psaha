@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Energía y Potencia &#8212; Procesamiento de señales, audio y habla</title>
+    <title>Series de Fourier &#8212; Procesamiento de señales, audio y habla</title>
   
   
   
@@ -64,11 +64,9 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/1/energyandpower';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/1/series_de_fourier';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Sistemas Lineales e Invariantes en el Tiempo" href="sistemaslti.html" />
-    <link rel="prev" title="Señales básicas y sus operaciones" href="signals.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -171,11 +169,11 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Procesamiento de señales</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introducción</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">Historia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signals.html">Señales básicas y sus operaciones</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Energía y Potencia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="energyandpower.html">Energía y Potencia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sistemaslti.html">Sistemas Lineales e Invariantes en el Tiempo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="convolucion.html">Convolución</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conv_ejemplos.html">Ejemplos de Convolución</a></li>
@@ -251,7 +249,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/1/energyandpower.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/1/series_de_fourier.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -281,7 +279,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../_sources/chapters/1/energyandpower.ipynb" target="_blank"
+      <li><a href="../../_sources/chapters/1/series_de_fourier.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -365,7 +363,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Energía y Potencia</h1>
+    <h1>Series de Fourier</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -375,15 +373,21 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-estadistica-de-senales">Descripción estadística de señales</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#densidad-de-una-senal">Densidad de una señal</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#energia-potencia">Energía, potencia</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#valor-rms">Valor RMS</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo">Ejemplo</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sinusoide">Sinusoide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#producto-interno-entre-funciones">Producto interno entre funciones</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aplicacion-a-senales">Aplicación a señales</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decibeles">Decibeles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-de-funciones-ortogonales">Base de funciones ortogonales</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-ortogonal-para-funciones-periodicas-series-de-fourier">Base ortogonal para funciones periódicas (series de Fourier)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-seno-coseno">Forma seno-coseno</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-amplitud-fase">Forma amplitud-fase</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obtener-componentes-de-una-senal">Obtener componentes de una señal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#senal-diente-de-sierra">Señal diente de sierra</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-de-parseval">Relación de Parseval</a></li>
 </ul>
             </nav>
         </div>
@@ -395,129 +399,160 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="energia-y-potencia">
-<h1>Energía y Potencia<a class="headerlink" href="#energia-y-potencia" title="Permalink to this heading">#</a></h1>
-<section id="descripcion-estadistica-de-senales">
-<h2>Descripción estadística de señales<a class="headerlink" href="#descripcion-estadistica-de-senales" title="Permalink to this heading">#</a></h2>
-<p>Primero escribamos las expresiones de media y varianza para señales continuas y discretas. Podemos definir la media de una señal como:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="series-de-fourier">
+<h1>Series de Fourier<a class="headerlink" href="#series-de-fourier" title="Permalink to this heading">#</a></h1>
+<section id="producto-interno-entre-funciones">
+<h2>Producto interno entre funciones<a class="headerlink" href="#producto-interno-entre-funciones" title="Permalink to this heading">#</a></h2>
+<p>Consideremos un espacio de funciones  <span class="math notranslate nohighlight">\(L^2_{\left(a,b\right)}\)</span>, el cual es el espacio de funciones cuadrado integrables en el intervalo <span class="math notranslate nohighlight">\(\left(a,b\right)\)</span>, es decir, funciones <span class="math notranslate nohighlight">\(f\)</span> tales que:
+$<span class="math notranslate nohighlight">\(
+\int_a^b |f(t)|^2 dt &lt; \infty
+\)</span><span class="math notranslate nohighlight">\(
+Este espacio es un espacio vectorial, y podemos definir un producto interno entre dos funciones \)</span>f<span class="math notranslate nohighlight">\( y \)</span>g<span class="math notranslate nohighlight">\( en \)</span>L^2_{\left(a,b\right)}$ como:</p>
 <div class="math notranslate nohighlight">
 \[
-\begin{align}
-\mu = \lim_{T\to\infty}\frac{1}{T}\int_{-T/2}^{T/2}x(t)dt &amp; \,&amp; \mu = \lim_{N\to\infty}\frac{1}{N}\sum_{n=1}^{N}x[n]
-\end{align}
+\langle f, g \rangle = \int_a^b f(t) g^*(t) dt
 \]</div>
-<p>Y la varianza de la señal como:</p>
+<p>donde <span class="math notranslate nohighlight">\(g^*(t)\)</span> es el conjugado complejo de <span class="math notranslate nohighlight">\(g(t)\)</span>. Este producto interno nos permite definir la norma de una función como:</p>
 <div class="math notranslate nohighlight">
 \[
-\begin{align}
-\sigma^2 = \lim_{T\to\infty}\frac{1}{T}\int_{-T/2}^{T/2}(x(t)-\mu)^2dt &amp; \,&amp; \sigma^2 = \lim_{N\to\infty}\frac{1}{N}\sum_{n=1}^{N}(x[n]-\mu)^2
-\end{align}
+||f|| = \sqrt{\langle f, f \rangle} = \sqrt{\int_a^b |f(t)|^2 dt}
+\]</div>
+<p>Si el producto es nulo, es decir, <span class="math notranslate nohighlight">\(\langle f, g \rangle = 0\)</span>, entonces las funciones son ortogonales.</p>
+<section id="aplicacion-a-senales">
+<h3>Aplicación a señales<a class="headerlink" href="#aplicacion-a-senales" title="Permalink to this heading">#</a></h3>
+<p>Observar que la norma cuadrado de una función es equivalente a la energía de la señal en el intervalo <span class="math notranslate nohighlight">\(\left(a,b\right)\)</span>, es decir:</p>
+<div class="math notranslate nohighlight">
+\[
+E = ||f||^2 = \int_a^b |f(t)|^2 dt
+\]</div>
+<p>Por otro lado el producto interno es una medida de la correlación entre dos funciones:</p>
+<div class="math notranslate nohighlight">
+\[
+R_{fg} = \langle f, g \rangle = \int_a^b f(t) g^*(t) dt
 \]</div>
 </section>
-<section id="densidad-de-una-senal">
-<h2>Densidad de una señal<a class="headerlink" href="#densidad-de-una-senal" title="Permalink to this heading">#</a></h2>
-<p>Dada una señal <span class="math notranslate nohighlight">\(x(t)\)</span> consideramos que la densidad en función de <span class="math notranslate nohighlight">\(x\)</span> depende de cuanto tiempo pase la señal en ese valor.</p>
-<div class="math notranslate nohighlight">
-\[
-p(x) = \frac{dt}{T dx}
-\]</div>
-<p>Con <span class="math notranslate nohighlight">\(T\)</span> el tiempo total de la señal. La probabilidad de que la señal tome un valor entre <span class="math notranslate nohighlight">\(x\)</span> y <span class="math notranslate nohighlight">\(x+dx\)</span> es <span class="math notranslate nohighlight">\(P(x)dx\)</span>.</p>
-<p>Si conocemos la densidad de probabilidad de una señal, podemos calcular la media y la varianza de la señal con las formulas de los momentos. La esperanza de una señal es:</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-E[x(t)] = \int_{-\infty}^{\infty} x p(x) dx
-\end{align}
-\]</div>
-<p>Donde <span class="math notranslate nohighlight">\(p(x)\)</span> es la función de densidad de probabilidad de la señal. La varianza de la señal es:</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-Var[x(t)] = \int_{-\infty}^{\infty} (x-E[x(t)])^2 p(x) dx
-\end{align}
-\]</div>
 </section>
-<section id="energia-potencia">
-<h2>Energía, potencia<a class="headerlink" href="#energia-potencia" title="Permalink to this heading">#</a></h2>
-<p>Ahora vamos a definir la potencia instantánea como:</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-P(t) = \left| x(t)\right|^2 &amp; \,&amp; P[n] = \left| x[n]\right|^2
-\end{align}
-\]</div>
-<p>Es decir, si la señal toma valores reales, la potencia es elevar al cuadrado a la señal.</p>
-<p>En terminos físicos, la potencia es energía por unidad de tiempo, por lo que si sumamos la potencia instantanea entre el tiempmo <span class="math notranslate nohighlight">\(T_1\)</span> y el tiempo <span class="math notranslate nohighlight">\(T_2\)</span> deberíamos obtener la energía total de ese intervalo de tiempo.</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-E_{T_1,T_2} = \int_{T_1}^{T_2} \left| x(t)\right|^2 dt &amp; \,&amp; E_{n_1,n_2} = \sum_{n = n_1}^{n_2}\left| x[n]\right|^2
-\end{align}
-\]</div>
-<p>Si a esta energía <span class="math notranslate nohighlight">\(E(t)\)</span> las dividimos por el total del tiempo del intervalo <span class="math notranslate nohighlight">\(T_2-T_1\)</span>, obtenemos nuevamente un valor con unidades de potencia. Esta vez no es la potencia instantánea, sino la potencia promedio.</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-P_{T_1,T_2} = \int_{T_1}^{T_2} \frac{\left| x(t)\right|^2 dt}{T_2-T_1} &amp; \,&amp; P_{n_1,n_2} = \sum_{n =n_1}^{n_2}\frac{\left| x[n]\right|^2}{n_2-n_1+1}
-\end{align}
-\]</div>
-<p>Notemos que en el caso discreto el denominador tiene un 1 agregado para contemplar el caso cuando <span class="math notranslate nohighlight">\(n_2-n_1 = 0\)</span>.</p>
-<p>Si la señal tiene media nula la definición de potencia es equivalente a calcular la varianza de la señal, y si la media no es nula, la potencia se puede escribir como la varianza más la media al cuadrado:</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-P = \sigma^2 + \mu^2
-\end{align}
-\]</div>
+<section id="base-de-funciones-ortogonales">
+<h2>Base de funciones ortogonales<a class="headerlink" href="#base-de-funciones-ortogonales" title="Permalink to this heading">#</a></h2>
+<p>Una base de funciones ortogonales es un conjunto de funciones <span class="math notranslate nohighlight">\(\{f_n(t)\}\)</span> tales que:</p>
+<ol class="arabic simple">
+<li><p>Cada función <span class="math notranslate nohighlight">\(f_n(t)\)</span> es ortogonal a las demás, es decir, <span class="math notranslate nohighlight">\(\langle f_n, f_m \rangle = 0\)</span> para <span class="math notranslate nohighlight">\(n \neq m\)</span>.</p></li>
+<li><p>Cualquier función <span class="math notranslate nohighlight">\(f(t)\)</span> en el espacio <span class="math notranslate nohighlight">\(L^2_{\left(a,b\right)}\)</span> se puede expresar como una combinación lineal de las funciones de la base, es decir:
+$<span class="math notranslate nohighlight">\(
+f(t) = \sum_{n=1}^{\infty} c_n f_n(t)
+\)</span><span class="math notranslate nohighlight">\(
+donde \)</span>c_n = \langle f, f_n \rangle$ son los coeficientes.</p></li>
+</ol>
 </section>
-<section id="valor-rms">
-<h2>Valor RMS<a class="headerlink" href="#valor-rms" title="Permalink to this heading">#</a></h2>
-<p>Finalmente definimos el valor RMS de una señal <span class="math notranslate nohighlight">\(x(t)\)</span> como el valor que tiene que tener una señal constante para tener la misma potencia que la señal original.</p>
+<section id="base-ortogonal-para-funciones-periodicas-series-de-fourier">
+<h2>Base ortogonal para funciones periódicas (series de Fourier)<a class="headerlink" href="#base-ortogonal-para-funciones-periodicas-series-de-fourier" title="Permalink to this heading">#</a></h2>
+<p>Consideremos funciones periódicas con periodo <span class="math notranslate nohighlight">\(T\)</span>, es decir, funciones que cumplen la propiedad:
+$<span class="math notranslate nohighlight">\(
+f(t + T) = f(t)
+\)</span>$
+Una base ortogonal para funciones periódicas es el conjunto de funciones</p>
+<div class="math notranslate nohighlight">
+\[\{e^{i \frac{2 \pi n}{T} t}\}\]</div>
+<p>donde <span class="math notranslate nohighlight">\(n\)</span> es un entero. Estas funciones son ortogonales entre sí en el intervalo <span class="math notranslate nohighlight">\(\left(0, T\right)\)</span>, es decir:</p>
 <div class="math notranslate nohighlight">
 \[
-\begin{align}
-X_{RMS} = \sqrt{\int_{T_1}^{T_2} \frac{\left| x(t)\right|^2 dt}{T_2-T_1}} &amp; \,&amp; X_{RMS} = \sqrt{\sum_{n = n_1}^{n_2}\frac{\left| x[n]\right|^2}{n_2-n_1+1}}
-\end{align}
+\langle e^{i \frac{2 \pi n}{T} t}, e^{i \frac{2 \pi m}{T} t} \rangle = \int_0^T e^{i \frac{2 \pi n}{T} t} e^{-i \frac{2 \pi m}{T} t} dt = \int_0^T e^{i \frac{2 \pi (n - m)}{T} t} dt = T \delta_{nm}
 \]</div>
-<p>El valor RMS sirve como valor eficaz de la señal y tiene las mismas unidades que la señal.</p>
+<p>Por lo tanto, si <span class="math notranslate nohighlight">\(n \neq m\)</span> el producto interno es cero, y si <span class="math notranslate nohighlight">\(n = m\)</span> el producto interno es igual a <span class="math notranslate nohighlight">\(T\)</span>.</p>
+<p>La integral de una exponencial compleja se puede resolver como:
+$<span class="math notranslate nohighlight">\(
+\int_0^T e^{i \frac{2 \pi (n - m)}{T} t} dt = \left[ \frac{T}{i 2 \pi (n - m)} e^{i \frac{2 \pi (n - m)}{T} t} \right]_0^T = \frac{T}{i 2 \pi (n - m)} \left( e^{i 2 \pi (n - m)} - 1 \right) = 0
+\)</span>$</p>
+<p>Para <span class="math notranslate nohighlight">\(n \neq m\)</span>, ya que <span class="math notranslate nohighlight">\(e^{i 2 \pi (n - m)} = 1\)</span>. Por lo tanto, el producto interno entre funciones de diferentes frecuencias es cero, lo que implica que son ortogonales.
+Para <span class="math notranslate nohighlight">\(n = m\)</span>, la integral se convierte en:
+$<span class="math notranslate nohighlight">\(
+\int_0^T e^{i \frac{2 \pi (n - n)}{T} t} dt = \int_0^T 1 dt = T
+\)</span>$</p>
+<p>Esta base ortogonal se puede utilizar para representar casi cualquier función periódica en el espacio <span class="math notranslate nohighlight">\(L^2_{\left(0, T\right)}\)</span> como una serie de Fourier:
+$<span class="math notranslate nohighlight">\(
+f(t) = \sum_{n=-\infty}^{\infty} c_n  e^{i \frac{2 \pi n}{T} t}
+\)</span><span class="math notranslate nohighlight">\(
+donde los coeficientes \)</span>c_n<span class="math notranslate nohighlight">\( se obtienen como:
+\)</span><span class="math notranslate nohighlight">\(
+c_n = \frac{1}{T} \int_0^T f(t) e^{-i \frac{2 \pi n}{T} t} dt \quad \text{para } n \in \mathbb{Z}
+\)</span>$
+Esta fórmula nos da los coeficientes que representan la amplitud y fase de cada componente armónica en la señal periódica.</p>
+<p>El estudio de la convergencia y los tipos de funciones que son posibles representar queda fuera de este curso, pero es importante mencionar que la serie de Fourier converge a la función original en casi todos los puntos, excepto en los puntos de discontinuidad, donde converge al promedio de los límites laterales. Para profundizar, capítulo 3 de Señales y Sistemas de Openheim y también <a class="reference external" href="https://en.wikipedia.org/wiki/Convergence_of_Fourier_series">Wikipedia</a>.</p>
+<section id="forma-seno-coseno">
+<h3>Forma seno-coseno<a class="headerlink" href="#forma-seno-coseno" title="Permalink to this heading">#</a></h3>
+<p>La serie de Fourier también se puede expresar en términos de funciones seno y coseno. En este caso, la serie de Fourier se escribe como:</p>
+<div class="math notranslate nohighlight">
+\[
+f(t) = a_0 + \sum_{n=1}^{\infty} \left( a_n \cos\left(\frac{2 \pi n}{T} t\right) + b_n \sin\left(\frac{2 \pi n}{T} t\right) \right)
+\]</div>
+<p>donde los coeficientes <span class="math notranslate nohighlight">\(a_n\)</span> y <span class="math notranslate nohighlight">\(b_n\)</span> se obtienen como:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+a_0 &amp;= \frac{1}{T} \int_0^T f(t) dt \\
+a_n &amp;= \frac{2}{T} \int_0^T f(t) \cos\left(\frac{2 \pi n}{T} t\right) dt &amp;\, \text{para } n \geq 1 \\
+b_n &amp;= \frac{2}{T} \int_0^T f(t) \sin\left(\frac{2 \pi n}{T} t\right) dt &amp;\, \text{para } n \geq 1
+\end{align*}
+\end{split}\]</div>
 </section>
-<section id="ejemplo">
-<h2>Ejemplo<a class="headerlink" href="#ejemplo" title="Permalink to this heading">#</a></h2>
-<section id="sinusoide">
-<h3>Sinusoide<a class="headerlink" href="#sinusoide" title="Permalink to this heading">#</a></h3>
-<p>Calculemos las magnitudes para el caso de una señal sinusoide con frecuencia <span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(x(t) = A\sin(2\pi f t)\)</span>.</p>
+<section id="forma-amplitud-fase">
+<h3>Forma amplitud-fase<a class="headerlink" href="#forma-amplitud-fase" title="Permalink to this heading">#</a></h3>
+<p>La serie de Fourier también se puede expresar en términos de amplitud y fase. En este caso, la serie de Fourier se escribe como:</p>
 <div class="math notranslate nohighlight">
-\[ 
-E = \int_{0}^{T} \left| A\sin(2\pi f t)\right|^2 dt = \frac{A^2}{2}T.
+\[
+f(t) = A_0 + \sum_{n=1}^{\infty} A_n \cos\left(\frac{2 \pi n}{T} t - \phi_n\right)
 \]</div>
-<p>La energía es proporcional a la amplitud y al período de la señal. Podemos calcular la potencia promedio dividiendo la energía por <span class="math notranslate nohighlight">\(T\)</span>:</p>
+<p>donde <span class="math notranslate nohighlight">\(A_n\)</span> es la amplitud y <span class="math notranslate nohighlight">\(\phi_n\)</span> es la fase de cada componente armónica. Los coeficientes <span class="math notranslate nohighlight">\(A_n\)</span> y <span class="math notranslate nohighlight">\(\phi_n\)</span> se obtienen a partir de los coeficientes <span class="math notranslate nohighlight">\(a_n\)</span> y <span class="math notranslate nohighlight">\(b_n\)</span> como:</p>
 <div class="math notranslate nohighlight">
-\[ 
-P = \frac{A^2}{2}
-\]</div>
-<p>Luego el valor RMS de la señal es:</p>
-<div class="math notranslate nohighlight">
-\[ X_{RMS} = \sqrt{\frac{A^2}{2}} = \frac{1}{\sqrt{2}}A = 0.707 A\]</div>
+\[\begin{split}
+\begin{align*}
+A_n &amp;= \sqrt{a_n^2 + b_n^2} = \left|c_n\right| \\
+\phi_n &amp;= \tan^{-1}\left(\frac{b_n}{a_n}\right) = \text{arg}(c_n)
+\end{align*}
+\end{split}\]</div>
 </section>
 </section>
-<section id="decibeles">
-<h2>Decibeles<a class="headerlink" href="#decibeles" title="Permalink to this heading">#</a></h2>
-<p>La energía y la potencia pueden expresarse en escala de decibeles a través de la siguiente fórmula genérica para una magnitud L:</p>
+<section id="obtener-componentes-de-una-senal">
+<h2>Obtener componentes de una señal<a class="headerlink" href="#obtener-componentes-de-una-senal" title="Permalink to this heading">#</a></h2>
+<p>Imaginemos la siguiente señal hecha de tres sinusoides con distintas frecuencias y amplitudes:</p>
 <div class="math notranslate nohighlight">
-\[ L_{dB} = 10 \log_{10}\left(\frac{L}{L_{ref}}\right) \]</div>
-<p>Donde <span class="math notranslate nohighlight">\(L_{ref}\)</span> es un valore de referencia para el cual el valor en decibeles <span class="math notranslate nohighlight">\(L_{dB}\)</span> vale 0.</p>
-<p>Que en el caso de la potencia de una señal sería:</p>
-<div class="math notranslate nohighlight">
-\[ P_{dB} = 10 \log_{10}\left(\frac{P}{P_{ref}}\right) \]</div>
-<div class="math notranslate nohighlight">
-\[ P_{dB} = 10 \log_{10}\left(\frac{X_{RMS}^2}{X^2_{ref}}\right) = 20 \log_{10}\left(\frac{X_{RMS}}{X_{ref}}\right) \]</div>
-<p>Para el caso de una sinusoide quedaría: <span class="math notranslate nohighlight">\(P_{dB} = 20 \log_{10}\left(\frac{A}{A_{ref}}\right) \)</span></p>
-<p>Uno de los casos más comunes es la intensidad del sonido medida en <span class="math notranslate nohighlight">\(dB_{SPL}\)</span>, (SPL = sound pressure level) cuya fórmula es:</p>
-<div class="math notranslate nohighlight">
-\[ 
-L_p=10 \log_{10}\left(\frac{{p_{\mathrm{{RMS}}}}^2}{{p_{\mathrm{ref}}}^2}\right) =20 \log_{10}\left(\frac{p_{\mathrm{RMS}}}{p_{\mathrm{ref}}}\right) dB
+\[
+y(t) = 2 \sin(2\pi t) + 3 \sin(2\pi 2 t) + 1.5 \sin(2\pi 3 t)
 \]</div>
-<p>El valor para <span class="math notranslate nohighlight">\(p_{ref}\)</span> suele tomarse como la amplitud de un tono puro de <span class="math notranslate nohighlight">\(1kHz\)</span> en el umbral de la audición, aproximadamente <span class="math notranslate nohighlight">\(20\)</span> micropascales, <span class="math notranslate nohighlight">\(p_{ref}=20\mu Pa\)</span></p>
+<p>Podríamos preguntarnos si hay alguna forma para extraer los coeficientes de cada senoide teniendo solamente la señal <span class="math notranslate nohighlight">\(y(t)\)</span>. Dado que estamos en un caso de una señal periódica, podemos hacer el producto interno entre la señal y cada senoide e ir obteniendo los coeficientes de cada senoide.</p>
+<div class="math notranslate nohighlight">
+\[
+\langle y(t), \sin(2\pi n t) \rangle = 2 \int_0^{1} y(t) \sin(2\pi n t) dt
+\]</div>
+<section id="senal-diente-de-sierra">
+<h3>Señal diente de sierra<a class="headerlink" href="#senal-diente-de-sierra" title="Permalink to this heading">#</a></h3>
+<p>La señal diente de sierra es una señal periódica que se puede representar como una serie de Fourier. La forma más común de la señal diente de sierra es:</p>
+<div class="math notranslate nohighlight">
+\[
+f(t) = \frac{t}{T} \quad  -T/2 \leq t &lt; T/2
+\]</div>
+<p>donde <span class="math notranslate nohighlight">\(T\)</span> es el periodo de la señal. Los coeficientes de la serie de Fourier para la señal diente de sierra se pueden calcular integrando la función en el intervalo <span class="math notranslate nohighlight">\([0, T]\)</span>:
+$<span class="math notranslate nohighlight">\(
+\begin{align*}
+a_0 &amp;= \frac{1}{T} \int_{-T/2}^{T/2} f(t) dt = \frac{1}{T} \int_{-T/2}^{T/2} \frac{t}{T} dt = 0 \\
+a_n &amp;= \frac{2}{T} \int_{-T/2}^{T/2} f(t) \cos\left(\frac{2 \pi n}{T} t\right) dt = \frac{2}{T^2} \int_{-T/2}^{T/2} t \cos\left(\frac{2 \pi n}{T} t\right) dt = 0 \\
+b_n &amp;= \frac{2}{T} \int_{-T/2}^{T/2} f(t) \sin\left(\frac{2 \pi n}{T} t\right) dt = \frac{2}{T^2} \int_{-T/2}^{T/2} t \sin\left(\frac{2 \pi n}{T} t\right) dt = \frac{\sin{2 \pi n}}{n^2 \pi^2} - \frac{2 \cos{2 \pi n}}{\pi n} = \left(-1\right)^{n} \frac{2}{\pi n}
+\end{align*}
+\)</span>$</p>
+<p>Por lo tanto, la serie de Fourier para la señal diente de sierra es:</p>
+<div class="math notranslate nohighlight">
+\[
+f(t) = \sum_{n=1}^{\infty} \left(-1\right)^{n} \frac{2 \sin{\frac{2 \pi n}{T} t }}{\pi n}
+\]</div>
+</section>
+</section>
+<section id="relacion-de-parseval">
+<h2>Relación de Parseval<a class="headerlink" href="#relacion-de-parseval" title="Permalink to this heading">#</a></h2>
+<p>La relación de Parseval establece que la energía total de una señal en el dominio del tiempo es igual a la energía total de la señal en el dominio de la frecuencia. Matemáticamente, se expresa como:</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{-\infty}^{\infty} |f(t)|^2 dt = \sum_{n=-\infty}^{\infty} |c_n|^2
+\]</div>
 </section>
 </section>
 
@@ -551,24 +586,6 @@ L_p=10 \log_{10}\left(\frac{{p_{\mathrm{{RMS}}}}^2}{{p_{\mathrm{ref}}}^2}\right)
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="signals.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Señales básicas y sus operaciones</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="sistemaslti.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Sistemas Lineales e Invariantes en el Tiempo</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -584,15 +601,21 @@ L_p=10 \log_{10}\left(\frac{{p_{\mathrm{{RMS}}}}^2}{{p_{\mathrm{ref}}}^2}\right)
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-estadistica-de-senales">Descripción estadística de señales</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#densidad-de-una-senal">Densidad de una señal</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#energia-potencia">Energía, potencia</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#valor-rms">Valor RMS</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo">Ejemplo</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sinusoide">Sinusoide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#producto-interno-entre-funciones">Producto interno entre funciones</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aplicacion-a-senales">Aplicación a señales</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decibeles">Decibeles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-de-funciones-ortogonales">Base de funciones ortogonales</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-ortogonal-para-funciones-periodicas-series-de-fourier">Base ortogonal para funciones periódicas (series de Fourier)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-seno-coseno">Forma seno-coseno</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-amplitud-fase">Forma amplitud-fase</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obtener-componentes-de-una-senal">Obtener componentes de una señal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#senal-diente-de-sierra">Señal diente de sierra</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-de-parseval">Relación de Parseval</a></li>
 </ul>
   </nav></div>
 

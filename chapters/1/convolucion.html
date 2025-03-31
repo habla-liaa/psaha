@@ -175,7 +175,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introducción</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">Historia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signals.html">Señales básicas y sus operaciones</a></li>
-<li class="toctree-l1"><a class="reference internal" href="energyandpower.html">Energía y Potencia de una señal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="energyandpower.html">Energía y Potencia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sistemaslti.html">Sistemas Lineales e Invariantes en el Tiempo</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Convolución</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conv_ejemplos.html">Ejemplos de Convolución</a></li>
@@ -378,6 +378,11 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades">Propiedades</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlacion-cruzada">Correlación cruzada</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#auto-correlacion">Auto-correlación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autocorrelacion-de-senal-periodica">Autocorrelación de señal periódica</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#autocorrelacion-de-ruido-blanco">Autocorrelación de ruido blanco</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#autocorrelacion-de-ruido-marron">Autocorrelación de ruido marrón</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -445,6 +450,11 @@ R_{xy}(t) &amp; = \int_{-\infty}^{\infty} x(\tau) y(t + \tau) d\tau &amp;\,  &am
 \end{align}
 \]</div>
 <p>En este caso la señal de salida no es simétrica, y se puede usar para encontrar la posición de una señal en otra, o bien para encontrar la similitud entre dos señales.</p>
+<p>El caso normalizado de la correlación cruzada se llama <strong>coeficiente de correlación</strong> y se define como:</p>
+<div class="math notranslate nohighlight">
+\[
+R_{xy}(t) = \frac{R_{xy}(t)}{\sqrt{R_{xx}(0) R_{yy}(0)}}
+\]</div>
 </section>
 <section id="auto-correlacion">
 <h2>Auto-correlación<a class="headerlink" href="#auto-correlacion" title="Permalink to this heading">#</a></h2>
@@ -463,21 +473,38 @@ R_{xx}(0) &amp; = \int_{-\infty}^{\infty} |x(\tau)|^2 d\tau &amp;\,  &amp;
 R_{xx}[0] = \sum_{n=-\infty}^{\infty} |x[n]|^2
 \end{align}
 \]</div>
+<p>La versión normalizada de la auto-correlación se llama <strong>coeficiente de auto-correlación</strong> y se define como:</p>
+<div class="math notranslate nohighlight">
+\[
+R_{xx}(t) = \frac{R_{xx}(t)}{R_{xx}(0)}
+\]</div>
+</section>
+<section id="autocorrelacion-de-senal-periodica">
+<h2>Autocorrelación de señal periódica<a class="headerlink" href="#autocorrelacion-de-senal-periodica" title="Permalink to this heading">#</a></h2>
+<p>La auto-correlación de una señal periódica es también periódica, y su periodo es el mismo que el de la señal original.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../../_images/e9d640eaa2cac86f703112573d34ea01c60f73a5f0b31f8711aeb1fa9ac9107e.png" src="../../_images/e9d640eaa2cac86f703112573d34ea01c60f73a5f0b31f8711aeb1fa9ac9107e.png" />
+<img alt="../../_images/fb027d5ded8a3f13711da8cc1676c5c2df8f2c62abcbd36530141f14326c0c2d.png" src="../../_images/fb027d5ded8a3f13711da8cc1676c5c2df8f2c62abcbd36530141f14326c0c2d.png" />
 </div>
 </div>
+<section id="autocorrelacion-de-ruido-blanco">
+<h3>Autocorrelación de ruido blanco<a class="headerlink" href="#autocorrelacion-de-ruido-blanco" title="Permalink to this heading">#</a></h3>
+<p>El ruido blanco es un tipo de señal aleatoria donde cada instante de la señal es independiente a los instantes anteriores. Su autorcorrelación es una delta de Dirac localizada en retraso 0.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../../_images/e677465a3687cd5f649ba0a69a75fefb099b0e07dab8523f2d807e27131cb4db.png" src="../../_images/e677465a3687cd5f649ba0a69a75fefb099b0e07dab8523f2d807e27131cb4db.png" />
+<img alt="../../_images/ad44010c666af6a56479cfa9ad716534a4dc8a58627d91b144948eee04a09bb9.png" src="../../_images/ad44010c666af6a56479cfa9ad716534a4dc8a58627d91b144948eee04a09bb9.png" />
 </div>
 </div>
+</section>
+<section id="autocorrelacion-de-ruido-marron">
+<h3>Autocorrelación de ruido marrón<a class="headerlink" href="#autocorrelacion-de-ruido-marron" title="Permalink to this heading">#</a></h3>
+<p>El ruido marrón es un tipo de señal aleatoria donde cada instante de la señal depende del instante anterior. Su autorcorrelación es una función exponencial decreciente.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../../_images/00a7181cc7ac89c86b40282251b3b14a554974405159fff8c15326c5e68c04e8.png" src="../../_images/00a7181cc7ac89c86b40282251b3b14a554974405159fff8c15326c5e68c04e8.png" />
+<img alt="../../_images/870e74d60331afa6ad7e166b7c948b29165bcb865132a320a536d4ccd37fd554.png" src="../../_images/870e74d60331afa6ad7e166b7c948b29165bcb865132a320a536d4ccd37fd554.png" />
 </div>
 </div>
+</section>
 </section>
 </section>
 
@@ -547,6 +574,11 @@ R_{xx}[0] = \sum_{n=-\infty}^{\infty} |x[n]|^2
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades">Propiedades</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlacion-cruzada">Correlación cruzada</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#auto-correlacion">Auto-correlación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autocorrelacion-de-senal-periodica">Autocorrelación de señal periódica</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#autocorrelacion-de-ruido-blanco">Autocorrelación de ruido blanco</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#autocorrelacion-de-ruido-marron">Autocorrelación de ruido marrón</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
