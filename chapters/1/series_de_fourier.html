@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Series de Fourier &#8212; Procesamiento de señales, audio y habla</title>
   
@@ -15,58 +14,56 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/1/series_de_fourier';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Código: Series de Fourier" href="series_de_fourier_ejemplos.html" />
+    <link rel="prev" title="Código Convolución" href="conv_ejemplos.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -76,28 +73,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -119,12 +111,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -140,6 +140,8 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
 
+  
+    
   
 
 <a class="navbar-brand logo" href="../../index.html">
@@ -158,7 +160,18 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -169,14 +182,16 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Procesamiento de señales</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introducción</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">Historia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signals.html">Señales básicas y sus operaciones</a></li>
 <li class="toctree-l1"><a class="reference internal" href="energyandpower.html">Energía y Potencia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sistemaslti.html">Sistemas Lineales e Invariantes en el Tiempo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="convolucion.html">Convolución</a></li>
-<li class="toctree-l1"><a class="reference internal" href="conv_ejemplos.html">Ejemplos de Convolución</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conv_ejemplos.html">Código Convolución</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Series de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="series_de_fourier_ejemplos.html">Código: Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="exercises.html">Ejercicios</a></li>
 </ul>
 
@@ -193,7 +208,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -202,14 +217,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -334,10 +349,10 @@ const thebe_selector_output = ".output, .cell_output"
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -345,14 +360,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -397,12 +412,12 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="series-de-fourier">
-<h1>Series de Fourier<a class="headerlink" href="#series-de-fourier" title="Permalink to this heading">#</a></h1>
+<h1>Series de Fourier<a class="headerlink" href="#series-de-fourier" title="Link to this heading">#</a></h1>
 <section id="producto-interno-entre-funciones">
-<h2>Producto interno entre funciones<a class="headerlink" href="#producto-interno-entre-funciones" title="Permalink to this heading">#</a></h2>
+<h2>Producto interno entre funciones<a class="headerlink" href="#producto-interno-entre-funciones" title="Link to this heading">#</a></h2>
 <p>Consideremos un espacio de funciones  <span class="math notranslate nohighlight">\(L^2_{\left(a,b\right)}\)</span>, el cual es el espacio de funciones cuadrado integrables en el intervalo <span class="math notranslate nohighlight">\(\left(a,b\right)\)</span>, es decir, funciones <span class="math notranslate nohighlight">\(f\)</span> tales que:
 $<span class="math notranslate nohighlight">\(
 \int_a^b |f(t)|^2 dt &lt; \infty
@@ -419,7 +434,7 @@ Este espacio es un espacio vectorial, y podemos definir un producto interno entr
 \]</div>
 <p>Si el producto es nulo, es decir, <span class="math notranslate nohighlight">\(\langle f, g \rangle = 0\)</span>, entonces las funciones son ortogonales.</p>
 <section id="aplicacion-a-senales">
-<h3>Aplicación a señales<a class="headerlink" href="#aplicacion-a-senales" title="Permalink to this heading">#</a></h3>
+<h3>Aplicación a señales<a class="headerlink" href="#aplicacion-a-senales" title="Link to this heading">#</a></h3>
 <p>Observar que la norma cuadrado de una función es equivalente a la energía de la señal en el intervalo <span class="math notranslate nohighlight">\(\left(a,b\right)\)</span>, es decir:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -433,7 +448,7 @@ R_{fg} = \langle f, g \rangle = \int_a^b f(t) g^*(t) dt
 </section>
 </section>
 <section id="base-de-funciones-ortogonales">
-<h2>Base de funciones ortogonales<a class="headerlink" href="#base-de-funciones-ortogonales" title="Permalink to this heading">#</a></h2>
+<h2>Base de funciones ortogonales<a class="headerlink" href="#base-de-funciones-ortogonales" title="Link to this heading">#</a></h2>
 <p>Una base de funciones ortogonales es un conjunto de funciones <span class="math notranslate nohighlight">\(\{f_n(t)\}\)</span> tales que:</p>
 <ol class="arabic simple">
 <li><p>Cada función <span class="math notranslate nohighlight">\(f_n(t)\)</span> es ortogonal a las demás, es decir, <span class="math notranslate nohighlight">\(\langle f_n, f_m \rangle = 0\)</span> para <span class="math notranslate nohighlight">\(n \neq m\)</span>.</p></li>
@@ -445,7 +460,7 @@ donde \)</span>c_n = \langle f, f_n \rangle$ son los coeficientes.</p></li>
 </ol>
 </section>
 <section id="base-ortogonal-para-funciones-periodicas-series-de-fourier">
-<h2>Base ortogonal para funciones periódicas (series de Fourier)<a class="headerlink" href="#base-ortogonal-para-funciones-periodicas-series-de-fourier" title="Permalink to this heading">#</a></h2>
+<h2>Base ortogonal para funciones periódicas (series de Fourier)<a class="headerlink" href="#base-ortogonal-para-funciones-periodicas-series-de-fourier" title="Link to this heading">#</a></h2>
 <p>Consideremos funciones periódicas con periodo <span class="math notranslate nohighlight">\(T\)</span>, es decir, funciones que cumplen la propiedad:
 $<span class="math notranslate nohighlight">\(
 f(t + T) = f(t)
@@ -479,7 +494,7 @@ c_n = \frac{1}{T} \int_0^T f(t) e^{-i \frac{2 \pi n}{T} t} dt \quad \text{para }
 Esta fórmula nos da los coeficientes que representan la amplitud y fase de cada componente armónica en la señal periódica.</p>
 <p>El estudio de la convergencia y los tipos de funciones que son posibles representar queda fuera de este curso, pero es importante mencionar que la serie de Fourier converge a la función original en casi todos los puntos, excepto en los puntos de discontinuidad, donde converge al promedio de los límites laterales. Para profundizar, capítulo 3 de Señales y Sistemas de Openheim y también <a class="reference external" href="https://en.wikipedia.org/wiki/Convergence_of_Fourier_series">Wikipedia</a>.</p>
 <section id="forma-seno-coseno">
-<h3>Forma seno-coseno<a class="headerlink" href="#forma-seno-coseno" title="Permalink to this heading">#</a></h3>
+<h3>Forma seno-coseno<a class="headerlink" href="#forma-seno-coseno" title="Link to this heading">#</a></h3>
 <p>La serie de Fourier también se puede expresar en términos de funciones seno y coseno. En este caso, la serie de Fourier se escribe como:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -496,7 +511,7 @@ b_n &amp;= \frac{2}{T} \int_0^T f(t) \sin\left(\frac{2 \pi n}{T} t\right) dt &am
 \end{split}\]</div>
 </section>
 <section id="forma-amplitud-fase">
-<h3>Forma amplitud-fase<a class="headerlink" href="#forma-amplitud-fase" title="Permalink to this heading">#</a></h3>
+<h3>Forma amplitud-fase<a class="headerlink" href="#forma-amplitud-fase" title="Link to this heading">#</a></h3>
 <p>La serie de Fourier también se puede expresar en términos de amplitud y fase. En este caso, la serie de Fourier se escribe como:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -513,7 +528,7 @@ A_n &amp;= \sqrt{a_n^2 + b_n^2} = \left|c_n\right| \\
 </section>
 </section>
 <section id="obtener-componentes-de-una-senal">
-<h2>Obtener componentes de una señal<a class="headerlink" href="#obtener-componentes-de-una-senal" title="Permalink to this heading">#</a></h2>
+<h2>Obtener componentes de una señal<a class="headerlink" href="#obtener-componentes-de-una-senal" title="Link to this heading">#</a></h2>
 <p>Imaginemos la siguiente señal hecha de tres sinusoides con distintas frecuencias y amplitudes:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -525,7 +540,7 @@ y(t) = 2 \sin(2\pi t) + 3 \sin(2\pi 2 t) + 1.5 \sin(2\pi 3 t)
 \langle y(t), \sin(2\pi n t) \rangle = 2 \int_0^{1} y(t) \sin(2\pi n t) dt
 \]</div>
 <section id="senal-diente-de-sierra">
-<h3>Señal diente de sierra<a class="headerlink" href="#senal-diente-de-sierra" title="Permalink to this heading">#</a></h3>
+<h3>Señal diente de sierra<a class="headerlink" href="#senal-diente-de-sierra" title="Link to this heading">#</a></h3>
 <p>La señal diente de sierra es una señal periódica que se puede representar como una serie de Fourier. La forma más común de la señal diente de sierra es:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -547,12 +562,13 @@ f(t) = \sum_{n=1}^{\infty} \left(-1\right)^{n} \frac{2 \sin{\frac{2 \pi n}{T} t 
 </section>
 </section>
 <section id="relacion-de-parseval">
-<h2>Relación de Parseval<a class="headerlink" href="#relacion-de-parseval" title="Permalink to this heading">#</a></h2>
+<h2>Relación de Parseval<a class="headerlink" href="#relacion-de-parseval" title="Link to this heading">#</a></h2>
 <p>La relación de Parseval establece que la energía total de una señal en el dominio del tiempo es igual a la energía total de la señal en el dominio de la frecuencia. Matemáticamente, se expresa como:</p>
 <div class="math notranslate nohighlight">
 \[
-\int_{-\infty}^{\infty} |f(t)|^2 dt = \sum_{n=-\infty}^{\infty} |c_n|^2
+\frac{1}{T} \int_T |f(t)|^2 dt = \sum_{n=-\infty}^{\infty} |c_n|^2
 \]</div>
+<p>donde <span class="math notranslate nohighlight">\(c_n\)</span> son los coeficientes de la serie de Fourier. Esta relación es útil para analizar la energía de una señal en el dominio de la frecuencia.</p>
 </section>
 </section>
 
@@ -583,9 +599,27 @@ f(t) = \sum_{n=1}^{\infty} \left(-1\right)^{n} \frac{2 \sin{\frac{2 \pi n}{T} t 
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="conv_ejemplos.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Código Convolución</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="series_de_fourier_ejemplos.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Código: Series de Fourier</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -594,6 +628,7 @@ f(t) = \sum_{n=1}^{\infty} \left(-1\right)^{n} \frac{2 \sin{\frac{2 \pi n}{T} t 
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -640,7 +675,7 @@ By Pablo Riera
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
@@ -664,8 +699,8 @@ By Pablo Riera
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
