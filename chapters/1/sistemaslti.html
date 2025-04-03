@@ -185,13 +185,12 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introducción</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">Historia</a></li>
-<li class="toctree-l1"><a class="reference internal" href="signals.html">Señales básicas y sus operaciones</a></li>
 <li class="toctree-l1"><a class="reference internal" href="energyandpower.html">Energía y Potencia</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Sistemas Lineales e Invariantes en el Tiempo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="convolucion.html">Convolución</a></li>
-<li class="toctree-l1"><a class="reference internal" href="conv_ejemplos.html">Código Convolución</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_convolucion.html">Código: Convolución</a></li>
 <li class="toctree-l1"><a class="reference internal" href="series_de_fourier.html">Series de Fourier</a></li>
-<li class="toctree-l1"><a class="reference internal" href="series_de_fourier_ejemplos.html">Código: Series de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_series_de_fourier.html">Código: Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="exercises.html">Ejercicios</a></li>
 </ul>
 
@@ -402,6 +401,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autofunciones-de-la-convolucion-sistema-lti">Autofunciones de la convolución / sistema LTI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#respuesta-a-senales-periodicas">Respuesta a señales periódicas</a></li>
 </ul>
             </nav>
         </div>
@@ -566,6 +566,28 @@ y[n] &amp;= H(z) x[n]
 \end{align}
 \end{split}\]</div>
 </section>
+<section id="respuesta-a-senales-periodicas">
+<h2>Respuesta a señales periódicas<a class="headerlink" href="#respuesta-a-senales-periodicas" title="Link to this heading">#</a></h2>
+<p>Restringimos <span class="math notranslate nohighlight">\(s\)</span> a ser un número complejo puro, es decir <span class="math notranslate nohighlight">\(s = j \omega\)</span> donde <span class="math notranslate nohighlight">\(\omega\)</span> es la frecuencia angular. En este caso la función exponencial compleja <span class="math notranslate nohighlight">\(e^{j \omega t}\)</span> es periódica con periodo <span class="math notranslate nohighlight">\(T = \frac{2 \pi}{\omega}\)</span>. La respuesta a una señal periódica se puede expresar como una combinación de respuestas a señales exponenciales complejas.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+H(j \omega) &amp;= \int_{-\infty}^{\infty} h(t) e^{-j \omega t} dt \\
+\end{align}\end{split}\]</div>
+<p>Consideremos una señal compuesta de suma de exponenciales complejas con frecuencias angulares <span class="math notranslate nohighlight">\(k \omega_0\)</span>, la cual también es periódica con período <span class="math notranslate nohighlight">\(T\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+x(t) = \sum_{k=-\infty}^{\infty} a_k e^{j k\omega_0 t}
+\]</div>
+<p>Luego la respuesta del sistema a esta señal es:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+y(t) &amp;= \sum_{k=-\infty}^{\infty} a_k H(j k \omega_0) e^{j k \omega_0 t} \\
+\end{align}
+\end{split}\]</div>
+<p>Podemos ver como la respuesta del sistema también es periódica y el comportamiento se basa en modificar cada frecuencia de forma independiente multiplicando por un número complejo <span class="math notranslate nohighlight">\(H(j k \omega_0)\)</span>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -646,6 +668,7 @@ y[n] &amp;= H(z) x[n]
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autofunciones-de-la-convolucion-sistema-lti">Autofunciones de la convolución / sistema LTI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#respuesta-a-senales-periodicas">Respuesta a señales periódicas</a></li>
 </ul>
   </nav></div>
 

@@ -388,6 +388,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autovectores-de-la-matriz-laplaciana">Autovectores de la matriz Laplaciana</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-de-senos-y-cosenos">Base de senos y cosenos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exponenciales-complejas">Exponenciales Complejas</a></li>
 </ul>
             </nav>
         </div>
@@ -399,7 +401,15 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="codigo-series-de-fourier">
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="codigo-series-de-fourier">
 <h1>Código: Series de Fourier<a class="headerlink" href="#codigo-series-de-fourier" title="Link to this heading">#</a></h1>
 <section id="autovectores-de-la-matriz-laplaciana">
 <h2>Autovectores de la matriz Laplaciana<a class="headerlink" href="#autovectores-de-la-matriz-laplaciana" title="Link to this heading">#</a></h2>
@@ -486,10 +496,7 @@ L = D - A
 \end{split}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="k">def</span> <span class="nf">laplacian_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">laplacian_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Crea una matriz Laplaciana para una cuadrícula 1D de tamaño n.    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -505,25 +512,26 @@ L = D - A
 <span class="n">k</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">w</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span><span class="o">/</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Primeros k autovalores normalizados&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Primeros autovalores normalizados&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Valor&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;# autovalor&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="c1"># color cycle viridis</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cycler</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">))))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">D</span><span class="p">[:,:</span><span class="n">k</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Primeros k autovectores&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Primeros autovectores&quot;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">pcolor</span><span class="p">(</span><span class="n">D</span><span class="p">[:,:</span><span class="n">k</span><span class="o">*</span><span class="mi">2</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Primeros 2*k autovectores&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pcolor</span><span class="p">(</span><span class="n">D</span><span class="p">[:,:</span><span class="n">k</span><span class="o">*</span><span class="mi">2</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Primeros autovectores&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2f1301cde02a38268c3caef9bf227c8dbd58e92b422f12d74563f3af52bb3f79.png" src="../../_images/2f1301cde02a38268c3caef9bf227c8dbd58e92b422f12d74563f3af52bb3f79.png" />
-<img alt="../../_images/244fb3f53833c01adfd3f18e837e2ec431625fa0380ca48954b2cc228baa6ad3.png" src="../../_images/244fb3f53833c01adfd3f18e837e2ec431625fa0380ca48954b2cc228baa6ad3.png" />
-<img alt="../../_images/7e4178462a6b692dfd4a1bb7964a4c61015bb319132ae8b52852862bb1e9b86e.png" src="../../_images/7e4178462a6b692dfd4a1bb7964a4c61015bb319132ae8b52852862bb1e9b86e.png" />
+<img alt="../../_images/c482c53fd31ebc1c56b020044392dbd10295134e54e8b16a2c2192c1bea582c2.png" src="../../_images/c482c53fd31ebc1c56b020044392dbd10295134e54e8b16a2c2192c1bea582c2.png" />
+<img alt="../../_images/e599193a70ee8f5d63110d9ab22f29869b44820d926c0474d6bbcc035d6eb05f.png" src="../../_images/e599193a70ee8f5d63110d9ab22f29869b44820d926c0474d6bbcc035d6eb05f.png" />
+<img alt="../../_images/9861796a935c43320e2212e458615686b3a95e3908835cf7476e982d89dd5f46.png" src="../../_images/9861796a935c43320e2212e458615686b3a95e3908835cf7476e982d89dd5f46.png" />
 </div>
 </div>
 <p>Analicemos una curva triangular con esta base</p>
@@ -533,30 +541,39 @@ L = D - A
 <span class="n">d</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="n">d</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="p">)]</span>
 
-<span class="n">D</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">eigenvectors</span><span class="p">[:,:</span><span class="n">k</span><span class="o">*</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">eigenvectors</span><span class="p">[:,:</span><span class="n">k</span><span class="p">]</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">D</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">y</span><span class="o">*</span><span class="n">D</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">);</span>
 <span class="c1"># set color gradient cycle</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cycler</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="o">*</span><span class="mi">2</span><span class="p">))))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cycler</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">))))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="c1"># different color each stem</span>
+<span class="n">ml</span><span class="p">,</span><span class="n">sl</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">linefmt</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">basefmt</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">markerfmt</span><span class="o">=</span><span class="s1">&#39;ko&#39;</span><span class="p">)</span>
+<span class="n">ml</span><span class="o">.</span><span class="n">set_markerfacecolor</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">sl</span><span class="o">.</span><span class="n">set_colors</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">)))</span>
+<span class="n">sl</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Número de componentes&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Proyección&quot;</span><span class="p">);</span>
 
 <span class="c1"># plot de convergencia</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">y</span><span class="o">*</span><span class="n">D</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">-</span><span class="n">x</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">T</span><span class="o">-</span><span class="n">x</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">));</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Número de componentes&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ca78443a22b68879d86483f09ed18ccb7c401ee314ac2de1e7fef34c1539804a.png" src="../../_images/ca78443a22b68879d86483f09ed18ccb7c401ee314ac2de1e7fef34c1539804a.png" />
-<img alt="../../_images/54077aa844234b361d222ff6d669c11d58c41767baca7b2b2b6c2d0b225dfbfc.png" src="../../_images/54077aa844234b361d222ff6d669c11d58c41767baca7b2b2b6c2d0b225dfbfc.png" />
-<img alt="../../_images/839eb41767b7025bcc036412ee9d7ca6e61d265ad2a9a97fb0731887fcf80b5e.png" src="../../_images/839eb41767b7025bcc036412ee9d7ca6e61d265ad2a9a97fb0731887fcf80b5e.png" />
+<img alt="../../_images/448fc11028575b2955f088c4a88f310a8e061ed20bd04eb6a6b8a92a9a6e2315.png" src="../../_images/448fc11028575b2955f088c4a88f310a8e061ed20bd04eb6a6b8a92a9a6e2315.png" />
+<img alt="../../_images/490e514d0925877373e0ba9edadb41a9af8943546baed54be36560c71bc55245.png" src="../../_images/490e514d0925877373e0ba9edadb41a9af8943546baed54be36560c71bc55245.png" />
+<img alt="../../_images/3d93ca3045eb134687cca6ee5ddba1a1e9e4da8d159c70cea9f43feaa372ba94.png" src="../../_images/3d93ca3045eb134687cca6ee5ddba1a1e9e4da8d159c70cea9f43feaa372ba94.png" />
 </div>
 </div>
 <p>Si realizamos el mismo procedimiento para un grafo cíclico de longitud <span class="math notranslate nohighlight">\(n\)</span> obtenemos una matriz similar cuyos autovectores ahora son senos y cosenos.</p>
@@ -740,28 +757,36 @@ L = D - A
 <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">y</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="n">D</span><span class="p">[:,:</span><span class="n">k</span><span class="p">],</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">y</span><span class="p">[:</span><span class="n">k</span><span class="o">*</span><span class="mi">2</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Proyección de la onda cuadrada sobre los autovectores&quot;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">);</span>
 <span class="c1"># set color gradient cycle</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cycler</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">))))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span>
 
+
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">T</span><span class="o">-</span><span class="n">x</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">);</span>
+<span class="c1"># different color each stem</span>
+<span class="n">ml</span><span class="p">,</span><span class="n">sl</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">y</span><span class="p">[:</span><span class="n">k</span><span class="p">],</span> <span class="n">linefmt</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">basefmt</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">markerfmt</span><span class="o">=</span><span class="s1">&#39;ko&#39;</span><span class="p">)</span>
+<span class="n">ml</span><span class="o">.</span><span class="n">set_markerfacecolor</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">sl</span><span class="o">.</span><span class="n">set_colors</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Proyección de la onda cuadrada sobre los autovectores&quot;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">T</span><span class="o">-</span><span class="n">x</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Número de componentes&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/7ca1b95754112703eedb86e3beded73d6a46f7d5d5f57269a3e4592b08dcdaa7.png" src="../../_images/7ca1b95754112703eedb86e3beded73d6a46f7d5d5f57269a3e4592b08dcdaa7.png" />
 <img alt="../../_images/3dd5e16ad3411e3bf321394794812c0a9d6f6f69bd46474fcbca86838708bf49.png" src="../../_images/3dd5e16ad3411e3bf321394794812c0a9d6f6f69bd46474fcbca86838708bf49.png" />
-<img alt="../../_images/680893ca55d6a6375b4dfa4e1950597400aff714cec29adab6ef5a0483d011f3.png" src="../../_images/680893ca55d6a6375b4dfa4e1950597400aff714cec29adab6ef5a0483d011f3.png" />
+<img alt="../../_images/7316e8c70009504000ff27f600ff84d8cbac0eaadbf89f58d57dec48f6e4fd20.png" src="../../_images/7316e8c70009504000ff27f600ff84d8cbac0eaadbf89f58d57dec48f6e4fd20.png" />
+<img alt="../../_images/777172b1deebb1b92e2d459ce739b032d8816cdff87d88bcb75fc657eb11feb1.png" src="../../_images/777172b1deebb1b92e2d459ce739b032d8816cdff87d88bcb75fc657eb11feb1.png" />
 </div>
 </div>
+</section>
+<section id="base-de-senos-y-cosenos">
+<h2>Base de senos y cosenos<a class="headerlink" href="#base-de-senos-y-cosenos" title="Link to this heading">#</a></h2>
 <p>Repetimos el procedimiento, pero construyendo una matriz explicitamente con senos y cosenos. Para no depender del calculo de autovectores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -796,7 +821,7 @@ L = D - A
 
 <span class="c1"># Generar la base de Fourier</span>
 <span class="n">n</span> <span class="o">=</span> <span class="mi">512</span>
-<span class="n">k</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">256</span>
 <span class="n">F</span> <span class="o">=</span> <span class="n">generar_base_fourier</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cycler</span><span class="p">(</span><span class="s1">&#39;linestyle&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span> <span class="o">+</span>
@@ -807,10 +832,15 @@ L = D - A
 <span class="n">plt</span><span class="o">.</span><span class="n">pcolor</span><span class="p">(</span><span class="n">F</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">10</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Base de Fourier&quot;</span><span class="p">);</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Norma de los autovectores todos 1&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Norma de los autovectores todos 1 False
+</pre></div>
+</div>
 <img alt="../../_images/c0acb1a670cca6da44186c1df183d78aaf78b7299af612534489c85de23bfc4f.png" src="../../_images/c0acb1a670cca6da44186c1df183d78aaf78b7299af612534489c85de23bfc4f.png" />
 <img alt="../../_images/add1b80c34202325f2b9ed095de3179ef0dd436de8dd903819e112d8d0d9e537.png" src="../../_images/add1b80c34202325f2b9ed095de3179ef0dd436de8dd903819e112d8d0d9e537.png" />
 </div>
@@ -825,9 +855,6 @@ L = D - A
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">F</span>
 <span class="n">k</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">y</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="n">F</span><span class="p">[:,:</span><span class="n">k</span><span class="p">],</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Proyección de la onda cuadrada sobre los autovectores&quot;</span><span class="p">);</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">);</span>
@@ -836,17 +863,132 @@ L = D - A
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Aproximación de la onda cuadrada con Fourier&quot;</span><span class="p">);</span>
 
+
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">T</span><span class="o">-</span><span class="n">x</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">);</span>
+<span class="n">ml</span><span class="p">,</span> <span class="n">sl</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">y</span><span class="p">[:</span><span class="n">k</span><span class="p">],</span> <span class="n">linefmt</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">basefmt</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">markerfmt</span><span class="o">=</span><span class="s1">&#39;ko&#39;</span><span class="p">)</span>
+<span class="n">ml</span><span class="o">.</span><span class="n">set_markerfacecolor</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">sl</span><span class="o">.</span><span class="n">set_colors</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Proyección de la onda cuadrada sobre los autovectores&quot;</span><span class="p">);</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">y</span><span class="o">*</span><span class="n">F</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">T</span><span class="o">-</span><span class="n">x</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Número de componentes&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/1cb4abfcc7fa26b2cbea18a037f72846c0c42da61e3b27b8ab3728feb7e63a53.png" src="../../_images/1cb4abfcc7fa26b2cbea18a037f72846c0c42da61e3b27b8ab3728feb7e63a53.png" />
 <img alt="../../_images/7e840342718a85630e46d14f74271b3b9ad441fc57971c99dda5ca38880e0f68.png" src="../../_images/7e840342718a85630e46d14f74271b3b9ad441fc57971c99dda5ca38880e0f68.png" />
-<img alt="../../_images/f914247f5d60d7727c921d28d046d7a9d60befb4170236316e25bc8fe876635b.png" src="../../_images/f914247f5d60d7727c921d28d046d7a9d60befb4170236316e25bc8fe876635b.png" />
+<img alt="../../_images/b7b3e325dca63da5bc42171fc1892f0c08aef4a763cebe86651dc14dcf413f8d.png" src="../../_images/b7b3e325dca63da5bc42171fc1892f0c08aef4a763cebe86651dc14dcf413f8d.png" />
+<img alt="../../_images/bb92ec9a07a4b5d906f76ad660c62e33c254283ebf2ae5d7c53b7293c4aee4a1.png" src="../../_images/bb92ec9a07a4b5d906f76ad660c62e33c254283ebf2ae5d7c53b7293c4aee4a1.png" />
+</div>
+</div>
+</section>
+<section id="exponenciales-complejas">
+<h2>Exponenciales Complejas<a class="headerlink" href="#exponenciales-complejas" title="Link to this heading">#</a></h2>
+<p>Repetimos el procedimiento, pero construyendo una matriz explicitamente con exponenciales complejas para poder visualizar facilmente la magnitud y fase de las componentes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">base_de_fourier_compleja</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">armonicos</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generar una base de Fourier compleja</span>
+<span class="sd">    </span>
+<span class="sd">    Parámetros:</span>
+<span class="sd">        n: Número de puntos de muestra</span>
+<span class="sd">        armonicos: Número de armónicos a incluir</span>
+<span class="sd">    </span>
+<span class="sd">    Retorna:</span>
+<span class="sd">        F: Matriz donde las columnas son las funciones base de Fourier complejas</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Crear puntos de muestra en [-π, π)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    
+    <span class="c1"># Inicializar la matriz base de Fourier compleja</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">armonicos</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    
+    <span class="c1"># Llenar la matriz con exponentes complejos</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">armonicos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">F</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">F</span>
+<span class="c1"># Generar la base de Fourier compleja</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">base_de_fourier_compleja</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cycler</span><span class="p">(</span><span class="s1">&#39;linestyle&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">p</span><span class="o">+</span><span class="p">[</span><span class="s1">&#39;--&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">p</span>
+                                    <span class="p">)</span> <span class="o">+</span>
+                         <span class="n">plt</span><span class="o">.</span><span class="n">cycler</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">tab10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">p</span><span class="p">),</span><span class="mi">2</span><span class="p">))))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">F</span><span class="p">[:,</span> <span class="p">:</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Re&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">F</span><span class="p">[:,</span> <span class="p">:</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Im&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Base de Fourier compleja&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pcolor</span><span class="p">(</span><span class="n">F</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Número de componente&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Parte real&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pcolor</span><span class="p">(</span><span class="n">F</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Parte imaginaria&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Número de componente&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">();</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Norma de los autovectores todos 1&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Norma de los autovectores todos 1 True
+</pre></div>
+</div>
+<img alt="../../_images/847d99267c5ebd84b9b49326723c0b42d42c3831b77ae3eea555546cfef3a710.png" src="../../_images/847d99267c5ebd84b9b49326723c0b42d42c3831b77ae3eea555546cfef3a710.png" />
+<img alt="../../_images/4b3d4384d77e989187b921a3e58196bef57542a8cf9dfc3fed199cd5b24bb4bd.png" src="../../_images/4b3d4384d77e989187b921a3e58196bef57542a8cf9dfc3fed199cd5b24bb4bd.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dientes de sierra</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">F</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">y</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="n">F</span><span class="p">[:,:</span><span class="n">k</span><span class="p">],</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">);</span>
+<span class="c1"># set color gradient cycle</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cycler</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">))))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ml</span><span class="p">,</span> <span class="n">sl</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y</span><span class="p">[:</span><span class="n">k</span><span class="p">]),</span> <span class="n">linefmt</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">basefmt</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">markerfmt</span><span class="o">=</span><span class="s1">&#39;ko&#39;</span><span class="p">)</span>
+<span class="n">ml</span><span class="o">.</span><span class="n">set_markerfacecolor</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">sl</span><span class="o">.</span><span class="n">set_colors</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Magnitud&quot;</span><span class="p">);</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ml</span><span class="p">,</span> <span class="n">sl</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">y</span><span class="p">[:</span><span class="n">k</span><span class="p">]),</span> <span class="n">linefmt</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">basefmt</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">markerfmt</span><span class="o">=</span><span class="s1">&#39;ko&#39;</span><span class="p">)</span>
+<span class="n">ml</span><span class="o">.</span><span class="n">set_markerfacecolor</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">sl</span><span class="o">.</span><span class="n">set_colors</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Fase&quot;</span><span class="p">);</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">y</span><span class="o">*</span><span class="n">F</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">T</span><span class="o">-</span><span class="n">x</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Número de componentes&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/870b589894dfbbe333663b75e90564bd7b399497f5a0ef6068187234918cb2c5.png" src="../../_images/870b589894dfbbe333663b75e90564bd7b399497f5a0ef6068187234918cb2c5.png" />
+<img alt="../../_images/64453bef68779874a1ac57751f9d9739c37e0001a4785e15e02e4cba3d6152e5.png" src="../../_images/64453bef68779874a1ac57751f9d9739c37e0001a4785e15e02e4cba3d6152e5.png" />
+<img alt="../../_images/b98ef2b6c62891206ccc60eda331fb56d506448b683c83940a9d55549f197afd.png" src="../../_images/b98ef2b6c62891206ccc60eda331fb56d506448b683c83940a9d55549f197afd.png" />
+<img alt="../../_images/8c4b3d6bec9f65e2229bcacb9130eaf226d6e09ec0b2e7284f56b9910d8d308c.png" src="../../_images/8c4b3d6bec9f65e2229bcacb9130eaf226d6e09ec0b2e7284f56b9910d8d308c.png" />
 </div>
 </div>
 </section>
@@ -917,6 +1059,8 @@ L = D - A
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autovectores-de-la-matriz-laplaciana">Autovectores de la matriz Laplaciana</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-de-senos-y-cosenos">Base de senos y cosenos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exponenciales-complejas">Exponenciales Complejas</a></li>
 </ul>
   </nav></div>
 

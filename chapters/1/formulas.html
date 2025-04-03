@@ -185,13 +185,12 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introducción</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">Historia</a></li>
-<li class="toctree-l1"><a class="reference internal" href="signals.html">Señales básicas y sus operaciones</a></li>
 <li class="toctree-l1"><a class="reference internal" href="energyandpower.html">Energía y Potencia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sistemaslti.html">Sistemas Lineales e Invariantes en el Tiempo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="convolucion.html">Convolución</a></li>
-<li class="toctree-l1"><a class="reference internal" href="conv_ejemplos.html">Código Convolución</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_convolucion.html">Código: Convolución</a></li>
 <li class="toctree-l1"><a class="reference internal" href="series_de_fourier.html">Series de Fourier</a></li>
-<li class="toctree-l1"><a class="reference internal" href="series_de_fourier_ejemplos.html">Código: Series de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_series_de_fourier.html">Código: Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="exercises.html">Ejercicios</a></li>
 </ul>
 
@@ -390,10 +389,10 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">A equals -K over M times Laplacian matrix 5x5 with 2 in the diagonal and -1 off</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#all-in-one-formula">All in one formula</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wave-equation">Wave equation</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-in-wolfram-syntax">Matrix in wolfram syntax</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-lineal">Sistema lineal</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-invariante-en-el-tiempo">Sistema invariante en el tiempo</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistemas-de-procesamiento">Sistemas de procesamiento</a></li>
 </ul>
 
             </nav>
@@ -416,11 +415,11 @@ y(x,t) = \sum_{n=1}^N \Big [\frac{2h}{n^2\pi^2} \frac{L^2}{d(L-d)}\,\sin\Big(\fr
 \]</div>
 <div class="math notranslate nohighlight">
 \[
-y(x,t) = \sum_{n=1}^N \big [A_n\cos(\omega_n t) + B_n\sin(\omega_n t)\big ] \sin\Big(\frac{n\pi}{L}x\Big)
+y(x,t) = \sum_{m=1}^\infty A_m \sin\Big(\frac{m\pi}{L}x\Big) \exp(i\omega_{m}t)
 \]</div>
 <div class="math notranslate nohighlight">
 \[
-u_n(t)=A_{m} \sqrt{\frac{2}{N}} \sin\Big(\frac{mn\pi}{N+1}\Big)\exp(i\omega_{m}t)
+u_n(t)= \sum_{m=1}^N A_{m} \sqrt{\frac{2}{N}} \sin\Big(\frac{mn\pi}{N+1}\Big)\exp(i\omega_{m}t)
 \]</div>
 <div class="math notranslate nohighlight">
 \[
@@ -455,6 +454,17 @@ A = - \omega_0^2 \cdot \begin{bmatrix}
 0 &amp; 0 &amp; 0 &amp; -1 &amp; 2
 \end{bmatrix}
 \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial^2 u_n(t)}{\partial t^2} = \sum_{m=1}^N A_{nm} u_m(t)
+\]</div>
+</section>
+<section id="wave-equation">
+<h1>Wave equation<a class="headerlink" href="#wave-equation" title="Link to this heading">#</a></h1>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial^2 y(t)}{\partial t^2} = c^2 \frac{\partial^2 y(t)}{\partial x^2}
+\]</div>
 </section>
 <section id="matrix-in-wolfram-syntax">
 <h1>Matrix in wolfram syntax<a class="headerlink" href="#matrix-in-wolfram-syntax" title="Link to this heading">#</a></h1>
@@ -606,49 +616,6 @@ y[n]
 <!-- $$x[n]: n \in \{0,1,2,...,N-1\} \rightarrow x \in \R$$ -->
 <div class="math notranslate nohighlight">
 \[x[n]: n \in \{0,1,2,...,N-1\} \rightarrow x \in \{-2^8,..., 2^8-1\}\]</div>
-<ul class="simple">
-<li><p>Notación de señales como funciones Rn-&gt;Rm</p></li>
-<li><p>Variable dependiente e independiente</p></li>
-<li><p>Continuas vs discretas</p></li>
-<li><p>Cuantizadas vs no cuantizadas</p></li>
-<li><p>Estocásticas vs no estocásticas</p></li>
-<li><p>Determinísticas vs no determinísticas</p></li>
-<li><p>Periódicas vs no periódicas</p></li>
-<li><p>Causales vs no causales</p></li>
-<li><p>Estacionarias vs no estacionarias</p></li>
-<li><p>Lineales vs no lineales</p></li>
-<li><p>Invariantes en el tiempo vs variantes en el tiempo</p></li>
-<li><p>Modelado de señales</p></li>
-<li><p>Transformaciones de señales</p></li>
-<li><p>Operaciones con señales</p></li>
-<li><p>Métodos de detección básicos</p></li>
-<li><p>Métodos de clasificación básicos</p></li>
-<li><p>Métodos de regresión básicos</p></li>
-<li><p>Métodos de agrupamiento básicos</p></li>
-<li><p>Métodos de reducción de dimensionalidad básicos</p></li>
-</ul>
-</section>
-<section id="sistemas-de-procesamiento">
-<h1>Sistemas de procesamiento<a class="headerlink" href="#sistemas-de-procesamiento" title="Link to this heading">#</a></h1>
-<p>A una señal se le puede aplicar un proceso o transformación. Tradicionalmente pensamos en una función matemática que toma una señal <span class="math notranslate nohighlight">\(x\)</span> como argumento y devuelve otra señal <span class="math notranslate nohighlight">\(y = f(x)\)</span>. Podemos generalizar esto a la idea de un sistema que toma una señal de entrada, la procesa y genera otra señal de salida.</p>
-<p>img entrada -&gt; proceso -&gt; salida</p>
-<p>Los sistemas más simples son aquellos que son lineales y no cambian el dominio de la señal. Por ejemplo,  tomar una señal de entrada y multiplicarla por una constante.</p>
-<p>Como casos más generales podemos pensar sistemas que realizan procesos no lineales, cajas negras, sistemas que cambian el dominio o la dimensionalidad de la señal. Por ejemplo un sistema que toma habla y devuelve texto.</p>
-<p>Nombrar sistemas que toman una señal de entrada y generan una señal de salida en un dominio diferente</p>
-<ul class="simple">
-<li><p>audio -&gt; escalar</p></li>
-<li><p>imagen -&gt; escalar</p></li>
-<li><p>texto -&gt; escalar</p></li>
-<li><p>audio -&gt; audio</p></li>
-<li><p>imagen -&gt; imagen</p></li>
-<li><p>texto -&gt; texto</p></li>
-<li><p>audio -&gt; texto</p></li>
-<li><p>audio -&gt; imagen</p></li>
-<li><p>imagen -&gt; audio</p></li>
-<li><p>imagen -&gt; texto</p></li>
-<li><p>texto -&gt; audio</p></li>
-<li><p>texto -&gt; imagen</p></li>
-</ul>
 </section>
 
     <script type="text/x-thebe-config">
@@ -699,10 +666,10 @@ y[n]
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">A equals -K over M times Laplacian matrix 5x5 with 2 in the diagonal and -1 off</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#all-in-one-formula">All in one formula</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wave-equation">Wave equation</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-in-wolfram-syntax">Matrix in wolfram syntax</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-lineal">Sistema lineal</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-invariante-en-el-tiempo">Sistema invariante en el tiempo</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistemas-de-procesamiento">Sistemas de procesamiento</a></li>
 </ul>
 
   </nav></div>
