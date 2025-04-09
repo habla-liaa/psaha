@@ -382,6 +382,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#serie-de-fourier">Serie de Fourier</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformada-de-fourier">Transformada de Fourier</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformada-de-fourier-discreta-dft">Transformada de Fourier discreta (DFT)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformada-de-fourier-discreta-de-tiempo-dtft">Transformada de Fourier discreta de tiempo (DTFT)</a></li>
 </ul>
             </nav>
         </div>
@@ -466,6 +467,18 @@ Análisis:
 X[k] = \sum_{n=0}^{N-1} x[n] e^{-i \frac{2 \pi k n}{N}}
 \)</span>$</p>
 </section>
+<section id="transformada-de-fourier-discreta-de-tiempo-dtft">
+<h2>Transformada de Fourier discreta de tiempo (DTFT)<a class="headerlink" href="#transformada-de-fourier-discreta-de-tiempo-dtft" title="Permalink to this heading">#</a></h2>
+<p>Representación de señales discretas no periódicas <span class="math notranslate nohighlight">\(x[n]\)</span> como una suma infinita de senos y cosenos en frecuencias continuas.</p>
+<p>Síntesis:
+$<span class="math notranslate nohighlight">\(
+x[n] = \frac{1}{2 \pi} \int_{-\pi}^{\pi} X(w) e^{i w n} dw
+\)</span><span class="math notranslate nohighlight">\(
+Análisis:
+\)</span><span class="math notranslate nohighlight">\(
+X(w) = \sum_{n=-\infty}^{\infty} x[n] e^{-i w n}
+\)</span>$</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -534,6 +547,7 @@ X[k] = \sum_{n=0}^{N-1} x[n] e^{-i \frac{2 \pi k n}{N}}
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#serie-de-fourier">Serie de Fourier</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformada-de-fourier">Transformada de Fourier</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformada-de-fourier-discreta-dft">Transformada de Fourier discreta (DFT)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformada-de-fourier-discreta-de-tiempo-dtft">Transformada de Fourier discreta de tiempo (DTFT)</a></li>
 </ul>
   </nav></div>
 
