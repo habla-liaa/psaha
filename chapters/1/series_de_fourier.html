@@ -183,7 +183,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codigo_series_de_fourier.html">Código: Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="transformada_de_fourier.html">Transformada de Fourier</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="codigo_transformada_de_fourier.html">Código: Transformada de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
 </ul>
@@ -449,46 +448,54 @@ R_{xy} = \langle x, y \rangle = \int_a^b x(t) y^*(t) dt
 <p>Una base de funciones ortogonales es un conjunto de funciones <span class="math notranslate nohighlight">\(\{f_n(t)\}\)</span> tales que:</p>
 <ol class="arabic simple">
 <li><p>Cada función <span class="math notranslate nohighlight">\(f_n(t)\)</span> es ortogonal a las demás, es decir, <span class="math notranslate nohighlight">\(\langle f_n, f_m \rangle = 0\)</span> para <span class="math notranslate nohighlight">\(n \neq m\)</span>.</p></li>
-<li><p>Cualquier función <span class="math notranslate nohighlight">\(f(t)\)</span> en el espacio <span class="math notranslate nohighlight">\(L^2_{\left(a,b\right)}\)</span> se puede expresar como una combinación lineal de las funciones de la base, es decir:
-$<span class="math notranslate nohighlight">\(
-f(t) = \sum_{n=1}^{\infty} c_n f_n(t)
-\)</span><span class="math notranslate nohighlight">\(
-donde \)</span>c_n = \langle f, f_n \rangle$ son los coeficientes.</p></li>
+<li><p>Cualquier función <span class="math notranslate nohighlight">\(f(t)\)</span> en el espacio <span class="math notranslate nohighlight">\(L^2_{\left(a,b\right)}\)</span> se puede expresar como una combinación lineal de las funciones de la base, es decir:</p></li>
 </ol>
+<div class="math notranslate nohighlight">
+\[
+f(t) = \sum_{n=1}^{\infty} c_n f_n(t)
+\]</div>
+<p>donde <span class="math notranslate nohighlight">\(c_n = \langle f, f_n \rangle\)</span> son los coeficientes.</p>
 </section>
 <section id="base-ortogonal-para-senales-periodicas-series-de-fourier">
 <h2>Base ortogonal para señales periódicas (series de Fourier)<a class="headerlink" href="#base-ortogonal-para-senales-periodicas-series-de-fourier" title="Permalink to this heading">#</a></h2>
-<p>Consideremos señales periódicas con periodo <span class="math notranslate nohighlight">\(T\)</span>, es decir, señales que cumplen la propiedad:
-$<span class="math notranslate nohighlight">\(
-x(t + T) = x(t)
-\)</span>$
-Una base ortogonal para funciones periódicas es el conjunto de funciones</p>
+<p>Consideremos señales periódicas con periodo <span class="math notranslate nohighlight">\(T\)</span>, es decir, señales que cumplen la propiedad:</p>
 <div class="math notranslate nohighlight">
-\[\{e^{i \frac{2 \pi n}{T} t}\}\]</div>
+\[
+x(t + T) = x(t)
+\]</div>
+<p>Una base ortogonal para funciones periódicas es el conjunto de funciones</p>
+<div class="math notranslate nohighlight">
+\[
+\{e^{i \frac{2 \pi n}{T} t}\}
+\]</div>
 <p>donde <span class="math notranslate nohighlight">\(n\)</span> es un entero. Estas funciones son ortogonales entre sí en el intervalo <span class="math notranslate nohighlight">\(\left(0, T\right)\)</span>, es decir:</p>
 <div class="math notranslate nohighlight">
 \[
 \langle e^{i \frac{2 \pi n}{T} t}, e^{i \frac{2 \pi m}{T} t} \rangle = \int_0^T e^{i \frac{2 \pi n}{T} t} e^{-i \frac{2 \pi m}{T} t} dt = \int_0^T e^{i \frac{2 \pi (n - m)}{T} t} dt = T \delta_{nm}
 \]</div>
 <p>Por lo tanto, si <span class="math notranslate nohighlight">\(n \neq m\)</span> el producto interno es cero, y si <span class="math notranslate nohighlight">\(n = m\)</span> el producto interno es igual a <span class="math notranslate nohighlight">\(T\)</span>.</p>
-<p>La integral de una exponencial compleja se puede resolver como:
-$<span class="math notranslate nohighlight">\(
+<p>La integral de una exponencial compleja se puede resolver como:</p>
+<div class="math notranslate nohighlight">
+\[
 \int_0^T e^{i \frac{2 \pi (n - m)}{T} t} dt = \left[ \frac{T}{i 2 \pi (n - m)} e^{i \frac{2 \pi (n - m)}{T} t} \right]_0^T = \frac{T}{i 2 \pi (n - m)} \left( e^{i 2 \pi (n - m)} - 1 \right) = 0
-\)</span>$</p>
+\]</div>
 <p>Para <span class="math notranslate nohighlight">\(n \neq m\)</span>, ya que <span class="math notranslate nohighlight">\(e^{i 2 \pi (n - m)} = 1\)</span>. Por lo tanto, el producto interno entre funciones de diferentes frecuencias es cero, lo que implica que son ortogonales.
-Para <span class="math notranslate nohighlight">\(n = m\)</span>, la integral se convierte en:
-$<span class="math notranslate nohighlight">\(
+Para <span class="math notranslate nohighlight">\(n = m\)</span>, la integral se convierte en:</p>
+<div class="math notranslate nohighlight">
+\[
 \int_0^T e^{i \frac{2 \pi (n - n)}{T} t} dt = \int_0^T 1 dt = T
-\)</span>$</p>
-<p>Esta base ortogonal se puede utilizar para representar casi cualquier señal periódica en el espacio <span class="math notranslate nohighlight">\(L^2_{\left(0, T\right)}\)</span> como una serie de Fourier:
-$<span class="math notranslate nohighlight">\(
+\]</div>
+<p>Esta base ortogonal se puede utilizar para representar casi cualquier señal periódica en el espacio <span class="math notranslate nohighlight">\(L^2_{\left(0, T\right)}\)</span> como una serie de Fourier:</p>
+<div class="math notranslate nohighlight">
+\[
 x(t) = \sum_{n=-\infty}^{\infty} c_n  e^{i \frac{2 \pi n}{T} t}
-\)</span><span class="math notranslate nohighlight">\(
-donde los coeficientes \)</span>c_n<span class="math notranslate nohighlight">\( se obtienen como:
-\)</span><span class="math notranslate nohighlight">\(
+\]</div>
+<p>donde los coeficientes <span class="math notranslate nohighlight">\(c_n\)</span> se obtienen como:</p>
+<div class="math notranslate nohighlight">
+\[
 c_n = \frac{1}{T} \int_0^T x(t) e^{-i \frac{2 \pi n}{T} t} dt \quad \text{para } n \in \mathbb{Z}
-\)</span>$
-Esta fórmula nos da los coeficientes que representan la amplitud y fase de cada componente armónica en la señal periódica.</p>
+\]</div>
+<p>Esta fórmula nos da los coeficientes que representan la amplitud y fase de cada componente armónica en la señal periódica.</p>
 <p>El estudio de la convergencia y los tipos de funciones que son posibles representar queda fuera de este curso, pero es importante mencionar que la serie de Fourier converge a la función original en casi todos los puntos, excepto en los puntos de discontinuidad, donde converge al promedio de los límites laterales. Para profundizar, capítulo 3 de Señales y Sistemas de Openheim y también <a class="reference external" href="https://en.wikipedia.org/wiki/Convergence_of_Fourier_series">Wikipedia</a>.</p>
 <section id="forma-seno-coseno">
 <h3>Forma seno-coseno<a class="headerlink" href="#forma-seno-coseno" title="Permalink to this heading">#</a></h3>
@@ -543,14 +550,15 @@ y(t) = 2 \sin(2\pi t) + 3 \sin(2\pi 2 t) + 1.5 \sin(2\pi 3 t)
 \[
 x(t) = \frac{t}{T} \quad  -T/2 \leq t &lt; T/2
 \]</div>
-<p>donde <span class="math notranslate nohighlight">\(T\)</span> es el periodo de la señal. Los coeficientes de la serie de Fourier para la señal diente de sierra se pueden calcular integrando la función en el intervalo <span class="math notranslate nohighlight">\([0, T]\)</span>:
-$<span class="math notranslate nohighlight">\(
+<p>donde <span class="math notranslate nohighlight">\(T\)</span> es el periodo de la señal. Los coeficientes de la serie de Fourier para la señal diente de sierra se pueden calcular integrando la función en el intervalo <span class="math notranslate nohighlight">\([0, T]\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \begin{align*}
 a_0 &amp;= \frac{1}{T} \int_{-T/2}^{T/2} x(t) dt = \frac{1}{T} \int_{-T/2}^{T/2} \frac{t}{T} dt = 0 \\
 a_n &amp;= \frac{2}{T} \int_{-T/2}^{T/2} x(t) \cos\left(\frac{2 \pi n}{T} t\right) dt = \frac{2}{T^2} \int_{-T/2}^{T/2} t \cos\left(\frac{2 \pi n}{T} t\right) dt = 0 \\
 b_n &amp;= \frac{2}{T} \int_{-T/2}^{T/2} x(t) \sin\left(\frac{2 \pi n}{T} t\right) dt = \frac{2}{T^2} \int_{-T/2}^{T/2} t \sin\left(\frac{2 \pi n}{T} t\right) dt = \frac{\sin{2 \pi n}}{n^2 \pi^2} - \frac{2 \cos{2 \pi n}}{\pi n} = \left(-1\right)^{n} \frac{2}{\pi n}
 \end{align*}
-\)</span>$</p>
+\end{split}\]</div>
 <p>Por lo tanto, la serie de Fourier para la señal diente de sierra es:</p>
 <div class="math notranslate nohighlight">
 \[
