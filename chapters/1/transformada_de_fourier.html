@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/1/transformada_de_fourier';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="next" title="Código: Transformada de Fourier" href="codigo_transformada_de_fourier.html" />
     <link rel="prev" title="Código: Series de Fourier" href="codigo_series_de_fourier.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -183,6 +183,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="series_de_fourier.html">Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codigo_series_de_fourier.html">Código: Series de Fourier</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Transformada de Fourier</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="codigo_transformada_de_fourier.html">Código: Transformada de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
 </ul>
 
@@ -356,7 +358,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -372,6 +376,29 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Transformada de Fourier</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-de-la-transformada-de-fourier">Propiedades de la Transformada de Fourier</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linealidad">Linealidad</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#desplazamiento-en-el-tiempo">Desplazamiento en el tiempo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#desplazamiento-en-frecuencia">Desplazamiento en frecuencia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#escalado-en-tiempo">Escalado en tiempo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partes-real-e-imaginaria">Partes real e imaginaria</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#componente-en-frecuencia-cero">Componente en frecuencia cero</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#teoremas-de-plancherel-y-parseval">Teoremas de Plancherel y Parseval</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#teorema-de-la-convolucion">Teorema de la convolución</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#teorema-de-la-correlacion-cruzada">Teorema de la correlación cruzada</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#teorema-de-wiener-khinchin">Teorema de Wiener-Khinchin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diferenciacion">Diferenciación</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -383,12 +410,190 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="transformada-de-fourier">
 <h1>Transformada de Fourier<a class="headerlink" href="#transformada-de-fourier" title="Permalink to this heading">#</a></h1>
-<p>La transformada de Fourier es la extensión de la serie de Fourier a funciones no periódicas. La transformada de Fourier se define como:</p>
+<p>La transformada de Fourier es la extensión de la serie de Fourier a funciones no periódicas. Esto se logra partiendo de una señal periódida con periodo <span class="math notranslate nohighlight">\(T\)</span> y frecuencia <span class="math notranslate nohighlight">\(f_0 = \frac{1}{T}\)</span>, y tomando el límite cuando <span class="math notranslate nohighlight">\(T\)</span> tiende a infinito. En este caso, la frecuencia fundamental <span class="math notranslate nohighlight">\(f_0\)</span> tiende a cero y las frecuencias discretas de la serie de Fourier se convierten en frecuencias continuas. No es necesario imaginar que la señal deseada realmente se estira en el tiempo, ya que siempre se puede extender con ceros a izquierda y derecha y mantener la idea de que la señal es periódica.</p>
+<a class="reference internal image-reference" href="../../_images/fourierlimit.png"><img alt="Transformada de Fourier" src="../../_images/fourierlimit.png" style="width: 400px;" /></a>
+<p>Si recordamos la formula de análisis de series de Fourier para una señal periódica, tenemos:</p>
+<div class="math notranslate nohighlight">
+\[
+c_n = \frac{1}{T} \int_{-T/2}^{T/2}  x(t) e^{-j \omega n t} dt
+\]</div>
+<p>y para la síntesis:</p>
+<div class="math notranslate nohighlight">
+\[
+x(t) = \sum_{n=-\infty}^{\infty} c_n e^{j \omega n t}
+\]</div>
+<p>Vamos a ver que los coeficientes <span class="math notranslate nohighlight">\(c_n\)</span> se transforman en una función continua <span class="math notranslate nohighlight">\(X(\omega)\)</span> en el dominio de la frecuencia al tomar el límite cuando <span class="math notranslate nohighlight">\(T\)</span> tiende a infinito.</p>
+<div class="math notranslate nohighlight">
+\[
+X(\omega) = \frac{1}{2\pi} \int_{-\infty}^{\infty}  x(t) e^{-j \omega n t} dt
+\]</div>
+<p>Primero reemplazamos la formula de síntesis en la de análisis:</p>
+<div class="math notranslate nohighlight">
+\[
+x(t) = \sum_{n=-\infty}^{\infty} \left( \frac{1}{T} \int_{-T/2}^{T/2}  x(t') e^{-j \frac{2\pi}{T} n t'} dt' \right) e^{j \frac{2\pi}{T} n t}
+\]</div>
+<p>Ahora el truco es pensar  <span class="math notranslate nohighlight">\(\lim_{T \to \infty} \frac{1}{T} = \frac{1}{2\pi} d\omega\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+x(t) = \lim_{T \to \infty}  \sum_{n=-\infty}^{\infty} \left(\int_{-\infty}^{\infty}  x(t') e^{-j \omega n t'} dt' \right) e^{j \omega n t}  \frac{1}{T} 
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+x(t) =  \int_{-\infty}^{\infty} \left(  \int_{-\infty}^{\infty}  x(t') e^{-j \omega t'} dt' \right) e^{j \omega t} \frac{1}{2\pi} d\omega
+\]</div>
+<p>La transformada de Fourier (análisis) se define como:</p>
 <div class="math notranslate nohighlight">
 \[
 \mathcal{F}\{x(t)\} = X(\omega) = \frac{1}{2\pi} \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt
 \]</div>
 <p>donde <span class="math notranslate nohighlight">\(x(t)\)</span> es la función en el dominio del tiempo, <span class="math notranslate nohighlight">\(X(\omega)\)</span> es la función en el dominio de la frecuencia, y es <span class="math notranslate nohighlight">\(\omega\)</span> la frecuencia angular.</p>
+<p>Luego se define la transformada inversa (síntesis) como:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{F}^{-1}\{X(\omega)\} = x(t) = \int_{-\infty}^{\infty} X(\omega) e^{j\omega t} d\omega
+\]</div>
+<p>La transformada de Fourier se puede expresar en función de la frecuencia <span class="math notranslate nohighlight">\(f\)</span> en lugar de la frecuencia angular <span class="math notranslate nohighlight">\(\omega\)</span>. La relación entre ambas es <span class="math notranslate nohighlight">\(\omega = 2\pi f\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{F}\{x(t)\} = X(f) = \int_{-\infty}^{\infty} x(t) e^{-j2\pi f t} dt
+\]</div>
+<p>donde <span class="math notranslate nohighlight">\(X(f)\)</span> es la función en el dominio de la frecuencia, y <span class="math notranslate nohighlight">\(f\)</span> es la frecuencia. La transformada inversa se define como:
+$<span class="math notranslate nohighlight">\(
+\mathcal{F}^{-1}\{X(f)\} = x(t) = \int_{-\infty}^{\infty} X(f) e^{j2\pi f t} df
+\)</span>$</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="propiedades-de-la-transformada-de-fourier">
+<h1>Propiedades de la Transformada de Fourier<a class="headerlink" href="#propiedades-de-la-transformada-de-fourier" title="Permalink to this heading">#</a></h1>
+<section id="linealidad">
+<h2>Linealidad<a class="headerlink" href="#linealidad" title="Permalink to this heading">#</a></h2>
+<p>La transformada de Fourier es lineal. Sean <span class="math notranslate nohighlight">\( x(t) \)</span> y <span class="math notranslate nohighlight">\( y(t) \)</span> funciones y <span class="math notranslate nohighlight">\(a,b\)</span> constantes:</p>
+<div class="math notranslate nohighlight">
+\[
+a\,x(t) + b\,y(t) \xleftrightarrow{\mathcal{F}} a\,X(f) + b\,Y(f)
+\]</div>
+</section>
+<section id="desplazamiento-en-el-tiempo">
+<h2>Desplazamiento en el tiempo<a class="headerlink" href="#desplazamiento-en-el-tiempo" title="Permalink to this heading">#</a></h2>
+<p>Un desplazamiento temporal equivale a una modulación exponencial en frecuencia:</p>
+<div class="math notranslate nohighlight">
+\[
+x(t - t_0) \xleftrightarrow{\mathcal{F}} e^{-j\,2\pi\,f\,t_0} X(f)
+\]</div>
+</section>
+<section id="desplazamiento-en-frecuencia">
+<h2>Desplazamiento en frecuencia<a class="headerlink" href="#desplazamiento-en-frecuencia" title="Permalink to this heading">#</a></h2>
+<p>Una modulación exponencial en tiempo equivale a un desplazamiento en frecuencia:</p>
+<div class="math notranslate nohighlight">
+\[
+e^{j\,2\pi\,f_0\,t}x(t) \xleftrightarrow{\mathcal{F}} X(f - f_0)
+\]</div>
+</section>
+<section id="escalado-en-tiempo">
+<h2>Escalado en tiempo<a class="headerlink" href="#escalado-en-tiempo" title="Permalink to this heading">#</a></h2>
+<p>Escalar en tiempo afecta inversamente al escalado en frecuencia:</p>
+<div class="math notranslate nohighlight">
+\[
+x(a t) \xleftrightarrow{\mathcal{F}} \frac{1}{|a|}X\left(\frac{f}{a}\right), \quad a \neq 0
+\]</div>
+</section>
+<section id="partes-real-e-imaginaria">
+<h2>Partes real e imaginaria<a class="headerlink" href="#partes-real-e-imaginaria" title="Permalink to this heading">#</a></h2>
+<p>Relación entre partes reales e imaginarias de la señal y su transformada:</p>
+<ul class="simple">
+<li><p>Parte real:
+$<span class="math notranslate nohighlight">\(
+\text{Re}\{x(t)\} \xleftrightarrow{\mathcal{F}} \frac{X(f) + X^*(-f)}{2}
+\)</span>$</p></li>
+<li><p>Parte imaginaria:
+$<span class="math notranslate nohighlight">\(
+\text{Im}\{x(t)\} \xleftrightarrow{\mathcal{F}} \frac{X(f) - X^*(-f)}{2j}
+\)</span>$</p></li>
+</ul>
+</section>
+<section id="componente-en-frecuencia-cero">
+<h2>Componente en frecuencia cero<a class="headerlink" href="#componente-en-frecuencia-cero" title="Permalink to this heading">#</a></h2>
+<p>La componente en frecuencia cero corresponde al área total bajo la señal:</p>
+<div class="math notranslate nohighlight">
+\[
+X(0) = \int_{-\infty}^{\infty} x(t)\,dt
+\]</div>
+</section>
+<section id="teoremas-de-plancherel-y-parseval">
+<h2>Teoremas de Plancherel y Parseval<a class="headerlink" href="#teoremas-de-plancherel-y-parseval" title="Permalink to this heading">#</a></h2>
+<p>Relacionan la energía de la señal en tiempo y frecuencia:</p>
+<ul class="simple">
+<li><p>Plancherel:
+$<span class="math notranslate nohighlight">\(
+\int_{-\infty}^{\infty} |x(t)|^2\,dt = \int_{-\infty}^{\infty} |X(f)|^2\,df
+\)</span>$</p></li>
+<li><p>Parseval (forma general):
+$<span class="math notranslate nohighlight">\(
+\int_{-\infty}^{\infty} x(t)\,y^*(t)\,dt = \int_{-\infty}^{\infty} X(f)\,Y^*(f)\,df
+\)</span>$</p></li>
+</ul>
+</section>
+<section id="teorema-de-la-convolucion">
+<h2>Teorema de la convolución<a class="headerlink" href="#teorema-de-la-convolucion" title="Permalink to this heading">#</a></h2>
+<p>La convolución temporal corresponde a multiplicación en frecuencia:</p>
+<div class="math notranslate nohighlight">
+\[
+(x * y)(t) \xleftrightarrow{\mathcal{F}} X(f)\,Y(f)
+\]</div>
+<p>donde:</p>
+<div class="math notranslate nohighlight">
+\[
+(x * y)(t) = \int_{-\infty}^{\infty} x(\tau)\,y(t - \tau)\,d\tau
+\]</div>
+</section>
+<section id="teorema-de-la-correlacion-cruzada">
+<h2>Teorema de la correlación cruzada<a class="headerlink" href="#teorema-de-la-correlacion-cruzada" title="Permalink to this heading">#</a></h2>
+<p>La correlación cruzada temporal equivale a multiplicación conjugada en frecuencia:</p>
+<div class="math notranslate nohighlight">
+\[
+(x \star y)(t) \xleftrightarrow{\mathcal{F}} X^*(f)\,Y(f)
+\]</div>
+<p>donde:
+$<span class="math notranslate nohighlight">\(
+(x \star y)(t) = \int_{-\infty}^{\infty} x^*(\tau)\,y(t + \tau)\,d\tau
+\)</span>$</p>
+</section>
+<section id="teorema-de-wiener-khinchin">
+<h2>Teorema de Wiener-Khinchin<a class="headerlink" href="#teorema-de-wiener-khinchin" title="Permalink to this heading">#</a></h2>
+<p>La transformada de Fourier de la autocorrelación de una señal es igual a la magnitud al cuadrado de la transformada. Si reemplazamos <span class="math notranslate nohighlight">\(Y(f)\)</span> por <span class="math notranslate nohighlight">\(X^*(f)\)</span> en el teorema de la correlación cruzada, obtenemos:</p>
+<div class="math notranslate nohighlight">
+\[
+(x \star x)(t) \xleftrightarrow{\mathcal{F}} |X(f)|^2
+\]</div>
+<p>Definimos a la densidad espectral de potencia como</p>
+<div class="math notranslate nohighlight">
+\[
+S_x(f) = |X(f)|^2
+\]</div>
+<p>Por lo tanto, la relación entre la autocorrelación y la densidad espectral de potencia es:</p>
+<div class="math notranslate nohighlight">
+\[
+R_x(\tau) \xleftrightarrow{\mathcal{F}} S_x(f)
+\]</div>
+<p>donde <span class="math notranslate nohighlight">\( R_x(\tau) \)</span> es la función de autocorrelación de la señal <span class="math notranslate nohighlight">\( x(t) \)</span>.</p>
+</section>
+<section id="diferenciacion">
+<h2>Diferenciación<a class="headerlink" href="#diferenciacion" title="Permalink to this heading">#</a></h2>
+<p>La diferenciación en tiempo equivale a multiplicar por <span class="math notranslate nohighlight">\( j\,2\pi\,f \)</span> en frecuencia:</p>
+<ul class="simple">
+<li><p>Primera derivada:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\frac{d}{dt}x(t) \xleftrightarrow{\mathcal{F}} j\,2\pi\,f\,X(f)
+\]</div>
+<ul class="simple">
+<li><p>Derivada de orden <span class="math notranslate nohighlight">\(n\)</span>:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\frac{d^n}{dt^n}x(t) \xleftrightarrow{\mathcal{F}} (j\,2\pi\,f)^n\,X(f)
+\]</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -431,11 +636,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="ejercicios.html"
+       href="codigo_transformada_de_fourier.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Ejercicios</p>
+        <p class="prev-next-title">Código: Transformada de Fourier</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -445,6 +650,35 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Transformada de Fourier</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-de-la-transformada-de-fourier">Propiedades de la Transformada de Fourier</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linealidad">Linealidad</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#desplazamiento-en-el-tiempo">Desplazamiento en el tiempo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#desplazamiento-en-frecuencia">Desplazamiento en frecuencia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#escalado-en-tiempo">Escalado en tiempo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partes-real-e-imaginaria">Partes real e imaginaria</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#componente-en-frecuencia-cero">Componente en frecuencia cero</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#teoremas-de-plancherel-y-parseval">Teoremas de Plancherel y Parseval</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#teorema-de-la-convolucion">Teorema de la convolución</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#teorema-de-la-correlacion-cruzada">Teorema de la correlación cruzada</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#teorema-de-wiener-khinchin">Teorema de Wiener-Khinchin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diferenciacion">Diferenciación</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>

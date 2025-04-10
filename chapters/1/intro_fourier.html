@@ -183,6 +183,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="series_de_fourier.html">Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codigo_series_de_fourier.html">Código: Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="transformada_de_fourier.html">Transformada de Fourier</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="codigo_transformada_de_fourier.html">Código: Transformada de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
 </ul>
 
@@ -424,7 +426,7 @@ document.write(`
 <li><p>Transformada de Fourier de tiempo discreto (DTFT)</p>
 <ul>
 <li><p>Señales discretas no periódicas</p></li>
-<li><p>Suma de infinitas componentes</p></li>
+<li><p>Integral de finitas componentes</p></li>
 <li><p>Frecuencias continuas</p></li>
 </ul>
 </li>
@@ -435,12 +437,12 @@ document.write(`
 <p>Síntesis:</p>
 <div class="math notranslate nohighlight">
 \[
-f(t) = \sum_{n=-\infty}^{\infty} c_n e^{i n \omega_0 t}
+x(t) = \sum_{n=-\infty}^{\infty} c_n e^{i n \omega_0 t}
 \]</div>
 <p>Análisis:</p>
 <div class="math notranslate nohighlight">
 \[
-c_n = \frac{1}{T} \int_a^b f(t) e^{-i n \omega_0 t} dt
+c_n = \frac{1}{T} \int_a^b x(t) e^{-i n \omega_0 t} dt
 \]</div>
 </section>
 <section id="transformada-de-fourier">
@@ -448,28 +450,28 @@ c_n = \frac{1}{T} \int_a^b f(t) e^{-i n \omega_0 t} dt
 <p>Representación de señales <span class="math notranslate nohighlight">\(L^2_{(-\infty,\infty)}\)</span> (funciones cuadrado integrables) como una integral de senos y cosenos. La transformada de Fourier permite representar señales no periódicas como una suma infinita de senos y cosenos con frecuencias continuas.</p>
 <p>Síntesis:
 $<span class="math notranslate nohighlight">\(
-f(t) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} F(w) e^{i w t} dw
+x(t) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} X(w) e^{i w t} dw
 \)</span><span class="math notranslate nohighlight">\(
 Análisis:
 \)</span><span class="math notranslate nohighlight">\(
-F(w) = \int_{-\infty}^{\infty} f(t) e^{-i w t} dt
+X(w) = \int_{-\infty}^{\infty} x(t) e^{-i w t} dt
 \)</span>$</p>
 </section>
 <section id="transformada-de-fourier-discreta-dft">
 <h2>Transformada de Fourier discreta (DFT)<a class="headerlink" href="#transformada-de-fourier-discreta-dft" title="Permalink to this heading">#</a></h2>
-<p>Representación de señales discretas periódicas <span class="math notranslate nohighlight">\(x[n]\)</span> con <span class="math notranslate nohighlight">\(N\)</span> muestras como una suma finita de senos y cosenos en frecuencias dadas por <span class="math notranslate nohighlight">\(w_k = \frac{2 \pi k}{N}\)</span>, <span class="math notranslate nohighlight">\(k=0,1,\ldots,N-1\)</span>.</p>
+<p>Representación de señales discretas periódicas <span class="math notranslate nohighlight">\(x[n]\)</span> con <span class="math notranslate nohighlight">\(N\)</span> muestras como una suma finita de senos y cosenos en frecuencias dadas por múltiplos de <span class="math notranslate nohighlight">\(w_0 = \frac{2 \pi}{N}\)</span>.</p>
 <p>Síntesis:
 $<span class="math notranslate nohighlight">\(
-x[n] = \frac{1}{N} \sum_{k=0}^{N-1} X[k] e^{i \frac{2 \pi k n}{N}}
+x[n] = \frac{1}{N} \sum_{k=0}^{N-1} X[k] e^{i w_0 k n} 
 \)</span><span class="math notranslate nohighlight">\(
 Análisis:
 \)</span><span class="math notranslate nohighlight">\(
-X[k] = \sum_{n=0}^{N-1} x[n] e^{-i \frac{2 \pi k n}{N}}
+X[k] = \sum_{n=0}^{N-1} x[n] e^{-i w_0 k n}
 \)</span>$</p>
 </section>
 <section id="transformada-de-fourier-discreta-de-tiempo-dtft">
 <h2>Transformada de Fourier discreta de tiempo (DTFT)<a class="headerlink" href="#transformada-de-fourier-discreta-de-tiempo-dtft" title="Permalink to this heading">#</a></h2>
-<p>Representación de señales discretas no periódicas <span class="math notranslate nohighlight">\(x[n]\)</span> como una suma infinita de senos y cosenos en frecuencias continuas.</p>
+<p>Representación de señales discretas no periódicas <span class="math notranslate nohighlight">\(x[n]\)</span> como una integral finita de senos y cosenos en frecuencias continuas.</p>
 <p>Síntesis:
 $<span class="math notranslate nohighlight">\(
 x[n] = \frac{1}{2 \pi} \int_{-\pi}^{\pi} X(w) e^{i w n} dw

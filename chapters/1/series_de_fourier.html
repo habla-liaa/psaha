@@ -68,7 +68,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Código: Series de Fourier" href="codigo_series_de_fourier.html" />
-    <link rel="prev" title="Código: Convolución" href="codigo_convolucion.html" />
+    <link rel="prev" title="Introducción Fourier" href="intro_fourier.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -179,9 +179,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="sistemaslti.html">Sistemas Lineales e Invariantes en el Tiempo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="convolucion.html">Convolución</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codigo_convolucion.html">Código: Convolución</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro_fourier.html">Introducción Fourier</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codigo_series_de_fourier.html">Código: Series de Fourier</a></li>
-<li class="toctree-l1"><a class="reference internal" href="exercises.html">Ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformada_de_fourier.html">Transformada de Fourier</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="codigo_transformada_de_fourier.html">Código: Transformada de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
 </ul>
 
     </div>
@@ -382,7 +386,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-de-funciones-ortogonales">Base de funciones ortogonales</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-ortogonal-para-funciones-periodicas-series-de-fourier">Base ortogonal para funciones periódicas (series de Fourier)</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-ortogonal-para-senales-periodicas-series-de-fourier">Base ortogonal para señales periódicas (series de Fourier)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-seno-coseno">Forma seno-coseno</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-amplitud-fase">Forma amplitud-fase</a></li>
 </ul>
@@ -431,12 +435,12 @@ document.write(`
 <p>Observar que la norma cuadrado de una función es equivalente a la energía de la señal en el intervalo <span class="math notranslate nohighlight">\(\left(a,b\right)\)</span>, es decir:</p>
 <div class="math notranslate nohighlight">
 \[
-E = ||f||^2 = \int_a^b |f(t)|^2 dt
+E = ||x||^2 = \int_a^b |x(t)|^2 dt
 \]</div>
 <p>Por otro lado el producto interno es una medida de la correlación entre dos funciones:</p>
 <div class="math notranslate nohighlight">
 \[
-R_{fg} = \langle f, g \rangle = \int_a^b f(t) g^*(t) dt
+R_{xy} = \langle x, y \rangle = \int_a^b x(t) y^*(t) dt
 \]</div>
 </section>
 </section>
@@ -452,11 +456,11 @@ f(t) = \sum_{n=1}^{\infty} c_n f_n(t)
 donde \)</span>c_n = \langle f, f_n \rangle$ son los coeficientes.</p></li>
 </ol>
 </section>
-<section id="base-ortogonal-para-funciones-periodicas-series-de-fourier">
-<h2>Base ortogonal para funciones periódicas (series de Fourier)<a class="headerlink" href="#base-ortogonal-para-funciones-periodicas-series-de-fourier" title="Permalink to this heading">#</a></h2>
-<p>Consideremos funciones periódicas con periodo <span class="math notranslate nohighlight">\(T\)</span>, es decir, funciones que cumplen la propiedad:
+<section id="base-ortogonal-para-senales-periodicas-series-de-fourier">
+<h2>Base ortogonal para señales periódicas (series de Fourier)<a class="headerlink" href="#base-ortogonal-para-senales-periodicas-series-de-fourier" title="Permalink to this heading">#</a></h2>
+<p>Consideremos señales periódicas con periodo <span class="math notranslate nohighlight">\(T\)</span>, es decir, señales que cumplen la propiedad:
 $<span class="math notranslate nohighlight">\(
-f(t + T) = f(t)
+x(t + T) = x(t)
 \)</span>$
 Una base ortogonal para funciones periódicas es el conjunto de funciones</p>
 <div class="math notranslate nohighlight">
@@ -476,13 +480,13 @@ Para <span class="math notranslate nohighlight">\(n = m\)</span>, la integral se
 $<span class="math notranslate nohighlight">\(
 \int_0^T e^{i \frac{2 \pi (n - n)}{T} t} dt = \int_0^T 1 dt = T
 \)</span>$</p>
-<p>Esta base ortogonal se puede utilizar para representar casi cualquier función periódica en el espacio <span class="math notranslate nohighlight">\(L^2_{\left(0, T\right)}\)</span> como una serie de Fourier:
+<p>Esta base ortogonal se puede utilizar para representar casi cualquier señal periódica en el espacio <span class="math notranslate nohighlight">\(L^2_{\left(0, T\right)}\)</span> como una serie de Fourier:
 $<span class="math notranslate nohighlight">\(
-f(t) = \sum_{n=-\infty}^{\infty} c_n  e^{i \frac{2 \pi n}{T} t}
+x(t) = \sum_{n=-\infty}^{\infty} c_n  e^{i \frac{2 \pi n}{T} t}
 \)</span><span class="math notranslate nohighlight">\(
 donde los coeficientes \)</span>c_n<span class="math notranslate nohighlight">\( se obtienen como:
 \)</span><span class="math notranslate nohighlight">\(
-c_n = \frac{1}{T} \int_0^T f(t) e^{-i \frac{2 \pi n}{T} t} dt \quad \text{para } n \in \mathbb{Z}
+c_n = \frac{1}{T} \int_0^T x(t) e^{-i \frac{2 \pi n}{T} t} dt \quad \text{para } n \in \mathbb{Z}
 \)</span>$
 Esta fórmula nos da los coeficientes que representan la amplitud y fase de cada componente armónica en la señal periódica.</p>
 <p>El estudio de la convergencia y los tipos de funciones que son posibles representar queda fuera de este curso, pero es importante mencionar que la serie de Fourier converge a la función original en casi todos los puntos, excepto en los puntos de discontinuidad, donde converge al promedio de los límites laterales. Para profundizar, capítulo 3 de Señales y Sistemas de Openheim y también <a class="reference external" href="https://en.wikipedia.org/wiki/Convergence_of_Fourier_series">Wikipedia</a>.</p>
@@ -491,15 +495,15 @@ Esta fórmula nos da los coeficientes que representan la amplitud y fase de cada
 <p>La serie de Fourier también se puede expresar en términos de funciones seno y coseno. En este caso, la serie de Fourier se escribe como:</p>
 <div class="math notranslate nohighlight">
 \[
-f(t) = a_0 + \sum_{n=1}^{\infty} \left( a_n \cos\left(\frac{2 \pi n}{T} t\right) + b_n \sin\left(\frac{2 \pi n}{T} t\right) \right)
+x(t) = a_0 + \sum_{n=1}^{\infty} \left( a_n \cos\left(\frac{2 \pi n}{T} t\right) + b_n \sin\left(\frac{2 \pi n}{T} t\right) \right)
 \]</div>
 <p>donde los coeficientes <span class="math notranslate nohighlight">\(a_n\)</span> y <span class="math notranslate nohighlight">\(b_n\)</span> se obtienen como:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
-a_0 &amp;= \frac{1}{T} \int_0^T f(t) dt \\
-a_n &amp;= \frac{2}{T} \int_0^T f(t) \cos\left(\frac{2 \pi n}{T} t\right) dt &amp;\, \text{para } n \geq 1 \\
-b_n &amp;= \frac{2}{T} \int_0^T f(t) \sin\left(\frac{2 \pi n}{T} t\right) dt &amp;\, \text{para } n \geq 1
+a_0 &amp;= \frac{1}{T} \int_0^T x(t) dt \\
+a_n &amp;= \frac{2}{T} \int_0^T x(t) \cos\left(\frac{2 \pi n}{T} t\right) dt &amp;\, \text{para } n \geq 1 \\
+b_n &amp;= \frac{2}{T} \int_0^T x(t) \sin\left(\frac{2 \pi n}{T} t\right) dt &amp;\, \text{para } n \geq 1
 \end{align*}
 \end{split}\]</div>
 </section>
@@ -508,7 +512,7 @@ b_n &amp;= \frac{2}{T} \int_0^T f(t) \sin\left(\frac{2 \pi n}{T} t\right) dt &am
 <p>La serie de Fourier también se puede expresar en términos de amplitud y fase. En este caso, la serie de Fourier se escribe como:</p>
 <div class="math notranslate nohighlight">
 \[
-f(t) = A_0 + \sum_{n=1}^{\infty} A_n \cos\left(\frac{2 \pi n}{T} t - \phi_n\right)
+x(t) = A_0 + \sum_{n=1}^{\infty} A_n \cos\left(\frac{2 \pi n}{T} t - \phi_n\right)
 \]</div>
 <p>donde <span class="math notranslate nohighlight">\(A_n\)</span> es la amplitud y <span class="math notranslate nohighlight">\(\phi_n\)</span> es la fase de cada componente armónica. Los coeficientes <span class="math notranslate nohighlight">\(A_n\)</span> y <span class="math notranslate nohighlight">\(\phi_n\)</span> se obtienen a partir de los coeficientes <span class="math notranslate nohighlight">\(a_n\)</span> y <span class="math notranslate nohighlight">\(b_n\)</span> como:</p>
 <div class="math notranslate nohighlight">
@@ -537,14 +541,14 @@ y(t) = 2 \sin(2\pi t) + 3 \sin(2\pi 2 t) + 1.5 \sin(2\pi 3 t)
 <p>La señal diente de sierra es una señal periódica que se puede representar como una serie de Fourier. La forma más común de la señal diente de sierra es:</p>
 <div class="math notranslate nohighlight">
 \[
-f(t) = \frac{t}{T} \quad  -T/2 \leq t &lt; T/2
+x(t) = \frac{t}{T} \quad  -T/2 \leq t &lt; T/2
 \]</div>
 <p>donde <span class="math notranslate nohighlight">\(T\)</span> es el periodo de la señal. Los coeficientes de la serie de Fourier para la señal diente de sierra se pueden calcular integrando la función en el intervalo <span class="math notranslate nohighlight">\([0, T]\)</span>:
 $<span class="math notranslate nohighlight">\(
 \begin{align*}
-a_0 &amp;= \frac{1}{T} \int_{-T/2}^{T/2} f(t) dt = \frac{1}{T} \int_{-T/2}^{T/2} \frac{t}{T} dt = 0 \\
-a_n &amp;= \frac{2}{T} \int_{-T/2}^{T/2} f(t) \cos\left(\frac{2 \pi n}{T} t\right) dt = \frac{2}{T^2} \int_{-T/2}^{T/2} t \cos\left(\frac{2 \pi n}{T} t\right) dt = 0 \\
-b_n &amp;= \frac{2}{T} \int_{-T/2}^{T/2} f(t) \sin\left(\frac{2 \pi n}{T} t\right) dt = \frac{2}{T^2} \int_{-T/2}^{T/2} t \sin\left(\frac{2 \pi n}{T} t\right) dt = \frac{\sin{2 \pi n}}{n^2 \pi^2} - \frac{2 \cos{2 \pi n}}{\pi n} = \left(-1\right)^{n} \frac{2}{\pi n}
+a_0 &amp;= \frac{1}{T} \int_{-T/2}^{T/2} x(t) dt = \frac{1}{T} \int_{-T/2}^{T/2} \frac{t}{T} dt = 0 \\
+a_n &amp;= \frac{2}{T} \int_{-T/2}^{T/2} x(t) \cos\left(\frac{2 \pi n}{T} t\right) dt = \frac{2}{T^2} \int_{-T/2}^{T/2} t \cos\left(\frac{2 \pi n}{T} t\right) dt = 0 \\
+b_n &amp;= \frac{2}{T} \int_{-T/2}^{T/2} x(t) \sin\left(\frac{2 \pi n}{T} t\right) dt = \frac{2}{T^2} \int_{-T/2}^{T/2} t \sin\left(\frac{2 \pi n}{T} t\right) dt = \frac{\sin{2 \pi n}}{n^2 \pi^2} - \frac{2 \cos{2 \pi n}}{\pi n} = \left(-1\right)^{n} \frac{2}{\pi n}
 \end{align*}
 \)</span>$</p>
 <p>Por lo tanto, la serie de Fourier para la señal diente de sierra es:</p>
@@ -559,7 +563,7 @@ f(t) = \sum_{n=1}^{\infty} \left(-1\right)^{n} \frac{2 \sin{\frac{2 \pi n}{T} t 
 <p>La relación de Parseval establece que la energía total de una señal en el dominio del tiempo es igual a la energía total de la señal en el dominio de la frecuencia. Matemáticamente, se expresa como:</p>
 <div class="math notranslate nohighlight">
 \[
-\frac{1}{T} \int_T |f(t)|^2 dt = \sum_{n=-\infty}^{\infty} |c_n|^2
+\frac{1}{T} \int_T |x(t)|^2 dt = \sum_{n=-\infty}^{\infty} |c_n|^2
 \]</div>
 <p>donde <span class="math notranslate nohighlight">\(c_n\)</span> son los coeficientes de la serie de Fourier. Esta relación es útil para analizar la energía de una señal en el dominio de la frecuencia.</p>
 </section>
@@ -596,12 +600,12 @@ f(t) = \sum_{n=1}^{\infty} \left(-1\right)^{n} \frac{2 \sin{\frac{2 \pi n}{T} t 
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="codigo_convolucion.html"
+       href="intro_fourier.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Código: Convolución</p>
+        <p class="prev-next-title">Introducción Fourier</p>
       </div>
     </a>
     <a class="right-next"
@@ -633,7 +637,7 @@ f(t) = \sum_{n=1}^{\infty} \left(-1\right)^{n} \frac{2 \sin{\frac{2 \pi n}{T} t 
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-de-funciones-ortogonales">Base de funciones ortogonales</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-ortogonal-para-funciones-periodicas-series-de-fourier">Base ortogonal para funciones periódicas (series de Fourier)</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-ortogonal-para-senales-periodicas-series-de-fourier">Base ortogonal para señales periódicas (series de Fourier)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-seno-coseno">Forma seno-coseno</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-amplitud-fase">Forma amplitud-fase</a></li>
 </ul>
