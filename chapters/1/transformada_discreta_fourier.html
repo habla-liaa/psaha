@@ -181,7 +181,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="series_de_fourier.html">Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codigo_series_de_fourier.html">Código: Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="transformada_de_fourier.html">Transformada de Fourier</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="codigo_transformada_de_fourier.html">Código: Transformada de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
 </ul>
@@ -356,7 +355,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -372,6 +373,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simetrias-de-las-4-transformadas">Simetrías de las 4 transformadas</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -383,6 +392,9 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="transformada-discreta-de-fourier">
 <h1>Transformada Discreta de Fourier<a class="headerlink" href="#transformada-discreta-de-fourier" title="Permalink to this heading">#</a></h1>
+<section id="simetrias-de-las-4-transformadas">
+<h2>Simetrías de las 4 transformadas<a class="headerlink" href="#simetrias-de-las-4-transformadas" title="Permalink to this heading">#</a></h2>
+<a class="reference internal image-reference" href="../../_images/dft.gif"><img alt="" src="../../_images/dft.gif" style="width: 700px;" /></a>
 <p>La fórmula de la tranformada de fourier de una señal <span class="math notranslate nohighlight">\(x(t)\)</span> es: $<span class="math notranslate nohighlight">\(X(f) := \int_{-\infty}^{\infty} x(t)\ e^{-j 2\pi f t}\,dt, \)</span>$</p>
 <p>La versión discreta es una suma sobre el total de los datos de una señal <span class="math notranslate nohighlight">\(x_n\)</span> de largo <span class="math notranslate nohighlight">\(N\)</span>:</p>
 <div class="math notranslate nohighlight">
@@ -390,6 +402,7 @@ document.write(`
 <p>La transformada inversa es:</p>
 <div class="math notranslate nohighlight">
 \[x[n] = \frac{1}{N} \sum_{k=0}^{N-1} X[k] e^{j \frac{2 \pi}{N} k n} \quad \quad n = 0, \dots, N-1\]</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -428,6 +441,20 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simetrias-de-las-4-transformadas">Simetrías de las 4 transformadas</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

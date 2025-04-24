@@ -1,0 +1,959 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>A equals -K over M times Laplacian matrix 5x5 with 2 in the diagonal and -1 off &#8212; Procesamiento de señales, audio y habla</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/1/formulas2';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Procesamiento de señales, audio y habla - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Procesamiento de señales, audio y habla - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Procesamiento de señales, audio y habla
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Procesamiento de señales</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Historia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_senales.html">Código: Señales y operaciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="energyandpower.html">Energía y Potencia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sistemaslti.html">Sistemas Lineales e Invariantes en el Tiempo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convolucion.html">Convolución</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_convolucion.html">Código: Convolución</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro_fourier.html">Introducción Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="series_de_fourier.html">Series de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_series_de_fourier.html">Código: Series de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformada_de_fourier.html">Transformada de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_transformada_de_fourier.html">Código: Transformada de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/1/formulas2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/1/formulas2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>A equals -K over M times Laplacian matrix 5x5 with 2 in the diagonal and -1 off</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">A equals -K over M times Laplacian matrix 5x5 with 2 in the diagonal and -1 off</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#all-in-one-formula">All in one formula</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wave-equation">Wave equation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-in-wolfram-syntax">Matrix in wolfram syntax</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-lineal">Sistema lineal</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-invariante-en-el-tiempo">Sistema invariante en el tiempo</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-filter">Digital filter</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analog-filter">Analog filter</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="math notranslate nohighlight">
+\[
+\mathbf {STFT} \{x(t)\}(\tau ,\omega )\equiv X(\tau ,\omega )=\int _{-\infty }^{\infty }x(t)w(t-\tau )e^{-i\omega t}\,dt
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathbf {STFT} \{x[n]\}(m,\omega )\equiv X(m,\omega )=\sum _{n=0}^{N-1}x[n]w[n-m]e^{-i\omega n}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial^2 y}{\partial x^2} = \frac{1}{c^2}\frac{\partial^2 y}{\partial t^2}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y(x,t) = \sum_{n=1}^N \Big [\frac{2h}{n^2\pi^2} \frac{L^2}{d(L-d)}\,\sin\Big(\frac{d n \pi}{L}\Big)\Big ]\ \sin\Big(\frac{n\pi}{L}x\Big) \cos\Big(2\pi\frac{n c}{2 L} t\Big) \ .
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y(x,t) = \sum_{m=1}^\infty A_m \sin\Big(\frac{m\pi}{L}x\Big) \exp(i\omega_{m}t)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+u_n(t)= \sum_{m=1}^N A_{m} \sqrt{\frac{2}{N}} \sin\Big(\frac{mn\pi}{N+1}\Big)\exp(i\omega_{m}t)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\omega_m = \sqrt{\frac{4K}{M}}\left| \sin\frac{m\pi}{2(N+1)}\right| 
+\]</div>
+<section id="a-equals-k-over-m-times-laplacian-matrix-5x5-with-2-in-the-diagonal-and-1-off">
+<h1>A equals -K over M times Laplacian matrix 5x5 with 2 in the diagonal and -1 off<a class="headerlink" href="#a-equals-k-over-m-times-laplacian-matrix-5x5-with-2-in-the-diagonal-and-1-off" title="Permalink to this heading">#</a></h1>
+<div class="math notranslate nohighlight">
+\[
+A = -\frac{K}{M} \cdot L
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+L = \begin{bmatrix}
+2 &amp; -1 &amp; 0 &amp; 0 &amp; 0 \\
+-1 &amp; 2 &amp; -1 &amp; 0 &amp; 0 \\
+0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 \\
+0 &amp; 0 &amp; -1 &amp; 2 &amp; -1 \\
+0 &amp; 0 &amp; 0 &amp; -1 &amp; 2
+\end{bmatrix}
+\end{split}\]</div>
+</section>
+<section id="all-in-one-formula">
+<h1>All in one formula<a class="headerlink" href="#all-in-one-formula" title="Permalink to this heading">#</a></h1>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A = - \omega_0^2 \cdot \begin{bmatrix}
+2 &amp; -1 &amp; 0 &amp; 0 &amp; 0 \\
+-1 &amp; 2 &amp; -1 &amp; 0 &amp; 0 \\
+0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 \\
+0 &amp; 0 &amp; -1 &amp; 2 &amp; -1 \\
+0 &amp; 0 &amp; 0 &amp; -1 &amp; 2
+\end{bmatrix}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial^2 u_n(t)}{\partial t^2} = \sum_{m=1}^N A_{nm} u_m(t)
+\]</div>
+</section>
+<section id="wave-equation">
+<h1>Wave equation<a class="headerlink" href="#wave-equation" title="Permalink to this heading">#</a></h1>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial^2 y(t)}{\partial t^2} = c^2 \frac{\partial^2 y(t)}{\partial x^2}
+\]</div>
+</section>
+<section id="matrix-in-wolfram-syntax">
+<h1>Matrix in wolfram syntax<a class="headerlink" href="#matrix-in-wolfram-syntax" title="Permalink to this heading">#</a></h1>
+<div class="math notranslate nohighlight">
+\[
+{{2, -1, 0, 0, 0}, {-1, 2, -1, 0, 0}, {0, -1, 2, -1, 0}, {0, 0, -1, 2, -1}, {0, 0, 0, -1, 2}}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y(t) = \frac{dx}{dt}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y[n] = x[n] - x[n-1]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+Y = X - RX = \frac{X}{1-R}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y(t) = \int x(t) dt
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y[n] = x[n] + y[n-1]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+Y = X + RY &amp; \, &amp;  X = \frac{Y}{1-R}
+\end{align}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\Delta t
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+SR = \frac{1}{\Delta t}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+2^N
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+x[n] = \sum_{k=-\infty}^{\infty} x[n] \delta[k-n]
+\]</div>
+<p>Convolución discreta</p>
+<div class="math notranslate nohighlight">
+\[ y[n] = \alpha_0 x[n-0] + \alpha_1 x[n-1] + \alpha_2 x[n-2] + \cdots \]</div>
+<div class="math notranslate nohighlight">
+\[ y[n] = h[0]x[n-0] + h[1]x[n-1] + h[2]x[n-2] + \cdots \]</div>
+<div class="math notranslate nohighlight">
+\[
+y[n] = \sum_{k=0}^{N-1} h[k]x[n-k]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y[n] = \left(h * x\right)[n]
+\]</div>
+<div class="math notranslate nohighlight">
+\[ f (t) * g (t)\ \stackrel{\mathrm{.}}{=} \int_{-\infty}^{\infty} f(\tau) g(t - \tau) d\tau \]</div>
+<div class="math notranslate nohighlight">
+\[{\displaystyle f[n]*g[n]=\sum _{m=0 }^{M }f[m]g[n-m]}\]</div>
+<div class="math notranslate nohighlight">
+\[
+\displaystyle R_{W}(n)=\operatorname {E} [W(k+n)W(k)]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\displaystyle R_{W}(n)=\sigma ^{2}\delta (n)
+\]</div>
+<p>Propiedades de la convolución</p>
+<p>Conmutativa
+Asociativa
+Distributiva
+Asociativa con la multiplicación por escalares
+Elemento neutro</p>
+<div class="math notranslate nohighlight">
+\[
+\left(h * x\right)[n] = \left(x * h\right)[n]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\left(h * x\right) * g = h * \left(x * g\right)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+h * \left(x_1 + x_2\right) = h * x_1 + h * x_2
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\alpha \left(h * x\right) = \left(\alpha h\right) * x
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+x * \delta = x
+\]</div>
+</section>
+<section id="sistema-lineal">
+<h1>Sistema lineal<a class="headerlink" href="#sistema-lineal" title="Permalink to this heading">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ x \rightarrow S \rightarrow y \]</div>
+<div class="math notranslate nohighlight">
+\[ \alpha x \rightarrow S \rightarrow \alpha y \]</div>
+<div class="math notranslate nohighlight">
+\[ x_1 \rightarrow S \rightarrow y_1, \quad y_2 \rightarrow S \rightarrow y_2 \]</div>
+<div class="math notranslate nohighlight">
+\[ x_1 + x_2 \rightarrow S \rightarrow y_1 + y_2 \]</div>
+</section>
+<section id="sistema-invariante-en-el-tiempo">
+<h1>Sistema invariante en el tiempo<a class="headerlink" href="#sistema-invariante-en-el-tiempo" title="Permalink to this heading">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ x(t) \rightarrow S \rightarrow y(t) \]</div>
+<div class="math notranslate nohighlight">
+\[ x(t - t_0) \rightarrow S \rightarrow y(t - t_0) \]</div>
+<div class="math notranslate nohighlight">
+\[
+x(t)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y(t)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+x[n]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y[n]
+\]</div>
+<div class="math notranslate nohighlight">
+\[S:\R^N \rightarrow \R^M\]</div>
+<div class="math notranslate nohighlight">
+\[x(t):t \in \R \rightarrow x \in \R^2\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}x(t) = \begin{bmatrix} x_L(t)\\ x_R(t) \end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[V(x,y,z): (x,y,z) \in \R^3 \rightarrow V \in \R^3\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}V(x,y,z) = \begin{bmatrix} V_x(x,y,z) \\ V_y(x,y,z) \\ V_z(x,y,z) \end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[T(\theta): \theta \in [0,2\pi) \rightarrow T \in \R\]</div>
+<div class="math notranslate nohighlight">
+\[S:\mathbb{K}_{in}^N \rightarrow \mathbb{K}_{out}^M\]</div>
+<!-- $$x[n]: n \in \{0,1,2,...,N-1\} \rightarrow x \in \R$$ -->
+<div class="math notranslate nohighlight">
+\[x[n]: n \in \{0,1,2,...,N-1\} \rightarrow x \in \{-2^8,..., 2^8-1\}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">fftconvolve</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fft convolve of a ramp with dirichlet kernel</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>                                                                         
+<span class="c1"># dirichlet kernel</span>
+<span class="k">def</span> <span class="nf">dirichlet_kernel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">x</span><span class="o">==</span><span class="mi">0</span>
+    <span class="n">x</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">x</span> <span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">diric</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># t = np.linspace(-np.pi, np.pi, 1000, endpoint=False)</span>
+<span class="c1"># n = 10</span>
+<span class="c1"># d = dirichlet_kernel(t, n)</span>
+<span class="c1"># plt.plot(t, d)</span>
+
+<span class="c1"># # d2 = diric(t*2, n)</span>
+<span class="c1"># # plt.plot(t, d2)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">dirichlet_kernel</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="o">/</span><span class="n">n</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">fftconvolve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+
+<span class="n">d2</span> <span class="o">=</span> <span class="n">diric</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">fftconvolve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d2</span> <span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y2</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assuming necessary libraries like numpy (as np), matplotlib.pyplot (as plt),</span>
+<span class="c1"># and numpy.fft functions (fft, fftshift, fftfreq) are imported previously.</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.fft</span> <span class="kn">import</span> <span class="n">fft</span><span class="p">,</span> <span class="n">fftshift</span><span class="p">,</span> <span class="n">fftfreq</span>
+
+<span class="c1"># increase font size</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">})</span>
+
+
+<span class="c1"># Define time and frequency parameters</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Sampling frequency in Hz (ensure Nyquist criterion is met for 20 Hz)</span>
+<span class="n">duration</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># seconds</span>
+<span class="n">n_points</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fs</span> <span class="o">*</span> <span class="n">duration</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">duration</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">duration</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n_points</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">n_points</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">fs</span><span class="p">))</span>
+
+<span class="c1"># Create the 3x2 subplot grid</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="o">*</span><span class="mf">1.2</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="mf">1.2</span><span class="p">))</span> <span class="c1"># Adjusted figsize for better layout</span>
+
+<span class="c1"># --- Row 1 ---</span>
+<span class="c1"># Col 1: Sine wave (20 Hz)</span>
+<span class="n">f_sine</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># Hz</span>
+<span class="n">sine_wave</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f_sine</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">sine_wave</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Sine Wave (20 Hz)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Col 2: FFT of Sine wave (Dirac delta representation using stem)</span>
+<span class="n">sine_fft</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">sine_wave</span><span class="p">))</span>
+<span class="n">sine_fft_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sine_fft</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_points</span> <span class="c1"># Normalize magnitude</span>
+<span class="c1"># Use stem plot - peaks should be at +/- 20 Hz</span>
+<span class="n">markerline</span><span class="p">,</span> <span class="n">stemlines</span><span class="p">,</span> <span class="n">baseline</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sine_fft_mag</span><span class="p">,</span> <span class="n">linefmt</span><span class="o">=</span><span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">markerfmt</span><span class="o">=</span><span class="s1">&#39;ko&#39;</span><span class="p">,</span> <span class="n">basefmt</span><span class="o">=</span><span class="s1">&#39;k-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">markerline</span><span class="p">,</span> <span class="s1">&#39;markersize&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">stemlines</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;linewidth&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">baseline</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;linewidth&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;FFT of Sine Wave (Magnitude)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Magnitude&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span> <span class="c1"># Focus on the region around +/- 20 Hz</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="c1"># --- Row 2 ---</span>
+<span class="c1"># Col 1: Square pulse (0.5s width centered at 0)</span>
+<span class="n">pulse_width</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">square_pulse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">square_pulse</span><span class="p">[(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">pulse_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">pulse_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">square_pulse</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Square Pulse (0.5s width)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span> <span class="c1"># Set y-limits for clarity</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Col 2: FFT of Square pulse (Sinc function shape)</span>
+<span class="n">square_fft</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">square_pulse</span><span class="p">))</span>
+<span class="n">square_fft_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">square_fft</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_points</span> <span class="c1"># Normalize magnitude</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">square_fft_mag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;FFT of Square Pulse (Magnitude)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Magnitude&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span> <span class="c1"># Focus on the main lobe and side lobes</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="c1"># --- Row 3 ---</span>
+<span class="c1"># Col 1: Sine wave multiplied by square pulse (windowed sine)</span>
+<span class="c1"># This results in 20 Hz * 0.5 s = 10 periods within the pulse</span>
+<span class="n">windowed_sine</span> <span class="o">=</span> <span class="n">sine_wave</span> <span class="o">*</span> <span class="n">square_pulse</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">windowed_sine</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Windowed Sine Wave (10 periods)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Col 2: FFT of Windowed Sine wave</span>
+<span class="n">windowed_sine_fft</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">windowed_sine</span><span class="p">))</span>
+<span class="n">windowed_sine_fft_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">windowed_sine_fft</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_points</span> <span class="c1"># Normalize magnitude</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">windowed_sine_fft_mag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;FFT of Windowed Sine (Magnitude)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Magnitude&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span> <span class="c1"># Focus on the convolved spectrum</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="c1"># Adjust layout and display plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/b9749a6b19dc9f0d48812b2f8ce977c1cc83c6c99059ac23592f0dd5d077d196.png" src="../../_images/b9749a6b19dc9f0d48812b2f8ce977c1cc83c6c99059ac23592f0dd5d077d196.png" />
+<img alt="../../_images/7623da612e170a5bd72fb81728b2085e7bd373121ad5c4037d8a2135a79aeeee.png" src="../../_images/7623da612e170a5bd72fb81728b2085e7bd373121ad5c4037d8a2135a79aeeee.png" />
+</div>
+</div>
+<p>Uncertainty principle</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{-\infty}^{\infty} t^2 |x(t)|^2 dt \cdot \int_{-\infty}^{\infty}  \omega^2 |X(\omega)|^2 d\omega \geq \frac{1}{4}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\sigma_t \cdot \sigma_\omega \geq \frac{1}{2}
+\]</div>
+</section>
+<section id="digital-filter">
+<h1>Digital filter<a class="headerlink" href="#digital-filter" title="Permalink to this heading">#</a></h1>
+<div class="math notranslate nohighlight">
+\[
+\sum_{k=0}^{M} a_{k}y[n-k] = \sum_{k=0}^{N} b_{k} x[n-k]
+\]</div>
+</section>
+<section id="analog-filter">
+<h1>Analog filter<a class="headerlink" href="#analog-filter" title="Permalink to this heading">#</a></h1>
+<div class="math notranslate nohighlight">
+\[
+\sum_{k=0}^{M} a_{k} \frac{d^k y(t)}{dt^k} = \sum_{k=0}^{N} b_{k} \frac{d^k x(t)}{dt^k}
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+x(t) &amp;= e^{s t} \\
+y(t) &amp;= (h \ast x)(t)  \\
+y(t) &amp;= H(s) e^{s t}\\
+y(t) &amp;= H(s) x(t)
+\end{align}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[
+H(s) = \int_{-\infty}^{\infty} h(\tau) e^{-s \tau} d\tau 
+\]</div>
+<p>Para el caso discreto:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+x[n] &amp;= z^{n} \\
+y[n] &amp;= (h \ast x)[n] \\
+y[n] &amp;= H(z) z^{n}\\
+y[n] &amp;= H(z) x[n]
+\end{align}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+H(z) =  \sum_{k=-\infty}^{\infty} h[k] z^{-k} \\
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[
+\sum_{k=0}^{N} a_k \frac{d^k y(t)}{dt^k} = \sum_{k=0}^{M} b_k \frac{d^k x(t)}{dt^k}.
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\left( \sum_{k=0}^{N} a_k s^k \right) Y(s) = \left( \sum_{k=0}^{M} b_k s^k \right) X(s),
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+H(s) = \frac{ \sum_{k=0}^{M} b_k s^k }{ \sum_{k=0}^{N} a_k s^k }.
+\]</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/1"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">A equals -K over M times Laplacian matrix 5x5 with 2 in the diagonal and -1 off</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#all-in-one-formula">All in one formula</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wave-equation">Wave equation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-in-wolfram-syntax">Matrix in wolfram syntax</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-lineal">Sistema lineal</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-invariante-en-el-tiempo">Sistema invariante en el tiempo</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-filter">Digital filter</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analog-filter">Analog filter</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pablo Riera
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
