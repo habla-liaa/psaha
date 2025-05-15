@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Sistemas Lineales e Invariantes en el Tiempo &#8212; Procesamiento de señales, audio y habla</title>
   
@@ -15,53 +14,49 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/1/sistemaslti';</script>
@@ -78,28 +73,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -121,12 +111,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -142,6 +140,8 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
 
+  
+    
   
 
 <a class="navbar-brand logo" href="../../index.html">
@@ -160,7 +160,18 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -183,9 +194,24 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="series_de_fourier.html">Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codigo_series_de_fourier.html">Código: Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="transformada_de_fourier.html">Transformada de Fourier</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="codigo_transformada_de_fourier.html">Código: Transformada de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformada_discreta_fourier.html">Transformada Discreta de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_transformada_discreta_de_fourier.html">Código: Transformada Discreta de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tiempo-frecuencia.html">Tiempo-Frecuencia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stft.html">Transformada de Fourier de Tiempo Corto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_stft.html">Código: Transformada de Fourier de Tiempo Corto (STFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_filtros.html">Codigo: Filtros</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Habla y lenguage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3/codigo_analisis_habla.html">Intensidad</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../3/codigo_descubrimiento_de_unidades.html">Codigo: Descubrimiento de Unidades del Lenguaje</a></li>
 </ul>
 
     </div>
@@ -201,7 +227,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -210,14 +236,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -342,10 +368,10 @@ const thebe_selector_output = ".output, .cell_output"
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -353,14 +379,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -405,15 +431,15 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="sistemas-lineales-e-invariantes-en-el-tiempo">
-<h1>Sistemas Lineales e Invariantes en el Tiempo<a class="headerlink" href="#sistemas-lineales-e-invariantes-en-el-tiempo" title="Permalink to this heading">#</a></h1>
+<h1>Sistemas Lineales e Invariantes en el Tiempo<a class="headerlink" href="#sistemas-lineales-e-invariantes-en-el-tiempo" title="Link to this heading">#</a></h1>
 <section id="sistema-lineal">
-<h2>Sistema lineal<a class="headerlink" href="#sistema-lineal" title="Permalink to this heading">#</a></h2>
+<h2>Sistema lineal<a class="headerlink" href="#sistema-lineal" title="Link to this heading">#</a></h2>
 <p>Definiendo un sistema lineal como aquel que cumple con la propiedad de superposición y de homogeneidad.</p>
 <section id="superposicion">
-<h3>Superposición<a class="headerlink" href="#superposicion" title="Permalink to this heading">#</a></h3>
+<h3>Superposición<a class="headerlink" href="#superposicion" title="Link to this heading">#</a></h3>
 <p>Se aplica una entrada <span class="math notranslate nohighlight">\(x_1\)</span> y se obtiene una salida <span class="math notranslate nohighlight">\(y_1\)</span> y luego se aplica una entrada <span class="math notranslate nohighlight">\(x_2\)</span> y se obtiene una salida <span class="math notranslate nohighlight">\(y_2\)</span>, entonces si se aplica una entrada <span class="math notranslate nohighlight">\(x_1 + x_2\)</span> se obtiene una salida <span class="math notranslate nohighlight">\(y_1 + y_2\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[ x_1 \rightarrow S \rightarrow y_1, \quad y_2 \rightarrow S \rightarrow y_2 \]</div>
@@ -431,7 +457,7 @@ y_1(t) + y_2(t) = H \cdot (x_1(t) + x_2(t))
 <p>El resultado de un sistema a estimulos complejos puede expresarse como estímulos menos complejos.</p>
 </section>
 <section id="homogeneidad">
-<h3>Homogeneidad<a class="headerlink" href="#homogeneidad" title="Permalink to this heading">#</a></h3>
+<h3>Homogeneidad<a class="headerlink" href="#homogeneidad" title="Link to this heading">#</a></h3>
 <p>Si se aplica una entrada <span class="math notranslate nohighlight">\(\alpha x\)</span> se obtiene una salida <span class="math notranslate nohighlight">\(\alpha y\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[ x \rightarrow S \rightarrow y \]</div>
@@ -449,7 +475,7 @@ y(t) = H \cdot x(t)
 </section>
 </section>
 <section id="sistema-invariante-en-el-tiempo">
-<h2>Sistema invariante en el tiempo<a class="headerlink" href="#sistema-invariante-en-el-tiempo" title="Permalink to this heading">#</a></h2>
+<h2>Sistema invariante en el tiempo<a class="headerlink" href="#sistema-invariante-en-el-tiempo" title="Link to this heading">#</a></h2>
 <p>Un sistema es invariante en el tiempo si el desplazamiento temporal de la entrada produce un desplazamiento temporal en la salida, es decir el sistema no cambia su comportamiento en el tiempo.</p>
 <div class="math notranslate nohighlight">
 \[ x(t) \rightarrow S \rightarrow y(t) \]</div>
@@ -466,7 +492,7 @@ y(t - t_0) = H \cdot x(t - t_0) = H \cdot D_{t_0} \cdot x(t) = D_{t_0} \cdot H \
 \]</div>
 </section>
 <section id="caracterizacion-de-un-sistema">
-<h2>Caracterización de un sistema<a class="headerlink" href="#caracterizacion-de-un-sistema" title="Permalink to this heading">#</a></h2>
+<h2>Caracterización de un sistema<a class="headerlink" href="#caracterizacion-de-un-sistema" title="Link to this heading">#</a></h2>
 <p>Cualquier señal la podemos expresar como:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -500,7 +526,7 @@ y[n] = \left(h * x\right)[n]
 \[ y(t) =  \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau  =  \left( h * x \right)(t)\  \]</div>
 </section>
 <section id="respuesta-al-impulso-de-un-sistema-lti">
-<h2>Respuesta al impulso de un sistema LTI<a class="headerlink" href="#respuesta-al-impulso-de-un-sistema-lti" title="Permalink to this heading">#</a></h2>
+<h2>Respuesta al impulso de un sistema LTI<a class="headerlink" href="#respuesta-al-impulso-de-un-sistema-lti" title="Link to this heading">#</a></h2>
 <p>Imaginemos tenemos acceso a un sistema LTI, al cual le podemos aplicar cualquier señal de entrada y medir la señal de salida. Sería interesante poder encontrar <span class="math notranslate nohighlight">\(h[n]\)</span> y caracterizar el sistema en base a una señal de entrada especial. Si vemos las ecuación (1), la señal <span class="math notranslate nohighlight">\(\delta[n]\)</span> cumple con la propiedad de ser el elemento neutro, es decir que al convolucionar cualquier señal con el impulso, la señal de salida es igual a la señal de entrada. En el caso de un sistema LTI caracterizado por una señal <span class="math notranslate nohighlight">\(h[n]\)</span>, aplicar un impulso genera la señal que caracteriza al sistema, esto le da a <span class="math notranslate nohighlight">\(h[n]\)</span> el nombre de respuesta al impulso del sistema.</p>
 <div class="math notranslate nohighlight">
 \[
@@ -510,10 +536,10 @@ y[n] &amp;= \left(h * \delta\right)[n] = h[n] &amp;\quad y(t) &amp;= \left( h * 
 \]</div>
 </section>
 <section id="representacion-de-un-sistema-lti">
-<h2>Representación de un sistema LTI<a class="headerlink" href="#representacion-de-un-sistema-lti" title="Permalink to this heading">#</a></h2>
+<h2>Representación de un sistema LTI<a class="headerlink" href="#representacion-de-un-sistema-lti" title="Link to this heading">#</a></h2>
 <p>Un sistema LTI puede ser representado de diferentes maneras, dependiendo del contexto. En el caso discreto, se puede representar como un sistema de ecuaciones en diferencias, mientras que en el caso continuo se puede representar como un sistema de ecuaciones diferenciales.</p>
 <section id="ecuacion-general-de-un-sistema-discreto-lti">
-<h3>Ecuación general de un sistema discreto LTI<a class="headerlink" href="#ecuacion-general-de-un-sistema-discreto-lti" title="Permalink to this heading">#</a></h3>
+<h3>Ecuación general de un sistema discreto LTI<a class="headerlink" href="#ecuacion-general-de-un-sistema-discreto-lti" title="Link to this heading">#</a></h3>
 <p>La siguiente notación es comúnmente utilizada para representar un sistema LTI discreto, se establece que hay dos grupos de coeficientes, uno para la señal de entrada <span class="math notranslate nohighlight">\(b_k\)</span> y otro para la señal de salida <span class="math notranslate nohighlight">\(a_k\)</span>. La ecuación general de un sistema LTI discreto es:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -521,7 +547,7 @@ y[n] &amp;= \left(h * \delta\right)[n] = h[n] &amp;\quad y(t) &amp;= \left( h * 
 \]</div>
 </section>
 <section id="ecuacion-general-de-un-sistema-lineal-de-ecuaciones-diferenciales">
-<h3>Ecuación general de un sistema lineal de ecuaciones diferenciales<a class="headerlink" href="#ecuacion-general-de-un-sistema-lineal-de-ecuaciones-diferenciales" title="Permalink to this heading">#</a></h3>
+<h3>Ecuación general de un sistema lineal de ecuaciones diferenciales<a class="headerlink" href="#ecuacion-general-de-un-sistema-lineal-de-ecuaciones-diferenciales" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
 \sum_{k=0}^{N} a_k \frac{d^k y(t)}{dt^k} = \sum_{k=0}^{M} b_k \frac{d^k x(t)}{dt^k}
@@ -529,7 +555,7 @@ y[n] &amp;= \left(h * \delta\right)[n] = h[n] &amp;\quad y(t) &amp;= \left( h * 
 </section>
 </section>
 <section id="autofunciones-de-la-convolucion-sistema-lti">
-<h2>Autofunciones de la convolución / sistema LTI<a class="headerlink" href="#autofunciones-de-la-convolucion-sistema-lti" title="Permalink to this heading">#</a></h2>
+<h2>Autofunciones de la convolución / sistema LTI<a class="headerlink" href="#autofunciones-de-la-convolucion-sistema-lti" title="Link to this heading">#</a></h2>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align}
@@ -561,7 +587,7 @@ y[n] &amp;= H(z) x[n]
 \end{split}\]</div>
 </section>
 <section id="respuesta-a-senales-periodicas">
-<h2>Respuesta a señales periódicas<a class="headerlink" href="#respuesta-a-senales-periodicas" title="Permalink to this heading">#</a></h2>
+<h2>Respuesta a señales periódicas<a class="headerlink" href="#respuesta-a-senales-periodicas" title="Link to this heading">#</a></h2>
 <p>Restringimos <span class="math notranslate nohighlight">\(s\)</span> a ser un número complejo puro, es decir <span class="math notranslate nohighlight">\(s = j \omega\)</span> donde <span class="math notranslate nohighlight">\(\omega\)</span> es la frecuencia angular. En este caso la función exponencial compleja <span class="math notranslate nohighlight">\(e^{j \omega t}\)</span> es periódica con periodo <span class="math notranslate nohighlight">\(T = \frac{2 \pi}{\omega}\)</span>. La respuesta a una señal periódica se puede expresar como una combinación de respuestas a señales exponenciales complejas.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -611,7 +637,7 @@ y(t) &amp;= \sum_{k=-\infty}^{\infty} a_k H(j k \omega_0) e^{j k \omega_0 t} \\
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -640,6 +666,7 @@ y(t) &amp;= \sum_{k=-\infty}^{\infty} a_k H(j k \omega_0) e^{j k \omega_0 t} \\
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -686,7 +713,7 @@ By Pablo Riera
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
@@ -710,8 +737,8 @@ By Pablo Riera
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

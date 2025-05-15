@@ -1,0 +1,103 @@
+Traceback (most recent call last):
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/jupyter_core/utils/__init__.py", line 173, in wrapped
+    return loop.run_until_complete(inner)
+  File "/home/miles/miniconda3/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# cosine wave
+sr = 20000  
+f0 = 401
+dur = 400/f0
+t = np.arange(0, dur, 1/sr)
+x = np.cos(2*np.pi*f0*t)
+
+fmax = []
+sigmas = []
+
+plt.rcParams['axes.prop_cycle'] = plt.cycler(color=plt.cm.rainbow(np.linspace(0, 1, 10)))
+fig, axs = plt.subplots(4, 1, figsize=(8, 10))
+
+ks =int(sr/f0/2)*2**np.arange(9, -1,-1)
+for i,k in enumerate(ks):
+    axs[0].plot(t[:k], x[:k]+i*2)
+    
+    freqs = np.arange(k//2+1)/k*sr
+    X = np.abs(np.fft.rfft(x[:k]))/k*2
+
+    freqs_ = np.fft.fftshift(np.fft.fftfreq(k,1/sr))
+    X_ = np.abs(np.fft.fftshift(np.fft.fft(x[:k])))/k
+
+    fmax.append((int(k),float(freqs[np.argmax(X)])))    
+    axs[1].semilogy(freqs, X,".-")
+
+    t_ = t[:k]
+    mu_t = np.trapezoid(t_*np.abs(x[:k])**2,t_)
+    t_ = t_ - mu_t
+    sigma_t = np.sqrt(np.trapezoid(t_**2*np.abs(x[:k])**2,t_))
+     
+    # mu_f = np.trapezoid(freqs_*np.abs(X_)**2,freqs_)
+    # freqs_ = freqs_ - mu_f
+    
+    sigma_f = np.sqrt(np.trapezoid(freqs_**2*np.abs(X_)**2,freqs_))
+    sigmas.append((sigma_t,sigma_f))
+
+fmax = np.array(fmax)
+
+axs[0].set_xlabel('Tiempo (s)')
+axs[0].set_ylabel('Amplitud')
+axs[0].set_yticks([])
+
+axs[1].set_xlim(0, 800)
+axs[1].set_ylim(0.001, 1)
+axs[1].set_xlabel('Frecuencia (Hz)')
+axs[1].set_ylabel('Magnitud')
+
+axs[2].loglog(fmax[:,0]*f0/sr,np.abs(fmax[:,1]-f0)/f0*100,'ko-')
+axs[2].set_xlabel('Ciclos')
+axs[2].set_ylabel('Error predicción\npico de la\ntransformada (%)')
+
+sigmas = np.array(sigmas)
+
+axs[3].loglog(sigmas[:,0],sigmas[:,1],'ko-')
+x = np.logspace(-5,-1,100)
+axs[3].loglog(x,0.5/x,'r-', label='Límite de incertidumbre')
+axs[3].legend()
+
+axs[3].set_xlabel('Desvío estándar tiempo')
+axs[3].set_ylabel('Desvío estándar frecuencia')
+
+print()
+
+plt.tight_layout()
+plt.show()
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+Cell [0;32mIn[2], line 28[0m
+[1;32m     25[0m axs[[38;5;241m1[39m][38;5;241m.[39msemilogy(freqs, X,[38;5;124m"[39m[38;5;124m.-[39m[38;5;124m"[39m)
+[1;32m     27[0m t_ [38;5;241m=[39m t[:k]
+[0;32m---> 28[0m mu_t [38;5;241m=[39m [43mnp[49m[38;5;241;43m.[39;49m[43mtrapezoid[49m(t_[38;5;241m*[39mnp[38;5;241m.[39mabs(x[:k])[38;5;241m*[39m[38;5;241m*[39m[38;5;241m2[39m,t_)
+[1;32m     29[0m t_ [38;5;241m=[39m t_ [38;5;241m-[39m mu_t
+[1;32m     30[0m sigma_t [38;5;241m=[39m np[38;5;241m.[39msqrt(np[38;5;241m.[39mtrapezoid(t_[38;5;241m*[39m[38;5;241m*[39m[38;5;241m2[39m[38;5;241m*[39mnp[38;5;241m.[39mabs(x[:k])[38;5;241m*[39m[38;5;241m*[39m[38;5;241m2[39m,t_))
+
+File [0;32m~/miniconda3/lib/python3.8/site-packages/numpy/__init__.py:320[0m, in [0;36m__getattr__[0;34m(attr)[0m
+[1;32m    317[0m     [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01mtesting[39;00m [38;5;28;01mimport[39;00m Tester
+[1;32m    318[0m     [38;5;28;01mreturn[39;00m Tester
+[0;32m--> 320[0m [38;5;28;01mraise[39;00m [38;5;167;01mAttributeError[39;00m([38;5;124m"[39m[38;5;124mmodule [39m[38;5;132;01m{!r}[39;00m[38;5;124m has no attribute [39m[38;5;124m"[39m
+[1;32m    321[0m                      [38;5;124m"[39m[38;5;132;01m{!r}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat([38;5;18m__name__[39m, attr))
+
+[0;31mAttributeError[0m: module 'numpy' has no attribute 'trapezoid'
+

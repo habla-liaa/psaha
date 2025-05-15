@@ -1,0 +1,53 @@
+Traceback (most recent call last):
+  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/site-packages/nbclient/client.py", line 1314, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# stft en python
+
+hop_size = 512
+win_size = 2048
+
+
+S = np.zeros((win_size//2+1, len(x)//hop_size), dtype=complex)
+
+for frame_i, time_i in enumerate(range(0, len(x), hop_size)):
+    frame = x[time_i:time_i+win_size]
+    if len(frame) < win_size:
+        frame = np.pad(frame, (0, win_size - len(frame)), 'constant')
+    window = np.hanning(len(frame))
+    frame = frame * window
+    spectrum = np.fft.rfft(frame)
+    S[:, time_i] = spectrum
+
+plt.figure(figsize=(10, 4))
+plt.imshow(10*np.log10(np.abs(S)), aspect='auto', origin='lower', cmap='gray')
+plt.colorbar()
+plt.xlabel('Frames')
+plt.ylabel('Frecuencia (bins)')
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mIndexError[0m                                Traceback (most recent call last)
+Cell [0;32mIn[3], line 16[0m
+[1;32m     14[0m     frame [38;5;241m=[39m frame [38;5;241m*[39m window
+[1;32m     15[0m     spectrum [38;5;241m=[39m np[38;5;241m.[39mfft[38;5;241m.[39mrfft(frame)
+[0;32m---> 16[0m     [43mS[49m[43m[[49m[43m:[49m[43m,[49m[43m [49m[43mtime_i[49m[43m][49m [38;5;241m=[39m spectrum
+[1;32m     18[0m plt[38;5;241m.[39mfigure(figsize[38;5;241m=[39m([38;5;241m10[39m, [38;5;241m4[39m))
+[1;32m     19[0m plt[38;5;241m.[39mimshow([38;5;241m10[39m[38;5;241m*[39mnp[38;5;241m.[39mlog10(np[38;5;241m.[39mabs(S)), aspect[38;5;241m=[39m[38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m, origin[38;5;241m=[39m[38;5;124m'[39m[38;5;124mlower[39m[38;5;124m'[39m, cmap[38;5;241m=[39m[38;5;124m'[39m[38;5;124mgray[39m[38;5;124m'[39m)
+
+[0;31mIndexError[0m: index 512 is out of bounds for axis 1 with size 93
+

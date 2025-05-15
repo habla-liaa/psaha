@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Introducción &#8212; Procesamiento de señales, audio y habla</title>
   
@@ -15,53 +14,49 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/1/introduction';</script>
@@ -78,28 +73,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -121,12 +111,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -142,6 +140,8 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
 
+  
+    
   
 
 <a class="navbar-brand logo" href="../../index.html">
@@ -160,7 +160,18 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -183,9 +194,24 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="series_de_fourier.html">Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codigo_series_de_fourier.html">Código: Series de Fourier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="transformada_de_fourier.html">Transformada de Fourier</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="codigo_transformada_de_fourier.html">Código: Transformada de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformada_discreta_fourier.html">Transformada Discreta de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_transformada_discreta_de_fourier.html">Código: Transformada Discreta de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tiempo-frecuencia.html">Tiempo-Frecuencia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stft.html">Transformada de Fourier de Tiempo Corto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_stft.html">Código: Transformada de Fourier de Tiempo Corto (STFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_filtros.html">Codigo: Filtros</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Habla y lenguage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3/codigo_analisis_habla.html">Intensidad</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../3/codigo_descubrimiento_de_unidades.html">Codigo: Descubrimiento de Unidades del Lenguaje</a></li>
 </ul>
 
     </div>
@@ -201,7 +227,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -210,14 +236,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -342,10 +368,10 @@ const thebe_selector_output = ".output, .cell_output"
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -353,14 +379,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -397,14 +423,14 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="introduccion">
-<h1>Introducción<a class="headerlink" href="#introduccion" title="Permalink to this heading">#</a></h1>
+<h1>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h1>
 <p>Este curso busca introducir temas relacionados al procesamiento de señales, particularmente señales de audio. Al mismo tiempo, haremos foco en señales de habla y los desafíos que esta presenta.</p>
 <p>Nos interesará analizar estos temas desde un enfoque sonoro. Es decir buscaremos escuchar y analizar auditivamente las señales de interes.</p>
 <section id="senales">
-<h2>Señales<a class="headerlink" href="#senales" title="Permalink to this heading">#</a></h2>
+<h2>Señales<a class="headerlink" href="#senales" title="Link to this heading">#</a></h2>
 <p>De forma abstracta podemos pensar una señal como un patrón de variaciones que transmite algún tipo de información. Tradicionalmente se consideran señales a funciones matemáticas que representan variaciones en el tiempo o en el espacio.</p>
 <p>En este curso consideraremos señales a cualquier conjunto de valores escalares o vectoriales, continuos o discretos organizados en alguna estructura, por ejemplo, un arreglo unidimensional para sónido o texto, bidimensional para una imagen, o tambíen organizados en grafos o redes.</p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -605,7 +631,8 @@ geom-max=”417.65842,106.79043” /&gt;
 </g>
 </svg></p>
 <p>Una secuencia de símbolos</p>
-<a class="reference internal image-reference" href="https://upload.wikimedia.org/wikipedia/commons/1/18/Signature_de_Joseph_Fourier.jpg"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/1/18/Signature_de_Joseph_Fourier.jpg" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="https://upload.wikimedia.org/wikipedia/commons/1/18/Signature_de_Joseph_Fourier.jpg"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/1/18/Signature_de_Joseph_Fourier.jpg" style="width: 200px;" />
+</a>
 <p>Una trayectoria en una superficie bidimensional, por ejemplo escritura a mano</p>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
@@ -720,9 +747,9 @@ geom-max=”357.65619,291.20019” /&gt;
 <p>Una señal multivariada sobre un grafo</p>
 </section>
 <section id="caracterizacion-de-senales">
-<h2>Caracterización de señales<a class="headerlink" href="#caracterizacion-de-senales" title="Permalink to this heading">#</a></h2>
+<h2>Caracterización de señales<a class="headerlink" href="#caracterizacion-de-senales" title="Link to this heading">#</a></h2>
 <section id="senales-continuas">
-<h3>Señales continuas<a class="headerlink" href="#senales-continuas" title="Permalink to this heading">#</a></h3>
+<h3>Señales continuas<a class="headerlink" href="#senales-continuas" title="Link to this heading">#</a></h3>
 <p>El origen conceptual de las señales está relacionado a magnitudes físicas que varía en el tiempo o en el espacio. Por ejemplo, la temperatura en un punto del espacio, la presión en un punto del espacio, la posición de un cuerpo en el tiempo, la velocidad de un cuerpo en el tiempo, la intensidad de un sonido en el tiempo, la intensidad de una imagen en el espacio, etc.</p>
 <p>Podemos pensar en una señal en términos de funciones <span class="math notranslate nohighlight">\(S:\mathbb{R}^N \rightarrow \mathbb{R}^M\)</span>. Por ejemplo, la posición unidimensional de un cuerpo <span class="math notranslate nohighlight">\(x(t): t \in \mathbb{R} \rightarrow x \in \mathbb{R}\)</span>. El tiempo es la variable independiente, o el dominio, y la posición es la variable dependiente, o la imagen. En el caso de una señal multivariada, la función <span class="math notranslate nohighlight">\(S\)</span> puede ser una función de varias variables, por ejemplo, la temperatura en un cuerpo <span class="math notranslate nohighlight">\(T(x,y,z): (x,y,z) \in \mathbb{R}^3 \rightarrow T \in \mathbb{R}\)</span>. En este caso, la temperatura es una función de tres variables, <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> y <span class="math notranslate nohighlight">\(z\)</span>, que son las coordenadas espaciales del cuerpo.</p>
 <p>Podemo pensar un caso multidimensional <span class="math notranslate nohighlight">\(V: \mathbb{R}^N \rightarrow \mathbb{R}^M\)</span>. Por ejemplo, el campo de velocidades de un fluido <span class="math notranslate nohighlight">\(V(x,y,z): (x,y,z) \in \mathbb{R}^3 \rightarrow V \in \mathbb{R}^3\)</span>. En este caso, el espacio imagen es <span class="math notranslate nohighlight">\(\mathbb{R}^3\)</span>, ya que el campo vector de velocidades es un vector tridimensional.</p>
@@ -731,14 +758,14 @@ geom-max=”357.65619,291.20019” /&gt;
 <p>El dominio de la señal puede tener una estructura o simetrías. Por ejemplo, la temperatura en un anillo <span class="math notranslate nohighlight">\(T(\theta): \theta \in [0,2\pi) \rightarrow T \in \mathbb{R}\)</span>. En este caso, la temperatura es una función de una variable, <span class="math notranslate nohighlight">\(\theta\)</span>, que es el ángulo en el anillo.</p>
 </section>
 <section id="senales-discretas">
-<h3>Señales discretas<a class="headerlink" href="#senales-discretas" title="Permalink to this heading">#</a></h3>
+<h3>Señales discretas<a class="headerlink" href="#senales-discretas" title="Link to this heading">#</a></h3>
 <p>Las señales discretas en la variable independiente se definen como <span class="math notranslate nohighlight">\(S:K^N \rightarrow \mathbb{R}^M\)</span>. Donde <span class="math notranslate nohighlight">\(K\)</span> es un conjunto discreto, por ejemplo, <span class="math notranslate nohighlight">\(K = \mathbb{N}\)</span>. Uno de los casos más importantes para generar señales discretas es a partir de muestrear una señal continua, y en particular con una frecuencia constante. Por ejemplo, una señal de audio es una señal continua en el tiempo, pero se puede muestrear a una frecuencia de 16000 muestras por segundo durante el proceso de digitalización.</p>
 <p>También podemos pensar en señales discretas como conjuntos de datos basados en eventos. Por ejemplo, el saldo de caja mensual de una cadena de supermercados. <span class="math notranslate nohighlight">\(K\)</span> es el conjunto de meses del año, <span class="math notranslate nohighlight">\(N\)</span> es el número de sucursales de la cadena.</p>
 <p>Una imagen RGB es una señal discreta en dos dimensiones <span class="math notranslate nohighlight">\(S: W \times H \rightarrow K^3\)</span>. Donde <span class="math notranslate nohighlight">\(W\)</span> es el ancho de la imagen, <span class="math notranslate nohighlight">\(H\)</span> es la altura de la imagen y <span class="math notranslate nohighlight">\(K^3\)</span> es el espacio de color RGB con <span class="math notranslate nohighlight">\(K = \{0\ldots255\}\)</span>. En forma matricial podemos pensar en una imagen como una matriz <span class="math notranslate nohighlight">\(S \in K^{W \times H \times 3}\)</span>.</p>
 </section>
 </section>
 <section id="sistemas-de-procesamiento">
-<h2>Sistemas de procesamiento<a class="headerlink" href="#sistemas-de-procesamiento" title="Permalink to this heading">#</a></h2>
+<h2>Sistemas de procesamiento<a class="headerlink" href="#sistemas-de-procesamiento" title="Link to this heading">#</a></h2>
 <p>A una señal se le puede aplicar un proceso o transformación. Tradicionalmente pensamos en una función matemática que toma una señal <span class="math notranslate nohighlight">\(x\)</span> como argumento y devuelve otra señal <span class="math notranslate nohighlight">\(y = f(x)\)</span>. Podemos generalizar esto a la idea de un sistema que toma una señal de entrada, la procesa y genera otra señal de salida.</p>
 <svg xmlns="http://www.w3.org/2000/svg" width="400" height="80">
   <defs>
@@ -808,7 +835,7 @@ geom-max=”357.65619,291.20019” /&gt;
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -837,6 +864,7 @@ geom-max=”357.65619,291.20019” /&gt;
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -875,7 +903,7 @@ By Pablo Riera
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
@@ -899,8 +927,8 @@ By Pablo Riera
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
