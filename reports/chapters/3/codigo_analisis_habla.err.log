@@ -1,56 +1,68 @@
 Traceback (most recent call last):
-  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
     executenb(
-  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/site-packages/nbclient/client.py", line 1314, in execute
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/nbclient/client.py", line 1305, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/jupyter_core/utils/__init__.py", line 173, in wrapped
     return loop.run_until_complete(inner)
-  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+  File "/home/miles/miniconda3/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
     return future.result()
-  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/site-packages/nbclient/client.py", line 709, in async_execute
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/nbclient/client.py", line 705, in async_execute
     await self.async_execute_cell(
-  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/nbclient/client.py", line 1058, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "/home/miles/miniconda3/envs/newbase/lib/python3.10/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# armamos ventanas
-win_length = int(0.04*sr) # 40ms
-hop_length = int(0.01*sr) # 10ms
-X = frame(x, frame_length=win_length, hop_length=hop_length)
-tf = frames_to_time(np.arange(X.shape[1]), sr=sr, hop_length=hop_length)
+data = []
+frame_length = 0.1
+hop_length = 0.01
+t1s = np.arange(0,snd.duration-frame_length,hop_length)
+times = zip(t1s,t1s+frame_length) 
+index = []
+for t1,t2 in times:
+  snd_ = snd.extract_part(t1,t2)
+  pitch = snd_.to_pitch()
+  pp = call(pitch, "To PointProcess")
+  vr = call([snd_,pitch,pp], "Voice report",0, 0, 75, 500, 1.3, 1.6, 0.03, 0.45)
+  data.append(dict(re.findall("(.*): (.*)",vr.replace('   ',''))[1:]))
+#   index.append((t1,t2))
+  index.append((t1+t2)/2)
 
-# cepstrum para cada venta
-cepstrum = np.abs(np.fft.irfft(np.log(np.abs(np.fft.rfft(X,axis=0))**2+1e-10), axis=0))**2
-cepstrum = cepstrum[:cepstrum.shape[0]//2,:]
+df = pd.DataFrame(data, index = index)
+pattern = re.compile(r" |\%|\(")
+df = df.map(lambda x: float(pattern.split(x)[0]) if 'undefined' not in x else np.nan )
 
-plt.figure(figsize=(12, 4))
-# LogNorm color map
-from matplotlib.colors import LogNorm
-plt.imshow(cepstrum, extent=(0, t[-1], 0, cepstrum.shape[0]/sr), aspect='auto', origin='lower', norm=LogNorm());
-plt.colorbar(label='Valor de autocorrelación')
-plt.ylim(0, 0.02)
+print("Atributos calculados:")
+print(df.columns.tolist())
 
-pitch = snd.to_pitch()
-xp = pitch.xs()
-yp = pitch.selected_array['frequency']
-yp[yp==0] = np.nan
-plt.plot(xp, 1/yp, label='periodo', color='black', alpha=0.3);
-plt.xlabel('Tiempo (s)')
-plt.ylabel('Quefrency (s)')
+
+fig, axs = plt.subplots(4, 1, figsize=(14, 10), sharex=True)
+axs[0].plot(tx, x, label='Forma de onda')
+for i, feat in enumerate(['Jitter (local)','Shimmer (local)', 'Mean harmonics-to-noise ratio']):
+    axs[i+1].plot(df.index, df[feat], label=feat)
+    axs[i+1].set_title(feat)
+    axs[i+1].set_ylabel('Valor')
+axs[i+1].set_xlabel('Tiempo (s)');
 plt.show()
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[16], line 14[0m
-[1;32m     12[0m [38;5;66;03m# LogNorm color map[39;00m
-[1;32m     13[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcolors[39;00m [38;5;28;01mimport[39;00m LogNorm
-[0;32m---> 14[0m plt[38;5;241m.[39mimshow(cepstrum, extent[38;5;241m=[39m([38;5;241m0[39m, [43mt[49m[[38;5;241m-[39m[38;5;241m1[39m], [38;5;241m0[39m, cepstrum[38;5;241m.[39mshape[[38;5;241m0[39m][38;5;241m/[39msr), aspect[38;5;241m=[39m[38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m, origin[38;5;241m=[39m[38;5;124m'[39m[38;5;124mlower[39m[38;5;124m'[39m, norm[38;5;241m=[39mLogNorm());
-[1;32m     15[0m plt[38;5;241m.[39mcolorbar(label[38;5;241m=[39m[38;5;124m'[39m[38;5;124mValor de autocorrelación[39m[38;5;124m'[39m)
-[1;32m     16[0m plt[38;5;241m.[39mylim([38;5;241m0[39m, [38;5;241m0.02[39m)
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+[0;32m<ipython-input-11-361460115dcb>[0m in [0;36m?[0;34m()[0m
+[0;32m---> 18[0;31m [0mdata[0m [0;34m=[0m [0;34m[[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     19[0m [0mframe_length[0m [0;34m=[0m [0;36m0.1[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     20[0m [0mhop_length[0m [0;34m=[0m [0;36m0.01[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     21[0m [0mt1s[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0marange[0m[0;34m([0m[0;36m0[0m[0;34m,[0m[0msnd[0m[0;34m.[0m[0mduration[0m[0;34m-[0m[0mframe_length[0m[0;34m,[0m[0mhop_length[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mNameError[0m: name 't' is not defined
+[0;32m~/miniconda3/lib/python3.8/site-packages/pandas/core/generic.py[0m in [0;36m?[0;34m(self, name)[0m
+[1;32m   5571[0m             [0;32mand[0m [0mname[0m [0;32mnot[0m [0;32min[0m [0mself[0m[0;34m.[0m[0m_accessors[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   5572[0m             [0;32mand[0m [0mself[0m[0;34m.[0m[0m_info_axis[0m[0;34m.[0m[0m_can_hold_identifiers_and_holds_name[0m[0;34m([0m[0mname[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   5573[0m         ):
+[1;32m   5574[0m             [0;32mreturn[0m [0mself[0m[0;34m[[0m[0mname[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 5575[0;31m         [0;32mreturn[0m [0mobject[0m[0;34m.[0m[0m__getattribute__[0m[0;34m([0m[0mself[0m[0;34m,[0m [0mname[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m
+[0;31mAttributeError[0m: 'DataFrame' object has no attribute 'map'
 

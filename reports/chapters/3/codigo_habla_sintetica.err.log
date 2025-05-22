@@ -1,0 +1,190 @@
+Traceback (most recent call last):
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/jupyter_core/utils/__init__.py", line 173, in wrapped
+    return loop.run_until_complete(inner)
+  File "/home/miles/miniconda3/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/miles/miniconda3/lib/python3.8/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import numpy as np
+import matplotlib.pyplot as plt
+from IPython.display import Audio
+from scipy import signal
+from IPython.display import Audio
+import soundfile as sf
+import librosa
+import librosa.display
+
+
+sr = 48000
+
+def generate_glottal_source(f0, fs, dur, fc, order):
+    t = np.arange(0, dur, 1/fs)
+    T = 1/f0
+
+    # Creat train of pulses with period T
+    x = np.zeros(len(t))
+    x[np.arange(0, len(t), int(T*fs))] = 1
+
+    # Filter with butterworth fc=2000
+    b,a = signal.butter(order, fc, 'low', fs=fs)
+    y = signal.lfilter(b,a,x)
+
+    # y[y<0] = 0
+
+    y = y - np.mean(y)
+
+    y = np.cumsum(y)
+    y = y-np.mean(y)
+    y = y/np.max(np.abs(y))
+
+    return y
+
+def fadeinout(y, fs, tau):
+    env = np.ones(len(y))
+    env[:int(tau*fs)] = (-np.cos(np.linspace(0, np.pi, int(tau*fs)))+1)/2
+    env[-int(tau*fs):] = (-np.cos(np.linspace(np.pi, 0, int(tau*fs)))+1)/2
+    y = y*env 
+    return y
+
+def two_pole_filter(fs, F1, F2, BW1, BW2):
+    R1=np.exp(-np.pi*BW1/fs)    
+    R2=np.exp(-np.pi*BW2/fs)
+
+    z = np.array([0.9])
+    p0 = np.exp(1j*2*np.pi*F1/fs)*R1
+    p1 = np.exp(1j*2*np.pi*F2/fs)*R2
+    p = np.array([p0, p1, np.conj(p0), np.conj(p1)])
+    k = 1
+
+    b,a = signal.zpk2tf(z,p,k)   
+
+    return b, a
+
+def generate_vowel(f0, fs, dur, tau, fc, order, F1, F2, BW1, BW2):
+    y = generate_glottal_source(f0, fs, dur, fc, order)
+    y = fadeinout(y, fs, tau)
+    b,a = two_pole_filter(fs, F1, F2, BW1, BW2)
+    y = signal.lfilter(b,a,y)
+    y = y - np.mean(y)
+    y = y/np.max(np.abs(y))
+    return y
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mKeyboardInterrupt[0m                         Traceback (most recent call last)
+Cell [0;32mIn[1], line 2[0m
+[1;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[0;32m----> 2[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
+[1;32m      3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mIPython[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdisplay[39;00m [38;5;28;01mimport[39;00m Audio
+[1;32m      4[0m [38;5;28;01mfrom[39;00m [38;5;21;01mscipy[39;00m [38;5;28;01mimport[39;00m signal
+
+File [0;32m~/miniconda3/lib/python3.8/site-packages/matplotlib/pyplot.py:52[0m
+[1;32m     50[0m [38;5;28;01mfrom[39;00m [38;5;21;01mcycler[39;00m [38;5;28;01mimport[39;00m cycler
+[1;32m     51[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m
+[0;32m---> 52[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcolorbar[39;00m
+[1;32m     53[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mimage[39;00m
+[1;32m     54[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m _api
+
+File [0;32m~/miniconda3/lib/python3.8/site-packages/matplotlib/colorbar.py:19[0m
+[1;32m     16[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[1;32m     18[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mas[39;00m [38;5;21;01mmpl[39;00m
+[0;32m---> 19[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m _api, cbook, collections, cm, colors, contour, ticker
+[1;32m     20[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01martist[39;00m [38;5;28;01mas[39;00m [38;5;21;01mmartist[39;00m
+[1;32m     21[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpatches[39;00m [38;5;28;01mas[39;00m [38;5;21;01mmpatches[39;00m
+
+File [0;32m~/miniconda3/lib/python3.8/site-packages/matplotlib/contour.py:13[0m
+[1;32m     11[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mas[39;00m [38;5;21;01mmpl[39;00m
+[1;32m     12[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m _api, _docstring
+[0;32m---> 13[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbackend_bases[39;00m [38;5;28;01mimport[39;00m MouseButton
+[1;32m     14[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtext[39;00m [38;5;28;01mimport[39;00m Text
+[1;32m     15[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpath[39;00m [38;5;28;01mas[39;00m [38;5;21;01mmpath[39;00m
+
+File [0;32m~/miniconda3/lib/python3.8/site-packages/matplotlib/backend_bases.py:45[0m
+[1;32m     42[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[1;32m     44[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mas[39;00m [38;5;21;01mmpl[39;00m
+[0;32m---> 45[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m (
+[1;32m     46[0m     _api, backend_tools [38;5;28;01mas[39;00m tools, cbook, colors, _docstring, text,
+[1;32m     47[0m     _tight_bbox, transforms, widgets, get_backend, is_interactive, rcParams)
+[1;32m     48[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_pylab_helpers[39;00m [38;5;28;01mimport[39;00m Gcf
+[1;32m     49[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbackend_managers[39;00m [38;5;28;01mimport[39;00m ToolManager
+
+File [0;32m~/miniconda3/lib/python3.8/site-packages/matplotlib/text.py:17[0m
+[1;32m     15[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01martist[39;00m [38;5;28;01mimport[39;00m Artist
+[1;32m     16[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01mfont_manager[39;00m [38;5;28;01mimport[39;00m FontProperties
+[0;32m---> 17[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01mpatches[39;00m [38;5;28;01mimport[39;00m FancyArrowPatch, FancyBboxPatch, Rectangle
+[1;32m     18[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01mtextpath[39;00m [38;5;28;01mimport[39;00m TextPath, TextToPath  [38;5;66;03m# noqa # Logically located here[39;00m
+[1;32m     19[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01mtransforms[39;00m [38;5;28;01mimport[39;00m (
+[1;32m     20[0m     Affine2D, Bbox, BboxBase, BboxTransformTo, IdentityTransform, Transform)
+
+File [0;32m~/miniconda3/lib/python3.8/site-packages/matplotlib/patches.py:3783[0m
+[1;32m   3778[0m             path [38;5;241m=[39m Path([p [38;5;28;01mfor[39;00m c, p [38;5;129;01min[39;00m patch_path], [c [38;5;28;01mfor[39;00m c, p [38;5;129;01min[39;00m patch_path])
+[1;32m   3780[0m             [38;5;28;01mreturn[39;00m path, [38;5;28;01mTrue[39;00m
+[0;32m-> 3783[0m [38;5;28;01mclass[39;00m [38;5;21;01mFancyBboxPatch[39;00m(Patch):
+[1;32m   3784[0m [38;5;250m    [39m[38;5;124;03m"""[39;00m
+[1;32m   3785[0m [38;5;124;03m    A fancy box around a rectangle with lower left at *xy* = (*x*, *y*)[39;00m
+[1;32m   3786[0m [38;5;124;03m    with specified width and height.[39;00m
+[0;32m   (...)[0m
+[1;32m   3790[0m [38;5;124;03m    fancy box is delegated to the style classes defined in `.BoxStyle`.[39;00m
+[1;32m   3791[0m [38;5;124;03m    """[39;00m
+[1;32m   3793[0m     _edge_default [38;5;241m=[39m [38;5;28;01mTrue[39;00m
+
+File [0;32m~/miniconda3/lib/python3.8/site-packages/matplotlib/artist.py:150[0m, in [0;36mArtist.__init_subclass__[0;34m(cls)[0m
+[1;32m    148[0m [38;5;28mcls[39m[38;5;241m.[39mset[38;5;241m.[39m[38;5;18m__name__[39m [38;5;241m=[39m [38;5;124m"[39m[38;5;124mset[39m[38;5;124m"[39m
+[1;32m    149[0m [38;5;28mcls[39m[38;5;241m.[39mset[38;5;241m.[39m[38;5;18m__qualname__[39m [38;5;241m=[39m [38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00m[38;5;28mcls[39m[38;5;241m.[39m[38;5;18m__qualname__[39m[38;5;132;01m}[39;00m[38;5;124m.set[39m[38;5;124m"[39m
+[0;32m--> 150[0m [38;5;28;43mcls[39;49m[38;5;241;43m.[39;49m[43m_update_set_signature_and_docstring[49m[43m([49m[43m)[49m
+
+File [0;32m~/miniconda3/lib/python3.8/site-packages/matplotlib/artist.py:178[0m, in [0;36mArtist._update_set_signature_and_docstring[0;34m(cls)[0m
+[1;32m    168[0m [38;5;28mcls[39m[38;5;241m.[39mset[38;5;241m.[39m__signature__ [38;5;241m=[39m Signature(
+[1;32m    169[0m     [Parameter([38;5;124m"[39m[38;5;124mself[39m[38;5;124m"[39m, Parameter[38;5;241m.[39mPOSITIONAL_OR_KEYWORD),
+[1;32m    170[0m      [38;5;241m*[39m[Parameter(prop, Parameter[38;5;241m.[39mKEYWORD_ONLY, default[38;5;241m=[39m_UNSET)
+[1;32m    171[0m        [38;5;28;01mfor[39;00m prop [38;5;129;01min[39;00m ArtistInspector([38;5;28mcls[39m)[38;5;241m.[39mget_setters()
+[1;32m    172[0m        [38;5;28;01mif[39;00m prop [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m Artist[38;5;241m.[39m_PROPERTIES_EXCLUDED_FROM_SET]])
+[1;32m    173[0m [38;5;28mcls[39m[38;5;241m.[39mset[38;5;241m.[39m_autogenerated_signature [38;5;241m=[39m [38;5;28;01mTrue[39;00m
+[1;32m    175[0m [38;5;28mcls[39m[38;5;241m.[39mset[38;5;241m.[39m[38;5;18m__doc__[39m [38;5;241m=[39m (
+[1;32m    176[0m     [38;5;124m"[39m[38;5;124mSet multiple properties at once.[39m[38;5;130;01m\n[39;00m[38;5;130;01m\n[39;00m[38;5;124m"[39m
+[1;32m    177[0m     [38;5;124m"[39m[38;5;124mSupported properties are[39m[38;5;130;01m\n[39;00m[38;5;130;01m\n[39;00m[38;5;124m"[39m
+[0;32m--> 178[0m     [38;5;241m+[39m [43mkwdoc[49m[43m([49m[38;5;28;43mcls[39;49m[43m)[49m)
+
+File [0;32m~/miniconda3/lib/python3.8/site-packages/matplotlib/artist.py:1860[0m, in [0;36mkwdoc[0;34m(artist)[0m
+[1;32m   1842[0m [38;5;250m[39m[38;5;124mr[39m[38;5;124;03m"""[39;00m
+[1;32m   1843[0m [38;5;124;03mInspect an `~matplotlib.artist.Artist` class (using `.ArtistInspector`) and[39;00m
+[1;32m   1844[0m [38;5;124;03mreturn information about its settable properties and their current values.[39;00m
+[0;32m   (...)[0m
+[1;32m   1855[0m [38;5;124;03m    use in Sphinx) if it is True.[39;00m
+[1;32m   1856[0m [38;5;124;03m"""[39;00m
+[1;32m   1857[0m ai [38;5;241m=[39m ArtistInspector(artist)
+[1;32m   1858[0m [38;5;28;01mreturn[39;00m ([38;5;124m'[39m[38;5;130;01m\n[39;00m[38;5;124m'[39m[38;5;241m.[39mjoin(ai[38;5;241m.[39mpprint_setters_rest(leadingspace[38;5;241m=[39m[38;5;241m4[39m))
+[1;32m   1859[0m         [38;5;28;01mif[39;00m mpl[38;5;241m.[39mrcParams[[38;5;124m'[39m[38;5;124mdocstring.hardcopy[39m[38;5;124m'[39m] [38;5;28;01melse[39;00m
+[0;32m-> 1860[0m         [38;5;124m'[39m[38;5;124mProperties:[39m[38;5;130;01m\n[39;00m[38;5;124m'[39m [38;5;241m+[39m [38;5;124m'[39m[38;5;130;01m\n[39;00m[38;5;124m'[39m[38;5;241m.[39mjoin([43mai[49m[38;5;241;43m.[39;49m[43mpprint_setters[49m[43m([49m[43mleadingspace[49m[38;5;241;43m=[39;49m[38;5;241;43m4[39;49m[43m)[49m))
+
+File [0;32m~/miniconda3/lib/python3.8/site-packages/matplotlib/artist.py:1622[0m, in [0;36mArtistInspector.pprint_setters[0;34m(self, prop, leadingspace)[0m
+[1;32m   1620[0m [38;5;28;01mfor[39;00m prop [38;5;129;01min[39;00m [38;5;28msorted[39m([38;5;28mself[39m[38;5;241m.[39mget_setters()):
+[1;32m   1621[0m     accepts [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mget_valid_values(prop)
+[0;32m-> 1622[0m     name [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43maliased_name[49m[43m([49m[43mprop[49m[43m)[49m
+[1;32m   1623[0m     lines[38;5;241m.[39mappend([38;5;124m'[39m[38;5;132;01m%s[39;00m[38;5;132;01m%s[39;00m[38;5;124m: [39m[38;5;132;01m%s[39;00m[38;5;124m'[39m [38;5;241m%[39m (pad, name, accepts))
+[1;32m   1624[0m [38;5;28;01mreturn[39;00m lines
+
+File [0;32m~/miniconda3/lib/python3.8/site-packages/matplotlib/artist.py:1567[0m, in [0;36mArtistInspector.aliased_name[0;34m(self, s)[0m
+[1;32m   1559[0m [38;5;28;01mdef[39;00m [38;5;21maliased_name[39m([38;5;28mself[39m, s):
+[1;32m   1560[0m [38;5;250m    [39m[38;5;124;03m"""[39;00m
+[1;32m   1561[0m [38;5;124;03m    Return 'PROPNAME or alias' if *s* has an alias, else return 'PROPNAME'.[39;00m
+[1;32m   1562[0m 
+[0;32m   (...)[0m
+[1;32m   1565[0m [38;5;124;03m    property, which does not, return 'transform'.[39;00m
+[1;32m   1566[0m [38;5;124;03m    """[39;00m
+[0;32m-> 1567[0m     aliases [38;5;241m=[39m [38;5;124m'[39m[38;5;124m'[39m[38;5;241m.[39mjoin([38;5;124m'[39m[38;5;124m or [39m[38;5;132;01m%s[39;00m[38;5;124m'[39m [38;5;241m%[39m x [38;5;28;01mfor[39;00m x [38;5;129;01min[39;00m [38;5;28msorted[39m([38;5;28mself[39m[38;5;241m.[39maliasd[38;5;241m.[39mget(s, [])))
+[1;32m   1568[0m     [38;5;28;01mreturn[39;00m s [38;5;241m+[39m aliases
+
+[0;31mKeyboardInterrupt[0m: 
+

@@ -1,0 +1,815 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Modelado de secuencias &#8212; Procesamiento de señales, audio y habla</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/4/modelado_secuencias';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Intro to HMMs" href="codigo_asr_hmm_fst.html" />
+    <link rel="prev" title="Ejercicios Capítulo 3" href="../3/ejercicios.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Procesamiento de señales, audio y habla - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Procesamiento de señales, audio y habla - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Procesamiento de señales, audio y habla
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Procesamiento de señales</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1/introduction.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/history.html">Historia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/codigo_senales.html">Código: Señales y operaciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/energyandpower.html">Energía y Potencia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/sistemaslti.html">Sistemas Lineales e Invariantes en el Tiempo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/convolucion.html">Convolución</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/codigo_convolucion.html">Código: Convolución</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/intro_fourier.html">Introducción Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/series_de_fourier.html">Series de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/codigo_series_de_fourier.html">Código: Series de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/transformada_de_fourier.html">Transformada de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/transformada_discreta_fourier.html">Transformada Discreta de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/codigo_transformada_discreta_de_fourier.html">Código: Transformada Discreta de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/tiempo-frecuencia.html">Tiempo-Frecuencia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/stft.html">Transformada de Fourier de Tiempo Corto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/codigo_stft.html">Código: Transformada de Fourier de Tiempo Corto (STFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/codigo_filtros.html">Codigo: Filtros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/ejercicios.html">Ejercicios</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Habla y lenguaje</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3/codigo_analisis_habla.html">Código: Cálculo de atributos del habla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3/codigo_descubrimiento_de_unidades.html">Codigo: Descubrimiento de Unidades del Lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3/ejercicios.html">Ejercicios Capítulo 3</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelado de señales y secuencias</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelado de secuencias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="codigo_asr_hmm_fst.html">Intro to HMMs</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/4/modelado_secuencias.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/4/modelado_secuencias.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Modelado de secuencias</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelado-estadistico-de-secuencias-discretas">Modelado estadístico de secuencias discretas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cadenas-de-markov">Cadenas de Markov</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos-de-markov-ocultos-hmm">Modelos de Markov ocultos (HMM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculo-expllicito-de-matrices-de-transicion-y-emision">Calculo expllicito de matrices de transición y emisión</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritmos-para-hmms">Algoritmos para HMMs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verosimilitud">Verosimilitud</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decodificacion">Decodificación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aprendizaje">Aprendizaje</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="modelado-de-secuencias">
+<h1>Modelado de secuencias<a class="headerlink" href="#modelado-de-secuencias" title="Link to this heading">#</a></h1>
+<p>Supongamos una secuencia generada por elementos de un conjunto <span class="math notranslate nohighlight">\(O\)</span> de tamaño <span class="math notranslate nohighlight">\((M)\)</span>. La secuencia tiene longitud <span class="math notranslate nohighlight">\((N)\)</span> y está compuesta por <span class="math notranslate nohighlight">\((N)\)</span> elementos <span class="math notranslate nohighlight">\((o_1, o_2, \ldots, o_N)\)</span>.</p>
+<p>¿Cuales son las formas en las que podemos modelar una secuencia? Podemos hacernos las siguientes preguntas:</p>
+<ol class="arabic simple">
+<li><p>¿Qué tipo de datos estamos modelando? ¿Son datos discretos o continuos?</p></li>
+<li><p>¿Qué tipo de secuencia estamos modelando? ¿Es una secuencia temporal, o una secuencia sin una tasa de muestreo definida?</p></li>
+<li><p>¿Qué tipo de relaciones existen entre los elementos de la secuencia? ¿Son independientes o están correlacionados?</p></li>
+<li><p>¿Qué tipo de patrones o estructuras estamos buscando en la secuencia? ¿Son patrones locales o globales?</p></li>
+<li><p>¿Qué tipo de información adicional tenemos sobre la secuencia? ¿Hay etiquetas o anotaciones disponibles?</p></li>
+<li><p>¿Qué tipo de modelo queremos construir? ¿Nos interesa poder generar nuevas secuencias, o queremos clasificar secuencias existentes?</p></li>
+<li><p>¿Nos interesa un modelado estadístico o en base a reglas de lenguaje?</p></li>
+</ol>
+<p>Una de las principales características de una secuencia a diferencia de otro tipo de conjunto de datos, es el orden en el que aparecen los elementos. Por lo tanto, a la hora de modelar una secuencia, una estrategia común es caracterízar un elemento en base a los elementos de su vecindad. Por ejemplo, si tenemos una secuencia de palabras, podemos caracterizar una palabra en base a las palabras que la preceden y las que la siguen. Esto se conoce como contexto del elemento.</p>
+<p>Una diferenciación importante en tipos de modelos está dada por aquellos que son capaces de generar nuevas secuencias. En el ámbito de modelos estadísticos, esto se refiere a modelos generativos que aprenden la distribución de los datos y permiten generar nuevas muestras. En el ámbito de lenguajes formales, esto también es posible mediante gramáticas que definen reglas para generar cadenas de símbolos. Luego tenemos modelos discriminativos. En el caso estadísticos, estos modelos aprenden a partir de un conjunto de características, una frontera de descición entre secuencias de distinta clase o la probabilidad de que una secuencia sea de una clase particular. En el caso de lenguajes formales, estos modelos pueden ser gramáticas que definen reglas para clasificar cadenas de símbolos en diferentes categorías. Como ejemplo de modelo generativo podría ser un modelo de lenguaje que genera texto. Como modelo discriminativo podría ser un clasificador de texto que determina si un correo electrónico es spam o no.</p>
+<p>Luego tenemos los paradigmas estadísticos y los basado en lenguajes formales. Una de las principales diferencias es que los estadísticos suelen estar basados en datos y manejar incertidumbre, mientras que los formales suelen estar basados en reglas.</p>
+<section id="modelado-estadistico-de-secuencias-discretas">
+<h2>Modelado estadístico de secuencias discretas<a class="headerlink" href="#modelado-estadistico-de-secuencias-discretas" title="Link to this heading">#</a></h2>
+<section id="cadenas-de-markov">
+<h3>Cadenas de Markov<a class="headerlink" href="#cadenas-de-markov" title="Link to this heading">#</a></h3>
+<p>El modelo de secuencia más simple es el modelo de cadenas de Markov, un modelo estadístico que describe un proceso estocástico en el que la probabilidad de un elemento depende solo de un número fijo de elementos anteriores. Este modelo se basa en la suposición de que el futuro es independiente de toda la historia pasada.</p>
+<p><strong>Cadena de Markov de primer orden</strong>: La probabilidad de un elemento depende solo del elemento anterior. Por ejemplo, en una secuencia de palabras, la probabilidad de que aparezca una palabra depende solo de la palabra anterior.</p>
+<p>Suposición de Markov:
+$<span class="math notranslate nohighlight">\(
+P(q_n = o_n | q_{n-1} = o_{n-1}, q_{n-2} = o_{n-2}, \ldots, q_1 = o_1) = P(q_n = o_n | q_{n-1} = o_{n-1})
+\)</span>$</p>
+<p>Donde (q_n) es el estado en el tiempo (n) y (o_n) es la observación en el tiempo (n). En este caso, la probabilidad de una observación depende solo de la observación anterior. Podemos simplificar la notación y escribir:</p>
+<div class="math notranslate nohighlight">
+\[
+P(o_n | o_{n-1}, o_{n-2}, \ldots, o_1) = P(o_n | o_{n-1})
+\]</div>
+<p>En el siguiente diagrama se muestra un ejemplo de cadena de Markov para un conjunto de estados dados por 3 palabras, “como”, “estás” y “bien”. La probabilidad de cada estado depende solo del estado anterior. Podemos representar la cadena como un grafo dirigido, donde los nodos representan los estados y las aristas representan las transiciones entre estados. En esta cadena podemos acceder de cualquier estado a cualquier otro estado, por lo que es un grafo totalmente conectado o cadena de Markov ergódica.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/882109b237f6139e29a1daa87f173ed47ed69a613a92d0af40c815196386529c.svg" src="../../_images/882109b237f6139e29a1daa87f173ed47ed69a613a92d0af40c815196386529c.svg" />
+</div>
+</div>
+<p>Podemos ver las probabildiades de transición entre estados en la siguiente tabla:</p>
+<table border="1" cellpadding="5" cellspacing="0">
+  <caption><strong>Matriz de transición del modelo de Markov</strong></caption>
+  <thead>
+    <tr>
+      <th>De \ A</th>
+      <th>como</th>
+      <th>estas</th>
+      <th>bien</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>como</th>
+      <td>0.1</td>
+      <td>0.6</td>
+      <td>0.3</td>
+    </tr>
+    <tr>
+      <th>estas</th>
+      <td>0.2</td>
+      <td>0.5</td>
+      <td>0.3</td>
+    </tr>
+    <tr>
+      <th>bien</th>
+      <td>0.4</td>
+      <td>0.1</td>
+      <td>0.5</td>
+    </tr>
+  </tbody>
+</table>
+<p>.</p>
+<p>Formalmente, una cadena de Markov se especifica mediante los siguientes componentes:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Q = {q_1, q_2, \ldots, q_N}\)</span>:  Un conjunto de <span class="math notranslate nohighlight">\(N\)</span> estados. En el ejemplo anterior, los símbolos son “como”, “estás” y “bien”.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A = [a_{ij}]\)</span>:  Una matriz de probabilidad de transición <span class="math notranslate nohighlight">\(A\)</span>, donde cada elemento <span class="math notranslate nohighlight">\(a_{ij}\)</span> representa la probabilidad de pasar del estado <span class="math notranslate nohighlight">\(i\)</span> al estado <span class="math notranslate nohighlight">\(j\)</span>. Debe cumplirse: <span class="math notranslate nohighlight">\( \sum_{j=1}^{N} a_{ij} = 1 \quad \forall i\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\pi = (\pi_1, \pi_2, \ldots, \pi_N)\)</span>:  Una distribución de probabilidad inicial sobre los estados. <span class="math notranslate nohighlight">\(\pi_i\)</span> indica la probabilidad de que la cadena comience en el estado <span class="math notranslate nohighlight">\(i\)</span>. Algunos estados <span class="math notranslate nohighlight">\(j\)</span> pueden tener <span class="math notranslate nohighlight">\(\pi_j = 0\)</span>, lo que significa que no pueden ser estados iniciales. Además, se cumple: <span class="math notranslate nohighlight">\( \sum_{i=1}^{N} \pi_i = 1\)</span></p></li>
+</ul>
+<p>Esta cadena de Markov representa un modelo de lenguaje de bigramas. Podemos calcular la probabilidad de una secuencia de palabras utilizando la regla de la cadena de Markov. Por ejemplo, si queremos calcular la probabilidad de la secuencia “como estás bien”, podemos usar la siguiente fórmula:
+$<span class="math notranslate nohighlight">\(
+P(q_1, q_2, q_3) = \pi_1 \cdot P(q_2 | q_1) \cdot P(q_3 | q_2)
+\)</span><span class="math notranslate nohighlight">\(
+Donde \)</span>\pi_1<span class="math notranslate nohighlight">\( es la probabilidad de empezar con la primera palabra, \)</span>P(q_2 | q_1)<span class="math notranslate nohighlight">\( es la probabilidad de la segunda palabra dado la primera, y \)</span>P(q_3 | q_2)<span class="math notranslate nohighlight">\( es la probabilidad de la tercera palabra dado la segunda.
+En este caso, con \)</span>\pi=[1/3, 1/3, 1/3]<span class="math notranslate nohighlight">\(, la probabilidad de la secuencia &quot;como estás bien&quot; sería:
+\)</span><span class="math notranslate nohighlight">\(
+P(como) \cdot P(estas | como) \cdot P(bien | estas) = \pi_1 a_{12} a_{23} = \frac{1}{3} \cdot 0.6 \cdot 0.3 =  0.06
+\)</span>$
+Esto significa que la probabilidad de que la secuencia “como estás bien” ocurra en este modelo de Markov es 0.06.</p>
+</section>
+</section>
+<section id="modelos-de-markov-ocultos-hmm">
+<h2>Modelos de Markov ocultos (HMM)<a class="headerlink" href="#modelos-de-markov-ocultos-hmm" title="Link to this heading">#</a></h2>
+<p>Un modelo de Markov oculto (HMM) es una cadena de Markov cuya secuencia de estados no es observable, sino que está oculta detrás de una secuencia de observaciones. En un HMM, cada estado tiene una distribución de probabilidad asociada a las observaciones, lo que significa que cada estado puede generar diferentes observaciones con diferentes probabilidades.</p>
+<p>Un HMM se especifica por los siguientes componentes:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Q = {q_1, q_2, \ldots, q_N}\)</span>: Un conjunto de <span class="math notranslate nohighlight">\(N\)</span> estados.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A = [a_{ij}]\)</span>: Una matriz de probabilidad de transición <span class="math notranslate nohighlight">\(A\)</span>. Cada <span class="math notranslate nohighlight">\(a_{ij}\)</span> representa la probabilidad de pasar del estado <span class="math notranslate nohighlight">\(i\)</span> al estado <span class="math notranslate nohighlight">\(j\)</span>. La suma de las probabilidades de las transiciones que salen de un estado dado debe ser 1, formalmente <span class="math notranslate nohighlight">\(\sum_{j=1}^{N} a_{ij} = 1\)</span> para todo <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(B = [b_i(o_t)]\)</span>: Una secuencia de verosimilitudes de observación. También se les conoce como probabilidades de emisión. Cada <span class="math notranslate nohighlight">\(b_i(o_t)\)</span> expresa la probabilidad de que una observación <span class="math notranslate nohighlight">\(o_t\)</span> (tomada de un vocabulario <span class="math notranslate nohighlight">\(V = {v_1, v_2, \ldots, v_V}\)</span>) sea generada desde un estado <span class="math notranslate nohighlight">\(q_i\)</span>. Esto es una matriz <span class="math notranslate nohighlight">\(B\)</span> de tamaño <span class="math notranslate nohighlight">\(N \times V\)</span> con elementos <span class="math notranslate nohighlight">\(b_{ik} = P(o_k|q_i)\)</span>, donde <span class="math notranslate nohighlight">\(b_{ik}\)</span> es la probabilidad de que el estado <span class="math notranslate nohighlight">\(i\)</span> emita la observación <span class="math notranslate nohighlight">\(k\)</span>. La suma de las probabilidades de emisión desde un estado dado debe ser 1, formalmente <span class="math notranslate nohighlight">\(\sum_{k=1}^{V} b_{ik} = 1\)</span> para todo <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\pi = (\pi_1, \pi_2, \ldots, \pi_N)\)</span>: Una distribución de probabilidad inicial sobre los estados. <span class="math notranslate nohighlight">\(\pi_i\)</span> es la probabilidad de que la cadena de Markov comience en el estado <span class="math notranslate nohighlight">\(i\)</span>. Algunos estados <span class="math notranslate nohighlight">\(j\)</span> pueden tener <span class="math notranslate nohighlight">\(\pi_j = 0\)</span>, lo que indica que no pueden ser estados iniciales. La suma de las probabilidades iniciales debe ser 1, formalmente <span class="math notranslate nohighlight">\(\sum_{i=1}^{N} \pi_i = 1\)</span>.</p></li>
+</ul>
+<p>Además de estos componentes que definen el modelo, al HMM se le da como entrada una secuencia de observaciones. Esta secuencia es <span class="math notranslate nohighlight">\(O = {o_1, o_2, \ldots, o_T}\)</span>, una secuencia de <span class="math notranslate nohighlight">\(T\)</span> observaciones, donde cada observación se toma del vocabulario <span class="math notranslate nohighlight">\(V\)</span>.
+Un modelo oculto de Markov de primer orden incorpora dos suposiciones simplificadoras:</p>
+<ol class="arabic simple">
+<li><p>La probabilidad de un estado particular depende únicamente del estado anterior (suposición de Markov): <span class="math notranslate nohighlight">\(P(q_i|q_1...q_{i-1}) = P(q_i|q_{i-1})\)</span>.</p></li>
+<li><p>La probabilidad de una observación de salida <span class="math notranslate nohighlight">\(o_i\)</span> depende solo del estado <span class="math notranslate nohighlight">\(q_i\)</span> que produjo la observación, y no de ningún otro estado u observación (independencia de salida): <span class="math notranslate nohighlight">\(P(o_i|q_1 \ldots q_i, \ldots, q_T, o_1, \ldots, o_i, \ldots, o_T) = P(o_i|q_i)\)</span>.</p></li>
+</ol>
+<p>Las observaciones son los eventos que vemos, mientras que los estados son “ocultos” porque no los observamos directamente. El objetivo suele ser inferir la secuencia de estados ocultos a partir de la secuencia de observaciones.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/e36bb2636ad7f55aba738843ec8f76d0623e8c87c427978b5339b164de9d2973.svg" src="../../_images/e36bb2636ad7f55aba738843ec8f76d0623e8c87c427978b5339b164de9d2973.svg" />
+</div>
+</div>
+<section id="calculo-expllicito-de-matrices-de-transicion-y-emision">
+<h3>Calculo expllicito de matrices de transición y emisión<a class="headerlink" href="#calculo-expllicito-de-matrices-de-transicion-y-emision" title="Link to this heading">#</a></h3>
+<p>Si conocemos la secuencia de estados y la secuencia de observaciones, podemos calcular las matrices de transición y emisión. Para ello, necesitamos contar cuántas veces ocurre cada transición y cada emisión.</p>
+<p>Supongamos tenemos la siguiente secuencia de estados y observaciones:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Estados</span><span class="p">:</span>       <span class="n">A</span> <span class="n">B</span> <span class="n">A</span> <span class="n">A</span> <span class="n">B</span>    <span class="n">A</span> <span class="n">B</span> <span class="n">A</span> <span class="n">B</span>     <span class="n">B</span> <span class="n">B</span> <span class="n">A</span> <span class="n">A</span>
+
+<span class="n">Observaciones</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">1</span>    <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">1</span>     <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<p>Podemos contar las transiciones entre estados y las emisiones de observaciones desde cada estado. Por ejemplo, para la secuencia de estados, contamos cuántas veces ocurre cada transición:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+P(A|A) = 2/6\quad\quad &amp; P(B|A) = 2/3 \\
+P(A|B) = 4/6\quad\quad &amp; P(B|B) = 1/3 
+\end{align*}
+\end{split}\]</div>
+<p>Y para la secuencia de observaciones, contamos cuántas veces ocurre cada emisión:
+$<span class="math notranslate nohighlight">\(
+\begin{align*}
+P(1|A) = 4/7\quad\quad &amp; P(1|B) = 3/6 \\       
+P(2|A) = 0/7\quad\quad &amp; P(2|B) = 3/6 \\
+P(3|A) = 3/7\quad\quad &amp; P(3|B) = 0/6
+\end{align*}
+\)</span>$</p>
+<p>En la práctica no conocemos la secuencia de estados, pero podemos estimar las matrices de transición y emisión utilizando algoritmos.</p>
+</section>
+<section id="algoritmos-para-hmms">
+<h3>Algoritmos para HMMs<a class="headerlink" href="#algoritmos-para-hmms" title="Link to this heading">#</a></h3>
+<p>Dentro de los HMMs, existen tres problemas fundamentales que se pueden abordar:</p>
+<ol class="arabic simple">
+<li><p><strong>Problema de la verosimilitud</strong>: Dada una secuencia de observaciones y un HMM, calcular la probabilidad de que el modelo haya generado esa secuencia. Dado un HMM <span class="math notranslate nohighlight">\(\lambda = (A,B)\)</span> y una secuencia de observaciones <span class="math notranslate nohighlight">\(O\)</span>, determinar la verosimilitud <span class="math notranslate nohighlight">\(P(O|\lambda )\)</span>. Este problema busca calcular la probabilidad de que el modelo dado haya generado la secuencia de observaciones vista. El algoritmo Forward (Adelante) es un método eficiente para resolver este problema.</p></li>
+<li><p><strong>Problema de decodificación</strong>: Dada una secuencia de observaciones <span class="math notranslate nohighlight">\(O\)</span> y un HMM <span class="math notranslate nohighlight">\(\lambda = (A,B)\)</span>, descubrir la mejor secuencia de estados ocultos <span class="math notranslate nohighlight">\(Q\)</span>. Esta tarea, también conocida como inferencia, consiste en encontrar la secuencia de estados ocultos más probable que subyace a la secuencia de observaciones dada. El algoritmo Viterbi es el algoritmo de decodificación más común para HMMs.</p></li>
+<li><p><strong>Problema de aprendizaje</strong>: Dada una secuencia de observaciones <span class="math notranslate nohighlight">\(O\)</span> y el conjunto de estados posibles en el HMM, aprender los parámetros del HMM, es decir, las matrices <span class="math notranslate nohighlight">\(A\)</span> y <span class="math notranslate nohighlight">\(B\)</span>. El algoritmo estándar para entrenar HMMs, también conocido como aprendizaje no supervisado de los parámetros A y B, es el algoritmo forward-backward o algoritmo de Baum-Welch, el cual es un caso especial del algoritmo de Expectation-Maximization (EM). Este algoritmo permite reestimar las probabilidades de transición <span class="math notranslate nohighlight">\(A\)</span> y las probabilidades de emisión <span class="math notranslate nohighlight">\(B\)</span>.</p></li>
+</ol>
+</section>
+<section id="verosimilitud">
+<h3>Verosimilitud<a class="headerlink" href="#verosimilitud" title="Link to this heading">#</a></h3>
+<p>Recordemos la probabilidad de una secuencia de estados ocultos <span class="math notranslate nohighlight">\(Q\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+P(Q) = \prod_{t=1}^{T} P(q_t|q_{t-1}) 
+\]</div>
+<p>Si conocemos la secuencia de estados ocultos <span class="math notranslate nohighlight">\(Q\)</span>, podemos calcular la probabilidad de la secuencia de observaciones <span class="math notranslate nohighlight">\(O\)</span> dada esa secuencia de estados.</p>
+<div class="math notranslate nohighlight">
+\[
+P(O|Q) = \prod_{t=1}^{T} P(o_t|q_t)
+\]</div>
+<p>Usando la fórmula de la probabilidad conjunta <span class="math notranslate nohighlight">\(P(O,Q) = P(O|Q) \cdot P(Q)\)</span>, podemos escribir:</p>
+<div class="math notranslate nohighlight">
+\[
+P(O,Q) = \prod_{t=1}^{T} P(o_t|q_t) \cdot \prod_{t=1}^{T} P(q_t|q_{t-1})
+\]</div>
+<p>Esta es la probabilidad de que haya ocurrido una secuencia de estados <span class="math notranslate nohighlight">\(Q\)</span> y una secuencia de observaciones <span class="math notranslate nohighlight">\(O\)</span>. Recordemos que la probabilidad total para una secuencia de observaciones <span class="math notranslate nohighlight">\(O\)</span> es <span class="math notranslate nohighlight">\(P(O) = \sum_{Q} P(O,Q)\)</span> donde sumamos sobre todas las posibles secuencias de estados <span class="math notranslate nohighlight">\(Q\)</span>.</p>
+<p>Para un HMM con <span class="math notranslate nohighlight">\(N\)</span> estados y secuencias de largo <span class="math notranslate nohighlight">\(T\)</span> tenemos que calcular <span class="math notranslate nohighlight">\(N^T\)</span> posibles secuencias de estados. Esto puede ser computacionalmente costoso, por lo que se utiliza el algoritmo Forward (Adelante) para calcular la probabilidad de una secuencia de observaciones <span class="math notranslate nohighlight">\(O\)</span> en un HMM. Este algoritmo utiliza programación dinámica para evitar cálculos redundantes, dado que si se tienen dos secuencias de estados que solo difieren en el estado final, no es necesario calcularlas las probabilidades anteriores por separado (ejemplo en la sección de <a class="reference internal" href="codigo_hmm.html"><span class="std std-doc">código</span></a>)</p>
+<p>El algoritmo Forward introduce los coeficientes <span class="math notranslate nohighlight">\(\alpha_t(j)=P(o_1, o_2, \ldots, o_t, q_t = j)\)</span>, que representan la probabilidad de observar la secuencia <span class="math notranslate nohighlight">\(O\)</span> hasta el tiempo <span class="math notranslate nohighlight">\(t\)</span> y estar en el estado <span class="math notranslate nohighlight">\(j\)</span> en el tiempo <span class="math notranslate nohighlight">\(t\)</span>. Estos coeficientes se calculan de forma recursiva de la siguiente manera:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\alpha_1(j) &amp;= \pi_j b_j(o_1) \quad \text{para } 1 \leq j \leq N\\
+\alpha_t(j) &amp;= \sum_{i=1}^{N} \alpha_{t-1}(i)\, a_{ij}\, b_j(o_t)\quad \text{para } 1 \leq j \leq N,\ 1 &lt; t \leq T\\
+P(O) &amp;= \sum_{i=1}^{N} \alpha_T(i)
+\end{align*}
+\end{split}\]</div>
+<p>De forma análoga se puede definir el algoritmo Backward (Atrás) que calcula los coeficientes <span class="math notranslate nohighlight">\(\beta_t(j)=P(o_{t+1}, o_{t+2}, \ldots, o_T | q_t = j)\)</span>, que representan la probabilidad de observar la secuencia <span class="math notranslate nohighlight">\(O\)</span> desde el tiempo <span class="math notranslate nohighlight">\(t\)</span> hasta el final y estar en el estado <span class="math notranslate nohighlight">\(j\)</span> en el tiempo <span class="math notranslate nohighlight">\(t\)</span>. Estos coeficientes se calculan de forma recursiva de la siguiente manera:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\beta_T(i) &amp;= 1 \quad \text{para } 1 \leq i \leq N\\
+\beta_t(i) &amp;= \sum_{j=1}^{N} \beta_{t+1}(j)\, a_{ij}\, b_j(o_{t+1})\quad \text{para } 1 \leq i \leq N,\ 1 &lt; t \leq T\\
+P(O) &amp;= \sum_{j=1}^{N} \pi_j b_j(o_1) \beta_1(j)
+\end{align*}
+\end{split}\]</div>
+<p>También es posible calcular esta probabilidad combinando <span class="math notranslate nohighlight">\(\alpha\)</span> y <span class="math notranslate nohighlight">\(\beta\)</span> para cualquier tiempo <span class="math notranslate nohighlight">\(t\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+P(O) = \sum_{i=1}^{N} \alpha_t(i) \beta_t(i)
+\]</div>
+<p>La expresión <span class="math notranslate nohighlight">\(\alpha_t(i) \beta_t(i)\)</span> representa la probabilidad conjunta de haber observado <span class="math notranslate nohighlight">\(O\)</span> y de estar en el estado <span class="math notranslate nohighlight">\(i\)</span> en el tiempo <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+P(q_t = i , O) = \alpha_t(i) \beta_t(i)
+\]</div>
+<p>Podemos combianar estas ultimas expresiones para obtener la probabilidad de estar en el estado <span class="math notranslate nohighlight">\(i\)</span> en el tiempo <span class="math notranslate nohighlight">\(t\)</span> dado la secuencia de observaciones <span class="math notranslate nohighlight">\(O\)</span>:
+$<span class="math notranslate nohighlight">\(
+P(q_t = i | O) = \frac{P(q_t = i , O)}{P(O)} = \frac{\alpha_t(i) \beta_t(i)}{\sum_{j=1}^{N} \alpha_t(j) \beta_t(j)}
+\)</span>$</p>
+</section>
+<section id="decodificacion">
+<h3>Decodificación<a class="headerlink" href="#decodificacion" title="Link to this heading">#</a></h3>
+<p>El problema de decodificación consiste en encontrar la secuencia de estados ocultos más probable <span class="math notranslate nohighlight">\(Q^*\)</span> dada una secuencia de observaciones <span class="math notranslate nohighlight">\(O\)</span>. Esto se puede resolver utilizando el algoritmo Viterbi, que utiliza programación dinámica para encontrar la secuencia óptima de estados ocultos. El algoritmo Viterbi calcula los coeficientes</p>
+<div class="math notranslate nohighlight">
+\[v_t(j) = \max_{q_1, \dots, q_{t-1}} P(q_1 \dots q_{t-1}, o_1, o_2 \dots o_t, q_t = j)\]</div>
+<p>que representan la probabilidad máxima de observar la secuencia <span class="math notranslate nohighlight">\(O\)</span> hasta el tiempo <span class="math notranslate nohighlight">\(t\)</span> y estar en el estado <span class="math notranslate nohighlight">\(j\)</span> en el tiempo <span class="math notranslate nohighlight">\(t\)</span>. El principio para calcular estos coeficientes es similar al algoritmo Forward, pero en lugar de sumar las probabilidades, tomamos el máximo. Esto se debe a que estamos buscando la secuencia de estados más probable, no la probabilidad total. Al mismo tiempo es necesario incluir otra variable para recordar cuál fue el estado anterior que generó la máxima probabilidad. Esta variable se llama <span class="math notranslate nohighlight">\(\delta_t(j)\)</span> y representa el estado anterior que generó la máxima probabilidad de estar en el estado <span class="math notranslate nohighlight">\(j\)</span> en el tiempo <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+v_1(j) &amp;= \pi_j b_j(o_1) \quad \text{para } 1 \leq j \leq N \\
+bt_1(j) &amp;= 0 \quad \text{para } 1 \leq j \leq N
+\end{align*}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+v_t(j) &amp;= \max_{i=1}^{N} \left[ v_{t-1}(i) a_{ij} b_j(o_t) \right] \quad \text{para } 1 \leq j \leq N,\ 1 &lt; t \leq T \\
+bt_t(j) &amp;= \arg\max_{i=1}^{N} \left[ v_{t-1}(i) a_{ij} b_j(o_t) \right] \quad \text{para } 1 \leq j \leq N,\ 1 &lt; t \leq T
+\end{align*}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\text{Puntaje del mejor camino:} \quad &amp; P_* =&amp; \max_{i=1}^{N} v_T(i) \\
+\text{Mejor camino:} \quad &amp; Q^* =&amp; \arg\max_{i=1}^{N} v_T(i)
+\end{align*}
+\end{split}\]</div>
+</section>
+<section id="aprendizaje">
+<h3>Aprendizaje<a class="headerlink" href="#aprendizaje" title="Link to this heading">#</a></h3>
+<p>El problema de aprendizaje consiste en encontrar los parámetros del HMM, es decir las matrices A y B, Esto se puede resolver utilizando el algoritmo de Baum-Welch, que es un caso especial del algoritmo Expectation-Maximization (EM). Este algoritmo tiene una etapa (Expectation) en la que se calcula la probabilidades sobre los parámetros del modelo en base a los dataos observados y una etapa (Maximization) en la que se actualizan los parámetros del modelo en base a las probabilidades calculadas en la etapa anterior.</p>
+<p>Las probabilidades de la etapa de Expectación se pueden calcular utilizando los coeficientes <span class="math notranslate nohighlight">\(\alpha\)</span> y <span class="math notranslate nohighlight">\(\beta\)</span> si tenemos una inicialización de las matrices A y B.
+$<span class="math notranslate nohighlight">\(
+P(q_t = i, q_{t+1} = j | O) = \frac{\alpha_t(i) a_{ij} b_j(o_{t+1}) \beta_{t+1}(j)}{\sum_{j=1}^{N} \alpha_t(j) \beta_t(j)}
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+P(q_t = i | O) = \frac{\alpha_t(i) \beta_t(i)}{\sum_{j=1}^{N} \alpha_t(j) \beta_t(j)}
+\]</div>
+<p>Luego se actualizan las matrices A y B utilizando estas probabilidades de transición y emisión con las siguientes fórmulas:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{a}_{ij} = \frac{ \sum_t P(q_t = i, q_{t+1} = j | O)}{ \sum_t P(q_t = i | O)} \\
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{b}_{ik} = \frac{ \sum_{o_t=v_k} P(q_t = i | O)}{\sum_t P(q_t = i | O)} \\
+\end{split}\]</div>
+<p>Esto se hace iterativamente, en cada iteración, se calcula la probabilidad de transición y emisión utilizando las matrices A y B actuales, y luego se actualizan las matrices A y B utilizando las probabilidades calculadas en la iteración anterior. El algoritmo continúa hasta que las matrices convergen a un valor estable o hasta que se alcanza un número máximo de iteraciones.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../3/ejercicios.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Ejercicios Capítulo 3</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="codigo_asr_hmm_fst.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Intro to HMMs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelado-estadistico-de-secuencias-discretas">Modelado estadístico de secuencias discretas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cadenas-de-markov">Cadenas de Markov</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos-de-markov-ocultos-hmm">Modelos de Markov ocultos (HMM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculo-expllicito-de-matrices-de-transicion-y-emision">Calculo expllicito de matrices de transición y emisión</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritmos-para-hmms">Algoritmos para HMMs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verosimilitud">Verosimilitud</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decodificacion">Decodificación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aprendizaje">Aprendizaje</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pablo Riera
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

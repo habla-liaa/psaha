@@ -1,0 +1,1703 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Código: HMMs y FSTs &#8212; Procesamiento de señales, audio y habla</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/4/codigo_asr_hmm_fst';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Modelado de secuencias" href="modelado_secuencias.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Procesamiento de señales, audio y habla - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Procesamiento de señales, audio y habla - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Procesamiento de señales, audio y habla
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Procesamiento de señales</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1/introduction.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/history.html">Historia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/codigo_senales.html">Código: Señales y operaciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/energyandpower.html">Energía y Potencia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/sistemaslti.html">Sistemas Lineales e Invariantes en el Tiempo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/convolucion.html">Convolución</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/codigo_convolucion.html">Código: Convolución</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/intro_fourier.html">Introducción Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/series_de_fourier.html">Series de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/codigo_series_de_fourier.html">Código: Series de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/transformada_de_fourier.html">Transformada de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/transformada_discreta_fourier.html">Transformada Discreta de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/codigo_transformada_discreta_de_fourier.html">Código: Transformada Discreta de Fourier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/tiempo-frecuencia.html">Tiempo-Frecuencia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/stft.html">Transformada de Fourier de Tiempo Corto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/codigo_stft.html">Código: Transformada de Fourier de Tiempo Corto (STFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/codigo_filtros.html">Codigo: Filtros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1/ejercicios.html">Ejercicios</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Habla y lenguaje</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3/codigo_analisis_habla.html">Código: Cálculo de atributos del habla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3/codigo_descubrimiento_de_unidades.html">Codigo: Descubrimiento de Unidades del Lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3/ejercicios.html">Ejercicios Capítulo 3</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelado de señales y secuencias</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="modelado_secuencias.html">Modelado de secuencias</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Código: HMMs y FSTs</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/4/codigo_asr_hmm_fst.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/4/codigo_asr_hmm_fst.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Código: HMMs y FSTs</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hmm-algorithms">HMM algorithms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-model">Example model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constants">Constants</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observation-sequence">Observation sequence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#state-transition-matrix">State transition matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#priors">Priors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-model">Final model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-algorithm">Forward algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#viterbi-algorithm">Viterbi algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-backward-routine">Forward-backward routine</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baum-welch">Baum-Welch</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#updates">Updates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hmm-topologies-for-speech-recognition">HMM topologies for speech recognition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wfst">WFST</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transducer-example">Transducer example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#composition">Composition</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hmm-example-using-wfst">HMM example using WFST</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pywrapfst</span> <span class="k">as</span> <span class="nn">fst</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">pywrapfst</span> <span class="k">as</span> <span class="nn">fst</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">File</span> <span class="o">~/</span><span class="n">miniconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">newbase</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pywrapfst</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">_pywrapfst</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;_pywrapfst&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="codigo-hmms-y-fsts">
+<h1>Código: HMMs y FSTs<a class="headerlink" href="#codigo-hmms-y-fsts" title="Link to this heading">#</a></h1>
+<p>Hidden Markov Models (HMMs) are a well known mathematical construct for modeling sequences of events using probabilistic reasoning. Its advantage is that it’s very intuitive and not too hard to implement. You can probably find much more information on places like <a class="reference external" href="https://en.wikipedia.org/wiki/Hidden_Markov_model">Wikipedia</a> and dozens of other sites you can google (e.g. <a class="reference external" href="http://www.comp.leeds.ac.uk/roger/HiddenMarkovModels/html_dev/main.html">this</a> one is one of my favorites).</p>
+<p>For speech recognition, the go to paper is an old one by <a class="reference external" href="http://www.ee.columbia.edu/~dpwe/e6820/papers/Rabiner89-hmm.pdf">Rabiner</a> which is written in a very simple and easy to understand way with examples specifically tuned to its application in speech recognition. If this is your first time hearing about it, you have to go and read that paper at once. This notebook will simply go through some of the major points written there and show their implementation in Python.</p>
+<section id="hmm-algorithms">
+<h2>HMM algorithms<a class="headerlink" href="#hmm-algorithms" title="Link to this heading">#</a></h2>
+<p>The Rabiner paper mentions 3 problems that are solved using HMMs:</p>
+<ol class="arabic simple">
+<li><p>Find the joint probability of a sequence of states given an HMM model - solved using the Forward algorithm</p></li>
+<li><p>Finding the most likely sequence of hidden states given the probability above - solved using the Viterbi algorithm</p></li>
+<li><p>Fine-tuning the parameters of the model by observing the likelihood of each state transition at each point in time - the Baum-Welch algorithm based around the Forward-Backward mechanic</p></li>
+</ol>
+<p>As a reminder, the HMM is defined by the following parameters:</p>
+<ul class="simple">
+<li><p>observation probability - classically is the output of a Gaussian Mixture Model (GMM), but we want to use the output of the ANN (e.g. MLP) here instead. For consistency with the Rabiner paper we will instead use a discrete model here, which means that observations will simply be some descreete events and the model will gives us a simple value of how probable this event is given a particular state (from a lookup table)</p></li>
+<li><p>hidden states - in our case, these are the units we try to recognize: e.g. phonemes, but also possibly things like words, which are a combination of phonemes (models can be combined in several layers - more on that later)</p></li>
+<li><p>transitions - as the name suggests, transitions from one state to another - these can contain weights that modify the probability (i.e. it is more likely to transition between certain phonemes than others)</p></li>
+<li><p>priors - initial probailities of starting a sequence in a certain state (this is often skipped whithout much problems)</p></li>
+</ul>
+<p>To keep things readable, we will use the same notation as in Rabiner’s paper:</p>
+<ul class="simple">
+<li><p>for observations we will use the letter <em>b</em></p></li>
+<li><p>for transitions the letter <em>a</em></p></li>
+<li><p>for priors the word <em>pi</em></p></li>
+</ul>
+</section>
+<section id="example-model">
+<h2>Example model<a class="headerlink" href="#example-model" title="Link to this heading">#</a></h2>
+<p>Here we will generate some random values to demonstrate the algorithms. Our HMM wil have 3 states and we will feed 5 observations into it. Each observation is a descrete event of on of 4 possible values. The model will also connect all the states to all the others. We are allowed to start and finish at any state.</p>
+<section id="constants">
+<h3>Constants<a class="headerlink" href="#constants" title="Link to this heading">#</a></h3>
+<p>These are the constants from above using notation from the Rabiner paper:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">M</span><span class="o">=</span><span class="mi">4</span>
+<span class="n">T</span><span class="o">=</span><span class="mi">5</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="observation-sequence">
+<h3>Observation sequence<a class="headerlink" href="#observation-sequence" title="Link to this heading">#</a></h3>
+<p>We will generate a random sequence of observations:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">O</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">T</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;O=&quot;</span><span class="p">,</span><span class="n">O</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>O= [0 1 0 2 0]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The observation matrix will convert these events into probablities for individual states. The matrix is a 3x4 matrix, where the first dimension is the state and second is the observation id:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">))</span>
+<span class="n">b</span><span class="o">/=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">b</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;b=&quot;</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b= [[0.31021875 0.6074922  0.35211577 0.39904301]
+ [0.28721382 0.15129559 0.40237732 0.07929935]
+ [0.40256743 0.24121221 0.24550691 0.52165764]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that probabilites for individual events have to sum to 1, i.e. each event is modeled by a probability distribution over the states (not the other way around):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1. 1. 1. 1.]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Given thes probabilities, we can easily estimate the observation probabilities in time:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ob</span><span class="o">=</span><span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">O</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ob</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.31021875 0.28721382 0.40256743]
+ [0.6074922  0.15129559 0.24121221]
+ [0.31021875 0.28721382 0.40256743]
+ [0.35211577 0.40237732 0.24550691]
+ [0.31021875 0.28721382 0.40256743]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>These also sum to 1 at each time step:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ob</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1. 1. 1. 1. 1.]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Please note that in our case, we will reaplace this lookup table with a proper model, e.g. an MLP or something better. This simple model will let us demonstrate the Baum-Welch algorithm, which is normally not used when talking about hybrid ANN-HMM models.</p>
+</section>
+<section id="state-transition-matrix">
+<h3>State transition matrix<a class="headerlink" href="#state-transition-matrix" title="Link to this heading">#</a></h3>
+<p>The state transition matrix is 3x3 and its rows also have to sum to 1 (i.e. the sum of probabilities of going from one state to all the others has to be equal one):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+<span class="n">a</span><span class="o">/=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)])</span><span class="o">.</span><span class="n">T</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.19702072 0.45607833 0.34690095]
+ [0.0949875  0.33957696 0.56543554]
+ [0.26588445 0.52429579 0.20981976]]
+[1. 1. 1.]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="priors">
+<h3>Priors<a class="headerlink" href="#priors" title="Link to this heading">#</a></h3>
+<p>We will also generate the priors. You can use random values or set everything to equally likely. The code below should work either way:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">pi</span><span class="o">/=</span><span class="n">pi</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.29762666 0.48634473 0.21602861]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="final-model">
+<h3>Final model<a class="headerlink" href="#final-model" title="Link to this heading">#</a></h3>
+<p>To make things easier to read below, we will merge all the values above into a single tuple:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hmm</span><span class="o">=</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here is some short code to save the model to a file:</p>
+</section>
+<section id="forward-algorithm">
+<h3>Forward algorithm<a class="headerlink" href="#forward-algorithm" title="Link to this heading">#</a></h3>
+<p>Implementing the algorithm directly using Rabiner’s paper would look like this. Note that Rabiner iterates his vectors/matrices starting from 1 (which is a standard in mathematics), but Python (as most computer programming languages) iterates from 0, so there is a little offset everywhere:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">fwd</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+
+    <span class="c1">#initiazliation</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">fwd</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">pi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">O</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+    <span class="c1">#induction</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">s</span><span class="o">=</span><span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+                <span class="n">s</span><span class="o">+=</span><span class="n">fwd</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">fwd</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">s</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">O</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+            
+    <span class="k">return</span> <span class="n">fwd</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.09232937 0.13968493 0.08696608]
+ [0.03315817 0.02044596 0.03117889]
+ [0.0052008  0.01103265 0.01191818]
+ [0.00184561 0.00497622 0.0025884 ]
+ [0.00047293 0.00111687 0.00160909]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Numpy allows us to implement this a bit more efficiently:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">fwd</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+
+    <span class="c1">#initialization</span>
+    <span class="n">fwd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">pi</span><span class="o">*</span><span class="n">b</span><span class="p">[:,</span><span class="n">O</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+    <span class="c1">#induction:</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">fwd</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">fwd</span><span class="p">[</span><span class="n">t</span><span class="p">],</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="n">b</span><span class="p">[:,</span><span class="n">O</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+    
+    <span class="k">return</span> <span class="n">fwd</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.09232937 0.13968493 0.08696608]
+ [0.03315817 0.02044596 0.03117889]
+ [0.0052008  0.01103265 0.01191818]
+ [0.00184561 0.00497622 0.0025884 ]
+ [0.00047293 0.00111687 0.00160909]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>This allows us to determine the joint probability of the sequence given the model (simply a sum of all the forward probabilities at the last time step):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">full_prob</span><span class="p">(</span><span class="n">fwd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fwd</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">full_prob</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.003198896983691855
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="viterbi-algorithm">
+<h3>Viterbi algorithm<a class="headerlink" href="#viterbi-algorithm" title="Link to this heading">#</a></h3>
+<p>Note that usually when we classifiy using MLPs directly (without HMMs), we just pick the most probable class at each timestep. This gives us the following sequnce:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">ob</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2, 0, 2, 1, 2])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The sequence above doesn’t take any context into account, however. The HMM model tells us that it may be more likely to choose certrain transitions than others. The Viterbi algorithm lets us find the most likely sequence of states (classes), while taking the parameters of the HMM into account:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">viterbi</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">ph</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1">#initialization</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">pi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">O</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">ph</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+
+    <span class="c1">#recursion</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">m</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+                <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">ph</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">O</span><span class="p">[</span><span class="n">t</span><span class="p">]]</span>
+
+    <span class="c1">#termination</span>
+    <span class="n">m</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">Pv</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+    <span class="c1">#path back-tracking</span>
+    <span class="n">Q</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">Q</span><span class="p">[</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="n">Q</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="n">ph</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">Q</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+        
+    <span class="k">return</span> <span class="n">Q</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">viterbi</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2 0 2 1 2]
+</pre></div>
+</div>
+</div>
+</div>
+<p>And a slightly faster Numpy implementation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">viterbi</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">ph</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1">#initialization</span>
+    <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">pi</span><span class="o">*</span><span class="n">b</span><span class="p">[:,</span><span class="n">O</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">ph</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+
+    <span class="c1">#recursion</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+        <span class="n">m</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">a</span><span class="o">.</span><span class="n">T</span>        
+        <span class="n">ph</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="n">m</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="n">ph</span><span class="p">[</span><span class="n">t</span><span class="p">]]</span><span class="o">*</span><span class="n">b</span><span class="p">[:,</span><span class="n">O</span><span class="p">[</span><span class="n">t</span><span class="p">]]</span>    
+
+    <span class="c1">#termination</span>
+    <span class="n">Q</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">Q</span><span class="p">[</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">Pv</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">Q</span><span class="p">[</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+
+    <span class="c1">#path back-tracking</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="n">Q</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="n">ph</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">Q</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+
+    <span class="k">return</span> <span class="n">Q</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">viterbi</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2 0 2 1 2]
+</pre></div>
+</div>
+</div>
+</div>
+<p>It should also be clear that if we set both the priors and transitions to be equiprobable (all the same value) the best observation and Viterbi paths will be the same.</p>
+</section>
+<section id="forward-backward-routine">
+<h3>Forward-backward routine<a class="headerlink" href="#forward-backward-routine" title="Link to this heading">#</a></h3>
+<p>The forward algorithm is already implemented above, so here, we will show the backward here:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">bk</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="c1">#initialization</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">bk</span><span class="p">[</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+    <span class="c1">#induction:</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">s</span><span class="o">=</span><span class="mi">0</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+                <span class="n">s</span><span class="o">+=</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">O</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span><span class="o">*</span><span class="n">bk</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>            
+            <span class="n">bk</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">s</span>
+    <span class="k">return</span> <span class="n">bk</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.01032582 0.00912923 0.01115729]
+ [0.03768161 0.04132281 0.03542651]
+ [0.11513804 0.103631   0.12223035]
+ [0.33176255 0.35462403 0.31753394]
+ [1.         1.         1.        ]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>And in Numpy:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">bk</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="c1">#initialization:</span>
+    <span class="n">bk</span><span class="p">[</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+    <span class="c1">#induction:</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="n">bk</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">bk</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[:,</span><span class="n">O</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]],</span><span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bk</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.01032582 0.00912923 0.01115729]
+ [0.03768161 0.04132281 0.03542651]
+ [0.11513804 0.103631   0.12223035]
+ [0.33176255 0.35462403 0.31753394]
+ [1.         1.         1.        ]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>When we have both Forward and Backward probabilities computed, we can use them together to estimate the probability of each state, at each point in time, by simply multuplying those two probablilities together. This works, because is the probability of a sequence from time 0 to time <span class="math notranslate nohighlight">\(t\)</span> and backward is the probabilty from time <span class="math notranslate nohighlight">\(t\)</span> to the end <span class="math notranslate nohighlight">\(T\)</span>. Adding them together gives a complete probability of passing that state in time. Addtionally, we normalize this by the joint probability <span class="math notranslate nohighlight">\(P\)</span> to make sure everything sums up nicely (i.e. each timestep sums to 1):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gamma</span><span class="p">(</span><span class="n">fwd</span><span class="p">,</span><span class="n">bk</span><span class="p">,</span><span class="n">fp</span><span class="p">):</span>
+    <span class="n">gm</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">gm</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">fwd</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">bk</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">i</span><span class="p">])</span><span class="o">/</span><span class="n">fp</span>
+    <span class="k">return</span> <span class="n">gm</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">gamma</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">full_prob</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.29803274 0.39864224 0.30332502]
+ [0.39058874 0.26411746 0.34529381]
+ [0.18719257 0.35741202 0.45539541]
+ [0.19141108 0.55165515 0.25693377]
+ [0.14784281 0.34914259 0.5030146 ]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Numpy one-liner:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gamma</span><span class="p">(</span><span class="n">fwd</span><span class="p">,</span><span class="n">bk</span><span class="p">,</span><span class="n">fp</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">fwd</span><span class="o">*</span><span class="n">bk</span><span class="p">)</span><span class="o">/</span><span class="n">fp</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">gamma</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">full_prob</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.29803274 0.39864224 0.30332502]
+ [0.39058874 0.26411746 0.34529381]
+ [0.18719257 0.35741202 0.45539541]
+ [0.19141108 0.55165515 0.25693377]
+ [0.14784281 0.34914259 0.5030146 ]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can compare the three probailities using a plot. You can notice on the plot (and it should be obvious from the equations) that forward probabilities decay exponentially in time and similarly (but in the opposite direction) with the backward probabilities. Adding them together, evens everything out and the full path denotes clearly what the most likely state at each step is.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="o">+</span><span class="mf">.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Forward&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Backward&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">g</span><span class="o">=</span><span class="n">gamma</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">full_prob</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)))</span>
+<span class="n">m</span><span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Full&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c44c9f234caa25a9f960be1e3e129937d539fa4e1dd43f414934def0adb6c369.png" src="../../_images/c44c9f234caa25a9f960be1e3e129937d539fa4e1dd43f414934def0adb6c369.png" />
+</div>
+</div>
+<p>Please note there are many sequences we can extract now and they are all different and NOT equivalent in any way, so you cannot use them interchangebly.</p>
+<ul class="simple">
+<li><p>we can get the best observation at each timestep, which doesn’t take the transitions or priors of the HMM into account</p></li>
+<li><p>we can take the best forward or backward probability at each time step, which takes only the history/future into account</p></li>
+<li><p>we can take the best full-probability at each time step, but this isn’t actually the most likely <em>sequence</em> - it is just the most likely state, i.e. there are many possible sequences and that is the <em>average</em> probability of all the sequences (likely or not) that go through that state</p></li>
+<li><p>finally, we can get simply the most likely sequence using the Viterbi algorithm</p></li>
+</ul>
+<p>The problem with full probability argmax not being equivalent to the Viterbi sequence can also be explained by the fact that the two states in the full prob. sequence don’t have to even be a part of the same sequence.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best observation sequence: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">ob</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best forward prob. sequence: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best backward prob. sequence: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+<span class="n">g</span><span class="o">=</span><span class="n">gamma</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">full_prob</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best full prob. sequence: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best Viterbi sequence: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">viterbi</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best observation sequence: [2 0 2 1 2]
+Best forward prob. sequence: [1 0 2 1 2]
+Best backward prob. sequence: [2 1 2 1 0]
+Best full prob. sequence: [1 0 2 1 2]
+Best Viterbi sequence: [2 0 2 1 2]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="baum-welch">
+<h3>Baum-Welch<a class="headerlink" href="#baum-welch" title="Link to this heading">#</a></h3>
+<p>Now we can also determine the sequence probablity, which would help us with fine-tuning the state transition likelihood. You can read about the Baum-Welch algorithm in Rabiner’s paper, but this is something that is not really used much in hybrid ANN-HMM models. We are mentioning it here more for sake of curiousity:</p>
+<p>The transition probability computed for each timestep gives us a 3D matrix of size 4x3x3, since there are <span class="math notranslate nohighlight">\(N^2\)</span> transitions at each timestep and only <span class="math notranslate nohighlight">\(T-1\)</span> transitions time steps (i.e. number of transitions between 5 consecutive timesteps). The matrix is computed thusly:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">xi</span><span class="p">(</span><span class="n">fwd</span><span class="p">,</span><span class="n">bk</span><span class="p">,</span><span class="n">fp</span><span class="p">,</span><span class="n">O</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">ret</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+                <span class="n">ret</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">fwd</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">O</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span><span class="o">*</span><span class="n">bk</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="n">fp</span>                
+    <span class="k">return</span> <span class="n">ret</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">xi</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">full_prob</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)),</span><span class="o">*</span><span class="n">hmm</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[[0.13017322 0.08229912 0.0855604 ]
+  [0.09494801 0.09270511 0.21098912]
+  [0.16546751 0.08911323 0.04874429]]
+
+ [[0.07294392 0.14070994 0.17693488]
+  [0.02168506 0.06460118 0.17783122]
+  [0.0925636  0.15210091 0.1006293 ]]
+
+ [[0.0374192  0.10580614 0.04396723]
+  [0.03827002 0.1671165  0.1520255 ]
+  [0.11572185 0.27873251 0.06094104]]
+
+ [[0.03526303 0.0755761  0.08057194]
+  [0.04583888 0.15172008 0.35409619]
+  [0.06674089 0.12184641 0.06834647]]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Numpy version:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">xi</span><span class="p">(</span><span class="n">fwd</span><span class="p">,</span><span class="n">bk</span><span class="p">,</span><span class="n">fp</span><span class="p">,</span><span class="n">O</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fwd</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">))</span><span class="o">*</span><span class="n">b</span><span class="p">[:,</span><span class="n">O</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">))</span><span class="o">*</span><span class="n">bk</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">))</span><span class="o">/</span><span class="n">fp</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">xi</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">full_prob</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)),</span><span class="o">*</span><span class="n">hmm</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[[0.13017322 0.08229912 0.0855604 ]
+  [0.09494801 0.09270511 0.21098912]
+  [0.16546751 0.08911323 0.04874429]]
+
+ [[0.07294392 0.14070994 0.17693488]
+  [0.02168506 0.06460118 0.17783122]
+  [0.0925636  0.15210091 0.1006293 ]]
+
+ [[0.0374192  0.10580614 0.04396723]
+  [0.03827002 0.1671165  0.1520255 ]
+  [0.11572185 0.27873251 0.06094104]]
+
+ [[0.03526303 0.0755761  0.08057194]
+  [0.04583888 0.15172008 0.35409619]
+  [0.06674089 0.12184641 0.06834647]]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The expected prior value can be estimated by simply looking at the expected value <span class="math notranslate nohighlight">\(\gamma\)</span> at the first point in time:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">exp_pi</span><span class="p">(</span><span class="n">gamma</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">gamma</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">exp_pi</span><span class="p">(</span><span class="n">gamma</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">),</span><span class="n">full_prob</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)))))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.29803274 0.39864224 0.30332502]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The expected transistions is the sum (for different timestep) of transition probabilities <span class="math notranslate nohighlight">\(\xi\)</span> normalized by the corresponding emitting state probabilities <span class="math notranslate nohighlight">\(\gamma\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">exp_a</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span><span class="n">xi</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">e_a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">e_a</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">xi</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gamma</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">])</span>
+            
+    <span class="k">return</span> <span class="n">e_a</span>
+
+<span class="n">fw</span><span class="o">=</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)</span>
+<span class="n">bk</span><span class="o">=</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">=</span><span class="n">full_prob</span><span class="p">(</span><span class="n">fw</span><span class="p">)</span>
+<span class="n">g</span><span class="o">=</span><span class="n">gamma</span><span class="p">(</span><span class="n">fw</span><span class="p">,</span><span class="n">bk</span><span class="p">,</span><span class="n">fp</span><span class="p">)</span>
+<span class="n">x</span><span class="o">=</span><span class="n">xi</span><span class="p">(</span><span class="n">fw</span><span class="p">,</span><span class="n">bk</span><span class="p">,</span><span class="n">fp</span><span class="p">,</span><span class="o">*</span><span class="n">hmm</span><span class="p">)</span>
+
+<span class="n">ea</span><span class="o">=</span><span class="n">exp_a</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">exp_a</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.25842661 0.37891846 0.36265493]
+ [0.12771252 0.30292323 0.56936425]
+ [0.32366692 0.47157794 0.20475514]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Numpy version:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">exp_a</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span><span class="n">xi</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>            
+    <span class="k">return</span> <span class="n">xi</span><span class="p">[:]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">gamma</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">fw</span><span class="o">=</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)</span>
+<span class="n">bk</span><span class="o">=</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">=</span><span class="n">full_prob</span><span class="p">(</span><span class="n">fw</span><span class="p">)</span>
+<span class="n">g</span><span class="o">=</span><span class="n">gamma</span><span class="p">(</span><span class="n">fw</span><span class="p">,</span><span class="n">bk</span><span class="p">,</span><span class="n">fp</span><span class="p">)</span>
+<span class="n">x</span><span class="o">=</span><span class="n">xi</span><span class="p">(</span><span class="n">fw</span><span class="p">,</span><span class="n">bk</span><span class="p">,</span><span class="n">fp</span><span class="p">,</span><span class="o">*</span><span class="n">hmm</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">exp_a</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.25842661 0.37891846 0.36265493]
+ [0.12771252 0.30292323 0.56936425]
+ [0.32366692 0.47157794 0.20475514]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, the expected observation likelihood is sum of probabilities of given states at times where the specific observation occured normalized by the sum of all the probilities in time for the given state:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">exp_b</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span><span class="n">O</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">):</span>
+    <span class="n">e_b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>        
+            <span class="n">e_b</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gamma</span><span class="p">[</span><span class="n">O</span><span class="o">==</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">])</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gamma</span><span class="p">[:,</span><span class="n">j</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">e_b</span>
+
+<span class="n">fw</span><span class="o">=</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)</span>
+<span class="n">bk</span><span class="o">=</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">=</span><span class="n">full_prob</span><span class="p">(</span><span class="n">fw</span><span class="p">)</span>
+<span class="n">g</span><span class="o">=</span><span class="n">gamma</span><span class="p">(</span><span class="n">fw</span><span class="p">,</span><span class="n">bk</span><span class="p">,</span><span class="n">fp</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">exp_b</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">O</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.52101459 0.32145424 0.15753117 0.        ]
+ [0.57533286 0.13749175 0.28717539 0.        ]
+ [0.67691005 0.18524718 0.13784277 0.        ]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Numpy version (couldn’t figure out how to get rid of the <em>k</em> loop):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">exp_b</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span><span class="n">O</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">):</span>    
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gamma</span><span class="p">[</span><span class="n">O</span><span class="o">==</span><span class="n">k</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">M</span><span class="p">)])</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">fw</span><span class="o">=</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)</span>
+<span class="n">bk</span><span class="o">=</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">=</span><span class="n">full_prob</span><span class="p">(</span><span class="n">fw</span><span class="p">)</span>
+<span class="n">g</span><span class="o">=</span><span class="n">gamma</span><span class="p">(</span><span class="n">fw</span><span class="p">,</span><span class="n">bk</span><span class="p">,</span><span class="n">fp</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">exp_b</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">O</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.52101459 0.32145424 0.15753117 0.        ]
+ [0.57533286 0.13749175 0.28717539 0.        ]
+ [0.67691005 0.18524718 0.13784277 0.        ]]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="updates">
+<h4>Updates<a class="headerlink" href="#updates" title="Link to this heading">#</a></h4>
+<p>The Baum-Welch algorithm now works by repeadatly updating the model parameters in this two step <em>EM</em> (first Expectation, then Modification) procedure. The goal of the algorithm is to maximize the <span class="math notranslate nohighlight">\(P(O|\Lambda)\)</span>, where <span class="math notranslate nohighlight">\(O\)</span> is the observation sequence and <span class="math notranslate nohighlight">\(\Lambda\)</span> is the model. We will also print out the mean square of the difference of model parameters vs their expected value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initial probability: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">full_prob</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">))))</span>
+
+<span class="n">hmm_new</span><span class="o">=</span><span class="n">hmm</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">):</span>
+    <span class="n">fw</span><span class="o">=</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm_new</span><span class="p">)</span>
+    <span class="n">bk</span><span class="o">=</span><span class="n">backward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm_new</span><span class="p">)</span>
+    <span class="n">fp</span><span class="o">=</span><span class="n">full_prob</span><span class="p">(</span><span class="n">fw</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">=</span><span class="n">gamma</span><span class="p">(</span><span class="n">fw</span><span class="p">,</span><span class="n">bk</span><span class="p">,</span><span class="n">fp</span><span class="p">)</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">xi</span><span class="p">(</span><span class="n">fw</span><span class="p">,</span><span class="n">bk</span><span class="p">,</span><span class="n">fp</span><span class="p">,</span><span class="o">*</span><span class="n">hmm_new</span><span class="p">)</span>
+
+    <span class="n">pi_new</span><span class="o">=</span><span class="n">exp_pi</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="n">a_new</span><span class="o">=</span><span class="n">exp_a</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">b_new</span><span class="o">=</span><span class="n">exp_b</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">O</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">)</span>
+    
+    <span class="n">err</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(((</span><span class="n">pi_new</span><span class="o">-</span><span class="n">hmm_new</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),(</span><span class="n">a_new</span><span class="o">-</span><span class="n">hmm_new</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),(</span><span class="n">b_new</span><span class="o">-</span><span class="n">hmm_new</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">ravel</span><span class="p">()))</span>
+    
+    <span class="n">hmm_new</span><span class="o">=</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">pi_new</span><span class="p">,</span><span class="n">a_new</span><span class="p">,</span><span class="n">b_new</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Update #</span><span class="si">{}</span><span class="s1"> probability: </span><span class="si">{}</span><span class="s1"> -- mean error: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">full_prob</span><span class="p">(</span><span class="n">forward</span><span class="p">(</span><span class="o">*</span><span class="n">hmm_new</span><span class="p">)),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">err</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Initial probability: 0.003198896983691855
+Update #1 probability: 0.008545296290226483 -- mean error: 0.03425361988412188
+Update #2 probability: 0.008829132833832265 -- mean error: 0.0003578204489397233
+Update #3 probability: 0.009563760860843927 -- mean error: 0.0006161253643439376
+Update #4 probability: 0.01255651757921105 -- mean error: 0.0019098366677917887
+Update #5 probability: 0.026895921111053187 -- mean error: 0.005307096532624511
+Update #6 probability: 0.0893844747892251 -- mean error: 0.010450460184931579
+Update #7 probability: 0.20744507989756178 -- mean error: 0.01134439211306692
+Update #8 probability: 0.24855786749424388 -- mean error: 0.0012701533647109615
+Update #9 probability: 0.24999733237121038 -- mean error: 2.5139351640098013e-06
+Update #10 probability: 0.24999999998335537 -- mean error: 1.278219744485456e-11
+Update #11 probability: 0.24999999999999992 -- mean error: 5.093255345056511e-22
+Update #12 probability: 0.2500000000000001 -- mean error: 2.1827206042017036e-33
+Update #13 probability: 0.24999999999999994 -- mean error: 2.5679065925163146e-33
+Update #14 probability: 0.24999999999999992 -- mean error: 3.241982073051847e-33
+Update #15 probability: 0.25 -- mean error: 4.237045877651919e-33
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, this doesn’t do anything for optimizing the Viterbi sequence recognized by the model, but there is another way HMMs are trained for speech recognition. Usually, each phonetical unit is modelled by a simple 3-5 state left-to-right model. When we present the recognizer a sentence, we actually combine all these phonetic models into one long chain. Then we try to maximize the <span class="math notranslate nohighlight">\(P(O|\Lambda_{\rho})\)</span> for each phoneme (indexed by <span class="math notranslate nohighlight">\(\rho\)</span>) individually, using the above E-M reestimation procedure.</p>
+<p>With hybird ANN-HMM systems, we generally don’t use EM training. ANNs are usually trained discriminatevly. In that case, we need a frame-wise alignment to train the model. We can either iteratively re-align the data (using Viterbi) and train the system, or we can use some other cost function (e.g. CTC), skipping the HMM part entirely.</p>
+</section>
+</section>
+</section>
+<section id="hmm-topologies-for-speech-recognition">
+<h2>HMM topologies for speech recognition<a class="headerlink" href="#hmm-topologies-for-speech-recognition" title="Link to this heading">#</a></h2>
+<p>To actually perform speech recognition using HMMs, we need to expand the definition of the model considerably. First of all, this model will allow us only to recognize a simple sequence of events.</p>
+<p>Say we create an “acoustic model” (instead of the observation martix) that will recognize phonemes based on some acoustic observations (e.g. STFT filterbank outputs through time). We can easily do this using a simple MLP. Such a model can use HMMs to cconvert the raw MLP outputs into a sequence of phonemes. If we wish to recognize words, we need to create another model to convert that sequence of phonemes into their word representation.</p>
+<p>Since a sequence of words is the same kind of sequence as the sequence of phonemes (albeit a bit more sparse), we can model it simply as another layer of HMMs on top of the phoneme one. This layer will not allow any sequence of phonemes, but only the ones that form actual words from a lexicon. We can also add one more layer that will define how words can interact with eachother in a sentence - the so-called language model.</p>
+<p>All these layers can get very tricky. In practice, we may decide to acutally recreate this layered model in a single-layered complex graph containg all the weights and contraints of both the phonetic, lexical and language layers together. This is named, by some reaserchers, an “Integrated Network” or IN for short. This turns out to be not enough in order to fully realize our solution, as the hidden states are still phonemes and not words. We can therefore add special non-emitting states (states that don’t move the time-line) to denote word bnoundaries - times where a word has to be output.</p>
+<p>A slightly more efficient solution would be to instead add an additional field to each state, apart from the phoneme that we are trying to consume, a word that we are trying to output. For most states, this auxilary value would be blank, but every once in a while we would have a word that needs to be output.</p>
+<p>Thus we have successfully redefined our classical HMM solution that relied on Finite-State Automata (FSA) to a much more convinient solution that relies of Finite-State Transducers (FST).</p>
+</section>
+<section id="wfst">
+<h2>WFST<a class="headerlink" href="#wfst" title="Link to this heading">#</a></h2>
+<p>Weighted Finite State Transducers are a type of automaton that has a sequence of states with transitions between them, just like an HMM. Unlike an HMM, a transducer has two types of symbols: an input and an output.</p>
+<p>HMM problems are usually presented as a graph with hidden states, denoting our hidden value that we are trying to deduce, and a weight related to the transition between these states. A different and pretty much equivalent method to represent this same model is to rewrite the hidden symbols on the transitions, together with the weights. This is also how a transducer is normally depicted, with a sequence of transitions between states, where each transition has two symbols (input and output) and a weight.</p>
+<p>All the details about WFST and their application to speech recognition can be found in <a class="reference external" href="http://www.cs.nyu.edu/~mohri/pub/csl01.pdf">this</a> paper by Mohri, et al. One of the prime examples of WFST for speech recognition is the <a class="reference external" href="http://www.kaldi-asr.org">Kaldi</a> project.</p>
+<section id="transducer-example">
+<h3>Transducer example<a class="headerlink" href="#transducer-example" title="Link to this heading">#</a></h3>
+<p>An actual transducer is an automaton that converts symbols from one set of values to another. Take this transducer that converts symbols in a following manner:</p>
+<ul class="simple">
+<li><p>convert <em>a</em> to <em>b</em></p></li>
+<li><p>convert *b to *c</p></li>
+<li><p>convert *c to *a</p></li>
+</ul>
+<p>By using the excellent <a class="reference external" href="http://pyfst.github.io/">PyFst</a> library, we can visualize this transducer like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">fst</span><span class="o">.</span><span class="n">VectorFst</span><span class="p">(</span><span class="n">arc_type</span><span class="o">=</span><span class="s2">&quot;standard&quot;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_state</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">fst</span><span class="o">.</span><span class="n">Arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">fst</span><span class="o">.</span><span class="n">Weight</span><span class="p">(</span><span class="s2">&quot;tropical&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.svg" src="../../_images/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.svg" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">symbol_table</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="n">fst</span><span class="o">.</span><span class="n">SymbolTable</span><span class="p">()</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">add_symbol</span><span class="p">(</span><span class="s2">&quot;ε&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">add_symbol</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">st</span>
+
+<span class="kn">from</span> <span class="nn">graphviz</span> <span class="kn">import</span> <span class="n">Source</span>
+<span class="k">def</span> <span class="nf">mydraw</span><span class="p">(</span><span class="n">fst</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mf">100.0</span><span class="p">):</span>
+    <span class="n">fst</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;test.dot&#39;</span><span class="p">,</span><span class="n">portrait</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="n">h</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="n">w</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Source</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;test.dot&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Transducer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbols</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">arc_type</span><span class="o">=</span><span class="s2">&quot;standard&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arc_type</span> <span class="o">=</span> <span class="n">arc_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight_type</span> <span class="o">=</span> <span class="s2">&quot;tropical&quot;</span> <span class="k">if</span> <span class="n">arc_type</span> <span class="o">==</span> <span class="s2">&quot;standard&quot;</span> <span class="k">else</span> <span class="s2">&quot;log&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fst</span> <span class="o">=</span> <span class="n">fst</span><span class="o">.</span><span class="n">VectorFst</span><span class="p">(</span><span class="n">arc_type</span><span class="o">=</span><span class="n">arc_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">symbols</span> <span class="o">==</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span>
+            <span class="n">alphabet</span> <span class="o">=</span> <span class="s2">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>
+            <span class="n">st</span> <span class="o">=</span> <span class="n">symbol_table</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">symbols</span><span class="o">==</span><span class="s2">&quot;numbers&quot;</span><span class="p">:</span>
+            <span class="n">alphabet</span> <span class="o">=</span> <span class="s2">&quot;0123456789&quot;</span>
+            <span class="n">st</span> <span class="o">=</span> <span class="n">symbol_table</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">symbols</span><span class="o">==</span><span class="s2">&quot;alphanumeric&quot;</span><span class="p">:</span>
+            <span class="n">alphabet</span> <span class="o">=</span> <span class="s2">&quot;abcdefghijklmnopqrstuvwxyz0123456789&quot;</span>
+            <span class="n">st</span> <span class="o">=</span> <span class="n">symbol_table</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">st</span> <span class="o">=</span> <span class="n">symbol_table</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">fst</span><span class="o">.</span><span class="n">SymbolTable</span><span class="p">):</span>
+            <span class="n">st</span> <span class="o">=</span> <span class="n">symbols</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fst</span><span class="o">.</span><span class="n">set_input_symbols</span><span class="p">(</span> <span class="n">st</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fst</span><span class="o">.</span><span class="n">set_output_symbols</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
+    
+        
+    <span class="k">def</span> <span class="nf">add_arc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">src</span><span class="p">,</span><span class="n">dst</span><span class="p">,</span> <span class="n">ilabel</span><span class="p">,</span> <span class="n">olabel</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ilabel</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">ilabel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fst</span><span class="o">.</span><span class="n">input_symbols</span><span class="p">()</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">ilabel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">olabel</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">olabel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fst</span><span class="o">.</span><span class="n">output_symbols</span><span class="p">()</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">olabel</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">weight</span> <span class="o">=</span> <span class="n">fst</span><span class="o">.</span><span class="n">Weight</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight_type</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">weight</span> <span class="o">=</span> <span class="n">fst</span><span class="o">.</span><span class="n">Weight</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight_type</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">src</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="ow">or</span> <span class="n">dst</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+            <span class="c1"># add states until we find the source state</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">max</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
+                <span class="c1"># add a new state to the FST</span>
+                <span class="n">new_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fst</span><span class="o">.</span><span class="n">add_state</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_state</span><span class="p">)</span>       
+        
+        <span class="k">if</span> <span class="mi">0</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fst</span><span class="o">.</span><span class="n">set_start</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>             
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fst</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="n">fst</span><span class="o">.</span><span class="n">Arc</span><span class="p">(</span><span class="n">ilabel</span><span class="p">,</span><span class="n">olabel</span><span class="p">,</span><span class="n">weight</span><span class="p">,</span> <span class="n">dst</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="nf">set_final</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">state</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+            <span class="c1"># add states until we find the source state</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">state</span><span class="p">:</span>
+                <span class="n">new_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fst</span><span class="o">.</span><span class="n">add_state</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fst</span><span class="o">.</span><span class="n">set_final</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
+        
+<span class="k">def</span> <span class="nf">linear_chain</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">Transducer</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">w</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">set_final</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">t</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="o">=</span><span class="n">Transducer</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_final</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">mydraw</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">fst</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/bc8714163e0ff5df78ee5d9f4de52719bafa5c272869e39fd9607cf73dda6334.svg" src="../../_images/bc8714163e0ff5df78ee5d9f4de52719bafa5c272869e39fd9607cf73dda6334.svg" />
+</div>
+</div>
+<p>Now let’s make another transducer, but this will have the same input and output symbols and they will form a sequence.</p>
+<p>Note that a transducer with identical input and output symbols is simply an automaton (FSA), or otherwise known as an <em>acceptor</em>.</p>
+<p>We will use a helpful <em>linear_chain</em> method to generate such an acceptor:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="n">linear_chain</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="n">mydraw</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">fst</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d23dc09cd5fbb3d8d9621e5f7d3eda0b7458b99a118c10aae2424135e16fecae.svg" src="../../_images/d23dc09cd5fbb3d8d9621e5f7d3eda0b7458b99a118c10aae2424135e16fecae.svg" />
+</div>
+</div>
+</section>
+<section id="composition">
+<h3>Composition<a class="headerlink" href="#composition" title="Link to this heading">#</a></h3>
+<p>The most useful method used in a transducer is composition. This operation takes two transducers, e.g. one converting from symbol space A into B, and second converting from B into C and creates a third transducer that converts from A into C that is like a combination of the original ones.</p>
+<p>We can use this method (denoted by the &gt;&gt; operator) to process the input chain transducer using our token converter above. The project_output method simply copies the output symbols to the input in order to discard the input symbols:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">o</span><span class="o">=</span><span class="n">fst</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">fst</span><span class="p">,</span><span class="n">f</span><span class="o">.</span><span class="n">fst</span><span class="p">)</span>
+<span class="n">o</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="s2">&quot;output&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8514db9ac9d833e66bb169bdc565d0ddf2d5574adb80570a572eded4c207c0cd.svg" src="../../_images/8514db9ac9d833e66bb169bdc565d0ddf2d5574adb80570a572eded4c207c0cd.svg" />
+</div>
+</div>
+<p>It pays off to think about this for a while until it’s clear what is actually going on here. For more help, I recommend reading some of the docs at the <a class="reference external" href="http://www.openfst.org/twiki/bin/view/FST/WebHome">OpenFST</a> website.</p>
+<p>We can also process several sequences at once. Here we create a transducer that is a union of 3 sub-transducers. We will also expand our definition of the new symbols. We have to remove epsilon, because (apart from being uneccessary) jupyter notebook has issues with printing unicode characters in SVG:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">i1</span><span class="o">=</span><span class="n">linear_chain</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">])</span>
+<span class="n">i2</span><span class="o">=</span><span class="n">linear_chain</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">])</span>
+<span class="n">i3</span><span class="o">=</span><span class="n">linear_chain</span><span class="p">([</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">])</span>
+<span class="n">i</span><span class="o">=</span><span class="n">i1</span><span class="o">.</span><span class="n">fst</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">i2</span><span class="o">.</span><span class="n">fst</span><span class="p">)</span>
+<span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">i3</span><span class="o">.</span><span class="n">fst</span><span class="p">)</span>
+<span class="n">mydraw</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">rmepsilon</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/34240e2595cd0df9e4a98c92dfb996d500525863b762b1b62470d5a4183ec815.svg" src="../../_images/34240e2595cd0df9e4a98c92dfb996d500525863b762b1b62470d5a4183ec815.svg" />
+</div>
+</div>
+<p>Now, this graph can be made more efficient by using determinization and minimization. Note that the graph below is equivalent to the one above, but has less states and transitions. This is especially useful with big graphs:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="n">fst</span><span class="o">.</span><span class="n">determinize</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="n">i</span><span class="o">.</span><span class="n">minimize</span><span class="p">()</span>
+<span class="n">mydraw</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/4156fdd6b03a1ac508460345b9b2cb82dade6faa211cc03ced1833aa9e681670.svg" src="../../_images/4156fdd6b03a1ac508460345b9b2cb82dade6faa211cc03ced1833aa9e681670.svg" />
+</div>
+</div>
+<p>And we can still produce an output, like before:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="o">=</span><span class="n">Transducer</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_final</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">mydraw</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">fst</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/e7f94f62dc05767a89e51d1672cd668648dd7353be179cc4fea688c874917daa.svg" src="../../_images/e7f94f62dc05767a89e51d1672cd668648dd7353be179cc4fea688c874917daa.svg" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">o</span> <span class="o">=</span> <span class="n">fst</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">f</span><span class="o">.</span><span class="n">fst</span><span class="p">)</span>
+<span class="n">o</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="s2">&quot;output&quot;</span><span class="p">)</span>
+<span class="n">mydraw</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1ef926d3fd1f26658be8548ecb7884391c2d00b3166e1ba4096e7743179d854e.svg" src="../../_images/1ef926d3fd1f26658be8548ecb7884391c2d00b3166e1ba4096e7743179d854e.svg" />
+</div>
+</div>
+<p>This method is also useful to combine a chain of operations into one complete transducer, for example to create a speech recognition pipeline as mentioned in the chapter about HMMs above. We can create a separate transducer for modeling phonemes, one for converting phonemes into words and another one for modeling sequences of words and combine all three into one large transducer converting context-indepentend phonemes into context-depndent words.</p>
+</section>
+</section>
+<section id="hmm-example-using-wfst">
+<h2>HMM example using WFST<a class="headerlink" href="#hmm-example-using-wfst" title="Link to this heading">#</a></h2>
+<p>Let’s reitrate our HMM example above using WFSTs. First lets convert the observation matrix into an input sequence:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">obs_mat</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">f</span><span class="o">=</span><span class="n">Transducer</span><span class="p">(</span><span class="n">arc_type</span><span class="o">=</span><span class="s2">&quot;standard&quot;</span><span class="p">,</span> <span class="n">symbols</span><span class="o">=</span><span class="s2">&quot;alphanumeric&quot;</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">O</span><span class="p">[</span><span class="n">t</span><span class="p">]]))</span>
+        
+    <span class="n">f</span><span class="o">.</span><span class="n">set_final</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">f</span>
+
+<span class="n">obs_fsa</span><span class="o">=</span><span class="n">obs_mat</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A thing to note is that weights in FSTs are usually represented in a different way than in HMMs. We generally define weights in a specific semiring: in this case the <a class="reference external" href="https://en.wikipedia.org/wiki/Tropical_geometry">tropical semiring</a>.</p>
+<p>This semiring defines that the combination of two weigts is implemented using the sum. Probabilities are usually added togehter by multiplying them with each other. If we convert them into the log domain, the multiplication changes into a sum. Taking a logarithm of a value between 0 and 1 (i.e. probability) caonstraints the result to values between <span class="math notranslate nohighlight">\(-\inf\)</span> to 0. The value of 0 is the best, and <span class="math notranslate nohighlight">\(-\inf\)</span> is the worst. The tropical semiring works in the opposite direction, so we also have to take the negative of the logarithm to redefine values from 0 to <span class="math notranslate nohighlight">\(\inf\)</span> and make the smaller values better than higher:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mydraw</span><span class="p">(</span><span class="n">obs_fsa</span><span class="o">.</span><span class="n">fst</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8cfff3906b40a093983f0430018fee0031b01bb34285440179ca64ded6e3275f.svg" src="../../_images/8cfff3906b40a093983f0430018fee0031b01bb34285440179ca64ded6e3275f.svg" />
+</div>
+</div>
+<p>This FSA simply chains several sequences in parallel. Each state represent a time step and the transitions in between are the individual observations. It’s shape is what made it known as the <em>sausage</em>.</p>
+<p>Now, we can also incorporate the priors and transitions in another FST that looks like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">trans_mat</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">f</span><span class="o">=</span><span class="n">Transducer</span><span class="p">(</span><span class="n">arc_type</span><span class="o">=</span><span class="s2">&quot;standard&quot;</span><span class="p">,</span> <span class="n">symbols</span><span class="o">=</span><span class="s2">&quot;alphanumeric&quot;</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pi</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">add_arc</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]))</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">set_final</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f</span>
+
+<span class="n">tr_fsa</span><span class="o">=</span><span class="n">trans_mat</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mydraw</span><span class="p">(</span><span class="n">tr_fsa</span><span class="o">.</span><span class="n">fst</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/83d2f264aaf376d0f5478f3a4a3c4f3031bba5b0fcda25b9b5992be9dd6202b0.svg" src="../../_images/83d2f264aaf376d0f5478f3a4a3c4f3031bba5b0fcda25b9b5992be9dd6202b0.svg" />
+</div>
+</div>
+<p>Now lets combine the input sausage with the above transitions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_fsa</span><span class="o">=</span><span class="n">fst</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">obs_fsa</span><span class="o">.</span><span class="n">fst</span><span class="p">,</span><span class="n">tr_fsa</span><span class="o">.</span><span class="n">fst</span><span class="p">)</span>
+<span class="n">mydraw</span><span class="p">(</span><span class="n">out_fsa</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/cf363c9bff1ccbf68d3b036fecab01027f79ceac9ccfc0e063c4117d12ecfcc3.svg" src="../../_images/cf363c9bff1ccbf68d3b036fecab01027f79ceac9ccfc0e063c4117d12ecfcc3.svg" />
+</div>
+</div>
+<p>What we get is a graph representing all the possible transitions among between all possible states with their corresponging weights. If we use the <em>shortest_path</em> method on this graph, we will get the same path as by using Viterbi:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sh_p</span><span class="o">=</span><span class="n">fst</span><span class="o">.</span><span class="n">shortestpath</span><span class="p">(</span><span class="n">out_fsa</span><span class="p">)</span>
+<span class="n">mydraw</span><span class="p">(</span><span class="n">sh_p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/49b65c6fe4d3ef0304a12ab74a1605cff7123f405d5166cf96d1fda175da5bc6.svg" src="../../_images/49b65c6fe4d3ef0304a12ab74a1605cff7123f405d5166cf96d1fda175da5bc6.svg" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># output symbols</span>
+<span class="p">[</span><span class="n">sh_p</span><span class="o">.</span><span class="n">output_symbols</span><span class="p">()</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">olabel</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">sh_p</span><span class="o">.</span><span class="n">states</span><span class="p">())[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">sh_p</span><span class="o">.</span><span class="n">arcs</span><span class="p">(</span><span class="n">s</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;2&#39;, &#39;0&#39;, &#39;2&#39;, &#39;1&#39;, &#39;2&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">viterbi</span><span class="p">(</span><span class="o">*</span><span class="n">hmm</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2 0 2 1 2]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="modelado_secuencias.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Modelado de secuencias</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hmm-algorithms">HMM algorithms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-model">Example model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constants">Constants</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observation-sequence">Observation sequence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#state-transition-matrix">State transition matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#priors">Priors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-model">Final model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-algorithm">Forward algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#viterbi-algorithm">Viterbi algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-backward-routine">Forward-backward routine</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baum-welch">Baum-Welch</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#updates">Updates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hmm-topologies-for-speech-recognition">HMM topologies for speech recognition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wfst">WFST</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transducer-example">Transducer example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#composition">Composition</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hmm-example-using-wfst">HMM example using WFST</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pablo Riera
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

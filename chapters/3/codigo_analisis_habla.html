@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Código: Cálculo de atrbutos del habla &#8212; Procesamiento de señales, audio y habla</title>
+    <title>Código: Cálculo de atributos del habla &#8212; Procesamiento de señales, audio y habla</title>
   
   
   
@@ -204,9 +204,15 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Habla y lenguaje</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Código: Cálculo de atrbutos del habla</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Código: Cálculo de atributos del habla</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codigo_descubrimiento_de_unidades.html">Codigo: Descubrimiento de Unidades del Lenguaje</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios Capítulo 3</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelado de señales y secuencias</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4/modelado_secuencias.html">Modelado de secuencias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4/codigo_asr_hmm_fst.html">Intro to HMMs</a></li>
+
 </ul>
 
     </div>
@@ -392,7 +398,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Código: Cálculo de atrbutos del habla</h1>
+    <h1>Código: Cálculo de atributos del habla</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -454,8 +460,8 @@ document.write(`
 </div>
 </div>
 </div>
-<section class="tex2jax_ignore mathjax_ignore" id="codigo-calculo-de-atrbutos-del-habla">
-<h1>Código: Cálculo de atrbutos del habla<a class="headerlink" href="#codigo-calculo-de-atrbutos-del-habla" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="codigo-calculo-de-atributos-del-habla">
+<h1>Código: Cálculo de atributos del habla<a class="headerlink" href="#codigo-calculo-de-atributos-del-habla" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span><span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;../../assets/murcielago.wav&quot;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -476,6 +482,7 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="n">sr</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -783,12 +790,15 @@ x[n] = \sum_{k=1}^{p} -a_k x[n-k] + e[n]
     <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
     <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Valor&#39;</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Tiempo (s)&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Atributos calculados:
-[&#39;Median pitch&#39;, &#39;Mean pitch&#39;, &#39;Standard deviation&#39;, &#39;Minimum pitch&#39;, &#39;Maximum pitch&#39;, &#39;Number of pulses&#39;, &#39;Number of periods&#39;, &#39;Mean period&#39;, &#39;Standard deviation of period&#39;, &#39;Fraction of locally unvoiced frames&#39;, &#39;Number of voice breaks&#39;, &#39;Degree of voice breaks&#39;, &#39;Jitter (local)&#39;, &#39;Jitter (local, absolute)&#39;, &#39;Jitter (rap)&#39;, &#39;Jitter (ppq5)&#39;, &#39;Jitter (ddp)&#39;, &#39;Shimmer (local)&#39;, &#39;Shimmer (local, dB)&#39;, &#39;Shimmer (apq3)&#39;, &#39;Shimmer (apq5)&#39;, &#39;Shimmer (apq11)&#39;, &#39;Shimmer (dda)&#39;, &#39;Mean autocorrelation&#39;, &#39;Mean noise-to-harmonics ratio&#39;, &#39;Mean harmonics-to-noise ratio&#39;]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Median pitch&#39;, &#39;Mean pitch&#39;, &#39;Standard deviation&#39;, &#39;Minimum pitch&#39;, &#39;Maximum pitch&#39;, &#39;Number of pulses&#39;, &#39;Number of periods&#39;, &#39;Mean period&#39;, &#39;Standard deviation of period&#39;, &#39;Fraction of locally unvoiced frames&#39;, &#39;Number of voice breaks&#39;, &#39;Degree of voice breaks&#39;, &#39;Jitter (local)&#39;, &#39;Jitter (local, absolute)&#39;, &#39;Jitter (rap)&#39;, &#39;Jitter (ppq5)&#39;, &#39;Jitter (ddp)&#39;, &#39;Shimmer (local)&#39;, &#39;Shimmer (local, dB)&#39;, &#39;Shimmer (apq3)&#39;, &#39;Shimmer (apq5)&#39;, &#39;Shimmer (apq11)&#39;, &#39;Shimmer (dda)&#39;, &#39;Mean autocorrelation&#39;, &#39;Mean noise-to-harmonics ratio&#39;, &#39;Mean harmonics-to-noise ratio&#39;]
 </pre></div>
 </div>
 <img alt="../../_images/f46c2222a712b66184562b069a957e5bdd31c2ea20c81b098a12398b5674d27e.png" src="../../_images/f46c2222a712b66184562b069a957e5bdd31c2ea20c81b098a12398b5674d27e.png" />
@@ -826,6 +836,7 @@ x[n] = \sum_{k=1}^{p} -a_k x[n-k] + e[n]
     <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Valor&#39;</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Tiempo (s)&#39;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -850,6 +861,7 @@ x[n] = \sum_{k=1}^{p} -a_k x[n-k] + e[n]
 <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">y_axis</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%+2.0f</span><span class="s1"> dB&#39;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Espectrograma&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -889,6 +901,7 @@ x[n] = \sum_{k=1}^{p} -a_k x[n-k] + e[n]
 
 <span class="c1"># reset</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.prop_cycle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParamsDefault</span><span class="p">[</span><span class="s1">&#39;axes.prop_cycle&#39;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -908,6 +921,7 @@ x[n] = \sum_{k=1}^{p} -a_k x[n-k] + e[n]
 <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">M_db</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">y_axis</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%+2.0f</span><span class="s1"> dB&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Melspectrograma&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -942,7 +956,7 @@ x[n] = \sum_{k=1}^{p} -a_k x[n-k] + e[n]
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="c1"># LogNorm color map</span>
 <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LogNorm</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cepstrum</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cepstrum</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">sr</span><span class="p">),</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">());</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cepstrum</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cepstrum</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">sr</span><span class="p">),</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">());</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Valor de autocorrelación&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
 
@@ -958,21 +972,7 @@ x[n] = \sum_{k=1}^{p} -a_k x[n-k] + e[n]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span> <span class="n">line</span> <span class="mi">14</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="c1"># LogNorm color map</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LogNorm</span>
-<span class="ne">---&gt; </span><span class="mi">14</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cepstrum</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cepstrum</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">sr</span><span class="p">),</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">());</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Valor de autocorrelación&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;t&#39; is not defined
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 1200x400 with 0 Axes&gt;
-</pre></div>
-</div>
+<img alt="../../_images/056d2ef7aaa0cc644bcaa900beb3e4dcb84ba90823e4cb03fcf512df832b5c52.png" src="../../_images/056d2ef7aaa0cc644bcaa900beb3e4dcb84ba90823e4cb03fcf512df832b5c52.png" />
 </div>
 </div>
 </section>
